@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project source="3.9.0dev" version="1.0">
-  This file is intended to be loaded by Logisim-evolution v3.9.0dev(https://github.com/logisim-evolution/).
+<project source="4.0.0dev" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v4.0.0dev(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -795,11 +795,39 @@
     <comp lib="0" loc="(390,1070)" name="Tunnel">
       <a name="label" val="r5_w"/>
     </comp>
+    <comp lib="0" loc="(390,110)" name="Tunnel">
+      <a name="label" val="r0"/>
+      <a name="width" val="4"/>
+    </comp>
     <comp lib="0" loc="(390,1100)" name="Tunnel">
       <a name="label" val="r6_w"/>
     </comp>
     <comp lib="0" loc="(390,1130)" name="Tunnel">
       <a name="label" val="r7_w"/>
+    </comp>
+    <comp lib="0" loc="(390,230)" name="Tunnel">
+      <a name="label" val="r1"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(390,360)" name="Tunnel">
+      <a name="label" val="r2"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(390,490)" name="Tunnel">
+      <a name="label" val="r3"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(390,620)" name="Tunnel">
+      <a name="label" val="r4"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(390,740)" name="Tunnel">
+      <a name="label" val="r5"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(390,860)" name="Tunnel">
+      <a name="label" val="r6"/>
+      <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(390,920)" name="Tunnel">
       <a name="label" val="r0_w"/>
@@ -809,6 +837,10 @@
     </comp>
     <comp lib="0" loc="(390,980)" name="Tunnel">
       <a name="label" val="r2_w"/>
+    </comp>
+    <comp lib="0" loc="(400,1190)" name="Tunnel">
+      <a name="label" val="r7"/>
+      <a name="width" val="4"/>
     </comp>
     <comp lib="0" loc="(530,1020)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -1195,6 +1227,23 @@
     <wire from="(230,860)" to="(240,860)"/>
     <wire from="(230,900)" to="(240,900)"/>
     <wire from="(230,990)" to="(240,990)"/>
+    <wire from="(280,110)" to="(290,110)"/>
+    <wire from="(280,230)" to="(290,230)"/>
+    <wire from="(280,360)" to="(290,360)"/>
+    <wire from="(280,490)" to="(290,490)"/>
+    <wire from="(280,620)" to="(290,620)"/>
+    <wire from="(280,740)" to="(290,740)"/>
+    <wire from="(280,860)" to="(290,860)"/>
+    <wire from="(280,990)" to="(290,990)"/>
+    <wire from="(290,110)" to="(390,110)"/>
+    <wire from="(290,1190)" to="(400,1190)"/>
+    <wire from="(290,230)" to="(390,230)"/>
+    <wire from="(290,360)" to="(390,360)"/>
+    <wire from="(290,490)" to="(390,490)"/>
+    <wire from="(290,620)" to="(390,620)"/>
+    <wire from="(290,740)" to="(390,740)"/>
+    <wire from="(290,860)" to="(390,860)"/>
+    <wire from="(290,990)" to="(290,1190)"/>
     <wire from="(300,1100)" to="(390,1100)"/>
     <wire from="(300,930)" to="(300,1100)"/>
     <wire from="(310,1070)" to="(390,1070)"/>
