@@ -367,14 +367,17 @@
     <comp lib="0" loc="(340,840)" name="Tunnel">
       <a name="label" val="IO_out"/>
     </comp>
-    <comp lib="0" loc="(340,860)" name="Tunnel">
-      <a name="label" val="ALUop"/>
-      <a name="width" val="4"/>
-    </comp>
     <comp lib="0" loc="(360,130)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="Data"/>
       <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(360,880)" name="Tunnel">
+      <a name="label" val="ALUop"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(370,860)" name="Tunnel">
+      <a name="label" val="Halt"/>
     </comp>
     <comp lib="0" loc="(50,400)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -520,6 +523,10 @@
     <comp lib="0" loc="(960,510)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="DoJump"/>
+    </comp>
+    <comp lib="0" loc="(960,540)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="Halt"/>
     </comp>
     <comp lib="0" loc="(970,840)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -694,7 +701,8 @@
     <wire from="(320,800)" to="(340,800)"/>
     <wire from="(320,820)" to="(340,820)"/>
     <wire from="(320,840)" to="(340,840)"/>
-    <wire from="(320,860)" to="(340,860)"/>
+    <wire from="(320,860)" to="(370,860)"/>
+    <wire from="(320,880)" to="(360,880)"/>
     <wire from="(340,110)" to="(380,110)"/>
     <wire from="(340,90)" to="(340,110)"/>
     <wire from="(340,90)" to="(380,90)"/>
@@ -732,6 +740,8 @@
     <wire from="(950,330)" to="(990,330)"/>
     <wire from="(950,350)" to="(990,350)"/>
     <wire from="(960,510)" to="(980,510)"/>
+    <wire from="(960,530)" to="(960,540)"/>
+    <wire from="(960,530)" to="(980,530)"/>
     <wire from="(960,630)" to="(1010,630)"/>
     <wire from="(970,370)" to="(990,370)"/>
     <wire from="(970,390)" to="(990,390)"/>
@@ -1559,6 +1569,11 @@
       <a name="label" val="B_in"/>
       <a name="width" val="4"/>
     </comp>
+    <comp lib="0" loc="(640,640)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="south"/>
+      <a name="label" val="ClockWait"/>
+    </comp>
     <comp lib="0" loc="(660,810)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="ClockUpd"/>
@@ -1579,11 +1594,6 @@
       <a name="facing" val="west"/>
       <a name="incoming" val="8"/>
       <a name="spacing" val="4"/>
-    </comp>
-    <comp lib="0" loc="(780,650)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="facing" val="west"/>
-      <a name="label" val="ClockWait"/>
     </comp>
     <comp lib="0" loc="(790,250)" name="Tunnel">
       <a name="label" val="CurrAdress"/>
@@ -1620,11 +1630,8 @@
       <a name="output" val="true"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="1" loc="(620,310)" name="Controlled Buffer">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="1" loc="(660,650)" name="NOT Gate">
-      <a name="facing" val="west"/>
+    <comp lib="1" loc="(640,710)" name="NOT Gate">
+      <a name="facing" val="south"/>
     </comp>
     <comp lib="1" loc="(660,790)" name="AND Gate">
       <a name="facing" val="south"/>
@@ -1636,7 +1643,11 @@
     <comp lib="4" loc="(670,300)" name="ROM">
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 8 12
-0 10f 11d b00 b11 101
+0 128 11c 110 125 11c 110 12c
+11c 110 12c 11c 110 12f 11c 110
+120 11a 110 127 11d 110 12f 11c
+110 122 11d 110 12c 11c 110 124
+11c 110 800
 </a>
       <a name="dataWidth" val="12"/>
     </comp>
@@ -1648,17 +1659,14 @@
     <wire from="(300,230)" to="(350,230)"/>
     <wire from="(310,280)" to="(350,280)"/>
     <wire from="(330,310)" to="(350,310)"/>
-    <wire from="(540,310)" to="(600,310)"/>
-    <wire from="(610,320)" to="(610,650)"/>
-    <wire from="(610,650)" to="(640,650)"/>
-    <wire from="(620,310)" to="(670,310)"/>
+    <wire from="(540,310)" to="(670,310)"/>
     <wire from="(640,210)" to="(680,210)"/>
     <wire from="(640,250)" to="(680,250)"/>
-    <wire from="(640,650)" to="(640,740)"/>
-    <wire from="(640,650)" to="(660,650)"/>
+    <wire from="(640,640)" to="(640,680)"/>
+    <wire from="(640,710)" to="(640,740)"/>
+    <wire from="(640,740)" to="(650,740)"/>
     <wire from="(660,790)" to="(660,810)"/>
     <wire from="(680,710)" to="(680,740)"/>
-    <wire from="(690,650)" to="(780,650)"/>
     <wire from="(700,250)" to="(790,250)"/>
     <wire from="(910,360)" to="(920,360)"/>
     <wire from="(940,320)" to="(1060,320)"/>
@@ -1730,6 +1738,12 @@
       <a name="label" val="IO_out"/>
       <a name="output" val="true"/>
     </comp>
+    <comp lib="0" loc="(730,260)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Halt"/>
+      <a name="output" val="true"/>
+    </comp>
     <comp lib="0" loc="(730,50)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
@@ -1747,7 +1761,7 @@
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 4 16
 0 1 41 40 c 0 38 0
-0 8 0 c0 4*2
+100 8 0 c0 4*2
 </a>
       <a name="dataWidth" val="16"/>
     </comp>
@@ -1762,6 +1776,7 @@
     <wire from="(670,20)" to="(730,20)"/>
     <wire from="(670,200)" to="(730,200)"/>
     <wire from="(670,230)" to="(730,230)"/>
+    <wire from="(670,260)" to="(730,260)"/>
     <wire from="(670,50)" to="(730,50)"/>
     <wire from="(670,80)" to="(730,80)"/>
   </circuit>
