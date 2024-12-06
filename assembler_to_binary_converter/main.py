@@ -9,6 +9,24 @@ def write_raw_utf(filename: str, codes: list[str]) -> None:
         for l in codes:
             file.write(l + "\n")
 
+def logsisim_hex_to_8bit(filename: str) -> tuple[list[str], list[str]]:
+    commands_one = []
+    commands_two = []
+
+    with open(filename, "r", encoding="utf-8") as file:
+        file.readline()
+        for line in file:
+            line = line.strip().split()
+            line = line[1:]
+
+            for hex_code in line:
+                commands_one.append(hex_code[:2])
+                commands_two.append(hex_code[2:] + ("" if len(hex_code) == 4 else "0"))
+
+    return commands_one , commands_two
+                
+
+
 
 def assembly_to_binary(filename: str) -> list[str]:
     result: list[str] = ["000"]
@@ -54,6 +72,7 @@ def main():
     parser.add_argument("filename")
     parser.add_argument("-t", "--translate", action="store_true")
     parser.add_argument("-l", "--logisim", action="store_true")
+    parser.add_argument("-lhth", "--logisim-hex-to-hex", action="store_true")
 
     args = parser.parse_args()
 
@@ -61,6 +80,11 @@ def main():
         res = assembly_to_binary(args.filename)
         if args.logisim:
             write_raw_utf(args.filename, res)
+
+    if args.logisim_hex_to_hex:
+        part1, part2 = logsisim_hex_to_8bit(args.filename)
+        write_raw_utf(args.filename + "part1", part1)
+        write_raw_utf(args.filename + "part2", part2)
 
 
 if __name__ == "__main__":
