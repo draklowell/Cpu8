@@ -1,13 +1,28 @@
 import argparse
 
-from constants import JUMP_REGEX, NO_OPPERANDS_REGEX, IMMED_REG_REGEX, LABEL_REGEX, REG_IMMED_REGEX, DOUBLE_REG_REGEX, \
-    OPERATIONS
+from constants import (
+    JUMP_REGEX,
+    NO_OPPERANDS_REGEX,
+    IMMED_REG_REGEX,
+    LABEL_REGEX,
+    REG_IMMED_REGEX,
+    DOUBLE_REG_REGEX,
+    OPERATIONS,
+)
 
 
 def write_raw_utf(filename: str, codes: list[str]) -> None:
     with open(filename + ".bin", "w", encoding="utf-8") as file:
         for l in codes:
             file.write(l + "\n")
+
+
+def write_byte_hex(filename: str, codes: list[str]) -> None:
+    bin_data = bytes(int(byte, 16) for byte in codes)
+    print(bin_data)
+    with open(filename + ".bin", "wb") as file:
+        file.write(bin_data)
+
 
 def logsisim_hex_to_8bit(filename: str) -> tuple[list[str], list[str]]:
     commands_one = []
@@ -23,9 +38,7 @@ def logsisim_hex_to_8bit(filename: str) -> tuple[list[str], list[str]]:
                 commands_one.append(hex_code[:2])
                 commands_two.append(hex_code[2:] + ("" if len(hex_code) == 4 else "0"))
 
-    return commands_one , commands_two
-                
-
+    return commands_one, commands_two
 
 
 def assembly_to_binary(filename: str) -> list[str]:
@@ -35,26 +48,49 @@ def assembly_to_binary(filename: str) -> list[str]:
     with open(filename, "r", encoding="utf-8") as file:
         i = 1
         for line in file:
-            new_op = ""
             line = line.strip()
             if line == "":
                 continue
+            re_match = LABEL_REGEX.match(line)
+            if re_match:
+                labels[re_match.group(1)] = f"{i:02x}"
+                continue
+            i += 1
+
+    print(labels)
+
+    with open(filename, "r", encoding="utf-8") as file:
+        for line in file:
+            new_op = ""
+            line = line.strip()
+            if line == "":
+
+                continue
 
             if re_match := DOUBLE_REG_REGEX.match(line):
-                new_op = OPERATIONS[re_match.group(1)] + re_match.group(2) + re_match.group(3)
+                new_op = (
+                    OPERATIONS[re_match.group(1)]
+                    + re_match.group(2)
+                    + re_match.group(3)
+                )
             elif re_match := REG_IMMED_REGEX.match(line):
-                new_op = OPERATIONS[re_match.group(1)] + re_match.group(2) + re_match.group(3)
+                new_op = (
+                    OPERATIONS[re_match.group(1)]
+                    + re_match.group(2)
+                    + re_match.group(3)
+                )
             elif re_match := IMMED_REG_REGEX.match(line):
-                new_op = OPERATIONS[re_match.group(1)] + re_match.group(2) + re_match.group(3)
+                new_op = (
+                    OPERATIONS[re_match.group(1)]
+                    + re_match.group(2)
+                    + re_match.group(3)
+                )
             elif re_match := NO_OPPERANDS_REGEX.match(line):
                 new_op = OPERATIONS[re_match.group(1)] + "00"
             elif re_match := JUMP_REGEX.match(line):
-                new_op = OPERATIONS[re_match.group(1)] + labels.get(re_match.group(2), "00")
+                new_op = OPERATIONS[re_match.group(1)] + labels[re_match.group(2)]
             elif re_match := LABEL_REGEX.match(line):
-                labels[re_match.group(1)] = f"{i:02x}"
                 continue
-
-            i += 1
 
             if new_op == "":
                 raise SyntaxError(f"Operation for this line is not defined: {line}")
@@ -65,8 +101,8 @@ def assembly_to_binary(filename: str) -> list[str]:
 
 def main():
     parser = argparse.ArgumentParser(
-        prog='CPU assembly translator',
-        description='Program to translate assembly code of a nibble cpu to binary code',
+        prog="CPU assembly translator",
+        description="Program to translate assembly code of a nibble cpu to binary code",
     )
 
     parser.add_argument("filename")
@@ -78,13 +114,14 @@ def main():
 
     if args.translate:
         res = assembly_to_binary(args.filename)
+        print(res)
         if args.logisim:
             write_raw_utf(args.filename, res)
 
     if args.logisim_hex_to_hex:
         part1, part2 = logsisim_hex_to_8bit(args.filename)
-        write_raw_utf(args.filename + "part1", part1)
-        write_raw_utf(args.filename + "part2", part2)
+        write_byte_hex(args.filename + "part1", part1)
+        write_byte_hex(args.filename + "part2", part2)
 
 
 if __name__ == "__main__":
