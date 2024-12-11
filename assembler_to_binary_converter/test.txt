@@ -1,7 +1,0 @@
-mvd r0, 5 11
-mvd r1, 2 11
-mvd r2, 4 11
-mvd r3, 6 11
-mvd r4, 1 11
-mvd r5, 0 11
-mvd r6, 1 11
