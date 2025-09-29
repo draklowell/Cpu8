@@ -600,4 +600,7 @@ for operation, selection, mode, carry_mode in [
             yield from NextOperation(ctx)
 
 
+# TODO: Shifts for accumulator and hlt instruction
+
+
 compiler.save("bin/")
