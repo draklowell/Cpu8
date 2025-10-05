@@ -184,8 +184,8 @@ REGISTERS_BYTE_ARITHMETICS = [
     (components.XH, "xh"),
     (components.YL, "yl"),
     (components.YH, "yh"),
-    (components.ZL, "yl"),
-    (components.ZH, "yh"),
+    (components.ZL, "zl"),
+    (components.ZH, "zh"),
 ]
 
 # 5
@@ -446,7 +446,6 @@ for operation, selection, mode, carry_mode, to_mode in [
     ("add", 0x9, 0, CarryMode.ALWAYS_ZERO, 1),
     ("sub", 0x6, 0, CarryMode.ALWAYS_ZERO, 1),
     ("nand", 0x4, 1, CarryMode.ALWAYS_ZERO, 1),
-    ("not", 0x0, 1, CarryMode.ALWAYS_ZERO, 1),
     ("xor", 0x6, 1, CarryMode.ALWAYS_ZERO, 1),
     ("nor", 0x1, 1, CarryMode.ALWAYS_ZERO, 1),
     ("adc", 0x9, 0, CarryMode.TRANSPARENT, 1),
