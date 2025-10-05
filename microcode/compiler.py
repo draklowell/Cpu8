@@ -1,3 +1,4 @@
+import csv
 import os.path
 from dataclasses import dataclass
 from typing import Callable, Generator
@@ -97,6 +98,10 @@ Code = tuple[int, int, int, int]
 
 
 class Compiler:
+    blocks: list[bytearray]
+    counter: int
+    table: dict[int, tuple[str, list[int]]]
+
     def __init__(self):
         self.blocks = [bytearray(2**16) for _ in range(4)]
         self.counter = 0
@@ -128,6 +133,8 @@ class Compiler:
         if code > 255:
             raise ValueError("Too many instructions")
 
+        cycles = []
+
         for ctx in POSSIBLE_CONTEXTS:
             base = code | ctx.get_value()
             for step, opcodes in enumerate(callback(ctx)):
@@ -139,13 +146,34 @@ class Compiler:
                 for block, value in enumerate(opcodes):
                     self.blocks[block][address] = value
 
-        self.table[code] = name
+            cycles.append(step + 1)  # last step
+
+        self.table[code] = (name, cycles)
 
     def save(self, path: str):
         for index, block in enumerate(self.blocks):
             with open(os.path.join(path, f"rom{index}.bin"), "wb") as file:
                 file.write(block)
 
-        with open(os.path.join(path, "table.txt"), "w") as file:
-            for code, name in sorted(self.table.items()):
-                file.write(hex(code).upper()[2:].zfill(2) + ": " + name + "\n")
+        with open(os.path.join(path, "table.csv"), "w") as file:
+            writer = csv.DictWriter(
+                file,
+                fieldnames=[
+                    "hexOpcode",
+                    "decOpcode",
+                    "mnemonic",
+                    "maxCycles",
+                    "minCycles",
+                ],
+            )
+            writer.writeheader()
+            for code, (name, cycles) in sorted(self.table.items()):
+                writer.writerow(
+                    {
+                        "hexOpcode": hex(code)[2:].zfill(2),
+                        "decOpcode": str(code).zfill(3),
+                        "mnemonic": name,
+                        "maxCycles": max(cycles),
+                        "minCycles": min(cycles),
+                    }
+                )
