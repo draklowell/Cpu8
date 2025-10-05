@@ -184,8 +184,8 @@ REGISTERS_BYTE_ARITHMETICS = [
     (components.XH, "xh"),
     (components.YL, "yl"),
     (components.YH, "yh"),
-    (components.ZL, "yl"),
-    (components.ZH, "yh"),
+    (components.ZL, "zl"),
+    (components.ZH, "zh"),
 ]
 
 # 5
