@@ -1,3 +1,6 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #pragma once
 
 #include <cstdint>
@@ -162,5 +165,6 @@ namespace asmx
         [[nodiscard]] uint8_t ldiImm16Opcode(Reg r) const;
         [[nodiscard]] uint8_t ldAbs16Opcode(Reg r) const;
         [[nodiscard]] uint8_t stAbs16Opcode(Reg r) const;
+        [[nodiscard]] const std::unordered_map<Key, OpcodeSpecs, KeyHash> &entries() const;
     };
 }
