@@ -1264,3 +1264,4 @@ dkms.conf
 *.dis
 
 .idea
+.PVS-Studio/

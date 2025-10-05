@@ -28,7 +28,7 @@ namespace asmx
         auto add_simple = [&](const char *mnemonic, std::vector<OT> signature, const uint8_t opcode, const uint8_t size, const bool reloc = false, const uint8_t imm_offset = 1)
         {
             Key key{std::string(mnemonic), signature};
-            table.try_emplace(std::move(key), OpcodeSpecs{opcode, size, signature, reloc, imm_offset});
+            table.emplace(std::move(key), OpcodeSpecs{opcode, size, signature, reloc, imm_offset});
         };
 
         auto add_mov = [&](Reg dst, Reg src, const uint8_t opcode)
@@ -45,7 +45,7 @@ namespace asmx
         auto add_ldi16 = [&](Reg r, const uint8_t opcode)
         {
             ldi16_[static_cast<int>(r)] = opcode;
-            add_simple("ldi", Sig({OT::Imm16}), opcode, 3, false, 1);
+            add_simple("ldi", Sig({OT::Reg, OT::Imm16}), opcode, 3, false, 1);
         };
 
         auto add_ldabs16 = [&](Reg r, const uint8_t opcode)
