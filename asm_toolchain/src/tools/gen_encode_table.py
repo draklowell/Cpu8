@@ -1,150 +1,164 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+"""Generate EncodeTable.inc.hpp from the CSV opcode table."""
 
+import csv
 import re
+from dataclasses import dataclass
 from pathlib import Path
 
+
+@dataclass(frozen=True)
+class MovEntry:
+    dst: str
+    src: str
+
+
+@dataclass(frozen=True)
+class SimpleEntry:
+    mnemonic: str
+    sig_kind: str  # "none", "imm8", "imm16"
+
+
+@dataclass(frozen=True)
+class SpecialEntry:
+    kind: str  # "LDI8", "LDI16", "LDABS16", "STABS16"
+    reg: str
+
+
 class EncodeTableGenerator:
-    TABLE = Path("table.txt")
-    OUT   = Path("../asm/EncodeTable.inc.hpp")
-    LINE_RE = re.compile(r"^\s*([0-9A-Fa-f]{2})\s*:\s*([^\s].*?)\s*$")
+    _BASE_DIR = Path(__file__).resolve().parent
+    TABLE = _BASE_DIR / "table.csv"
+    OUT = _BASE_DIR.parent / "asm" / "EncodeTable.inc.hpp"
+
+    MOV_RE = re.compile(r"^mov-([^-]+)-([^-]+)$", re.IGNORECASE)
+    LDI_RE = re.compile(r"^ldi-([^-]+)-\[(byte|word)\]$", re.IGNORECASE)
+    LDABS_RE = re.compile(r"^ld-([^-]+)-\[word\]$", re.IGNORECASE)
+    STABS_RE = re.compile(r"^st-\[word]-([^-]+)$", re.IGNORECASE)
 
     REG_ALIASES = {
-        "ac":"AC", "xh":"XH", "yl":"YL", "yh":"YH", "zl":"ZL", "zh":"ZH", "fr":"FR",
-        "sp":"SP", "pc":"PC",
-        "x":"X", "y":"Y", "z":"Z",
+        "ac": "AC",
+        "xh": "XH",
+        "yl": "YL",
+        "yh": "YH",
+        "zl": "ZL",
+        "zh": "ZH",
+        "fr": "FR",
+        "sp": "SP",
+        "pc": "PC",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
     }
 
-    @staticmethod
-    def reg_enum(s: str) -> str:
-        s = s.strip().lower()
-        if s not in EncodeTableGenerator.REG_ALIASES:
-            raise ValueError(f"Unknown register '{s}'")
-        return f"Reg::{EncodeTableGenerator.REG_ALIASES[s]}"
+    SIG_STRINGS = {
+        "none": "Sig({OT::None})",
+        "imm8": "Sig({OT::Imm8})",
+        "imm16": "Sig({OT::Imm16})",
+    }
 
-    @staticmethod
-    def sig_none():
-        return "Sig({OT::None})"
+    SIMPLE_SIZES = {
+        "none": 1,
+        "imm8": 2,
+        "imm16": 3,
+    }
 
-    @staticmethod
-    def sig_imm8():
-        return "Sig({OT::Imm8})"
+    def __init__(self, table_path: Path | None = None, out_path: Path | None = None):
+        self.table_path = table_path or self.TABLE
+        self.out_path = out_path or self.OUT
 
-    @staticmethod
-    def sig_imm16():
-        return "Sig({OT::Imm16})"
+    def reg_enum(self, raw: str) -> str:
+        key = raw.strip().lower()
+        if key not in self.REG_ALIASES:
+            raise ValueError(f"Unknown register '{raw}'")
+        return f"Reg::{self.REG_ALIASES[key]}"
 
-    @staticmethod
-    def sig_memabs16():
-        return "Sig({OT::MemAbs16})"
+    def classify(self, mnemonic: str):
+        text = mnemonic.strip().lower()
+        if not text:
+            raise ValueError("Empty mnemonic")
 
-    @staticmethod
-    def parse_table_line(line: str):
-        m = EncodeTableGenerator.LINE_RE.match(line)
-        if not m:
-            return None
-        opc_hex = m.group(1)
-        mnem = m.group(2).strip()
-        opcode = int(opc_hex, 16)
-        return opcode, mnem
+        if (match := self.MOV_RE.match(text)):
+            dst = self.reg_enum(match.group(1))
+            src = self.reg_enum(match.group(2))
+            return MovEntry(dst=dst, src=src)
 
-    def classify(opcode: int, mnem: str):
-        """
-        Повертає tuple виду:
-          ("LDI8", reg)
-          ("LDI16", reg)
-          ("LDABS16", reg)
-          ("STABS16", reg)
-          ("MOV", dst, src)
-          ("SIMPLE", mnem, sig_kind)   # sig_kind: "none"|"imm8"|"imm16"
-        """
-        s = mnem.lower()
+        if (match := self.LDI_RE.match(text)):
+            reg = self.reg_enum(match.group(1))
+            width = match.group(2).lower()
+            if width == "byte":
+                return SpecialEntry(kind="LDI8", reg=reg)
+            if width == "word":
+                return SpecialEntry(kind="LDI16", reg=reg)
+            raise ValueError(f"Unsupported immediate width '{width}' for mnemonic '{mnemonic}'")
 
-        # 1) mov-dst-src
-        if s.startswith("mov-"):
-            parts = s.split("-")
-            if len(parts) == 3:
-                dst, src = parts[1], parts[2]
-                return ("MOV", EncodeTableGenerator.reg_enum(dst), EncodeTableGenerator.reg_enum(src))
-            else:
-                raise ValueError(f"Bad mov mnemonic: {mnem}")
+        if (match := self.LDABS_RE.match(text)):
+            reg = self.reg_enum(match.group(1))
+            return SpecialEntry(kind="LDABS16", reg=reg)
 
-        # 2) ldi-REG-[byte] / ldi-REG-[word]
-        if s.startswith("ldi-"):
-            if s.endswith("[byte]"):
-                reg = s[len("ldi-") : -len("-[byte]")]
-                return ("LDI8", EncodeTableGenerator.reg_enum(reg))
-            if s.endswith("[word]"):
-                reg = s[len("ldi-") : -len("-[word]")]
-                return ("LDI16", EncodeTableGenerator.reg_enum(reg))
+        if (match := self.STABS_RE.match(text)):
+            reg = self.reg_enum(match.group(1))
+            return SpecialEntry(kind="STABS16", reg=reg)
 
-        # 3) ld-REG-[word]  -> load from absolute 16-bit address
-        if s.startswith("ld-") and s.endswith("[word]"):
-            reg = s[len("ld-") : -len("-[word]")]
-            return ("LDABS16", EncodeTableGenerator.reg_enum(reg))
+        if text.endswith("-[byte]"):
+            base = text[: -len("-[byte]")]
+            return SimpleEntry(mnemonic=base, sig_kind="imm8")
 
-        # 4) st-[word]-REG  -> store to absolute 16-bit address
-        if s.startswith("st-[word]-"):
-            reg = s[len("st-[word]-") :]
-            return ("STABS16", EncodeTableGenerator.reg_enum(reg))
+        if text.endswith("-[word]"):
+            base = text[: -len("-[word]")]
+            return SimpleEntry(mnemonic=base, sig_kind="imm16")
 
-        # 5) будь-що інше: визначимо наявність [byte]/[word] для сигнатури
-        if "[byte]" in s:
-            base = s.replace("-[byte]", "")
-            return ("SIMPLE", base, "imm8")
-        if "[word]" in s:
-            base = s.replace("-[word]", "")
-            return ("SIMPLE", base, "imm16")
+        return SimpleEntry(mnemonic=text, sig_kind="none")
 
-        # 6) дефолт — без аргументів
-        return ("SIMPLE", s, "none")
-
-    @staticmethod
-    def procces():
-        EncodeTableGenerator.OUT.parent.mkdir(parents=True, exist_ok=True)
-        lines_out = []
-        lines_out.append("// DO NOT EDIT — generated from table.txt\n")
-
-        with EncodeTableGenerator.TABLE.open("r", encoding="utf-8") as f:
-            for raw in f:
-                raw = raw.strip()
-                if not raw or raw.startswith("#") or raw.startswith("//"):
+    def read_rows(self) -> list[tuple[int, str]]:
+        rows: list[tuple[int, str]] = []
+        with self.table_path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                if not row:
                     continue
-                parsed = EncodeTableGenerator.parse_table_line(raw)
-                if not parsed:
+                mnemonic = (row.get("mnemonic") or "").strip()
+                if not mnemonic:
                     continue
-                opcode, mnem = parsed
-                kind = EncodeTableGenerator.classify(opcode, mnem)
+                hex_opcode = (row.get("hexOpcode") or "").strip()
+                if not hex_opcode:
+                    raise ValueError(f"Missing hexOpcode for mnemonic '{mnemonic}'")
+                opcode = int(hex_opcode, 16)
+                rows.append((opcode, mnemonic))
+        rows.sort(key=lambda item: item[0])
+        return rows
 
-                if kind[0] == "MOV":
-                    _, dst, src = kind
-                    lines_out.append(f"ADD_MOV({dst}, {src}, 0x{opcode:02X});")
-                elif kind[0] == "LDI8":
-                    _, reg = kind
-                    lines_out.append(f"ADD_LDI8({reg}, 0x{opcode:02X});")
-                elif kind[0] == "LDI16":
-                    _, reg = kind
-                    lines_out.append(f"ADD_LDI16({reg}, 0x{opcode:02X});")
-                elif kind[0] == "LDABS16":
-                    _, reg = kind
-                    lines_out.append(f"ADD_LDABS16({reg}, 0x{opcode:02X});")
-                elif kind[0] == "STABS16":
-                    _, reg = kind
-                    lines_out.append(f"ADD_STABS16({reg}, 0x{opcode:02X});")
-                elif kind[0] == "SIMPLE":
-                    _, base_mnem, sigk = kind
-                    if sigk == "imm8":
-                        lines_out.append(f'ADD_SIMPLE("{base_mnem}", {EncodeTableGenerator.sig_imm8()}, 0x{opcode:02X}, 2);')
-                    elif sigk == "imm16":
-                        lines_out.append(f'ADD_SIMPLE("{base_mnem}", {EncodeTableGenerator.sig_imm16()}, 0x{opcode:02X}, 3);')
-                    else:
-                        lines_out.append(f'ADD_SIMPLE("{base_mnem}", {EncodeTableGenerator.sig_none()}, 0x{opcode:02X}, 1);')
-                else:
-                    raise RuntimeError("unknown kind")
+    def format_line(self, opcode: int, entry) -> str:
+        if isinstance(entry, MovEntry):
+            return f"ADD_MOV({entry.dst}, {entry.src}, 0x{opcode:02X});"
+        if isinstance(entry, SpecialEntry):
+            if entry.kind == "LDI8":
+                return f"ADD_LDI8({entry.reg}, 0x{opcode:02X});"
+            if entry.kind == "LDI16":
+                return f"ADD_LDI16({entry.reg}, 0x{opcode:02X});"
+            if entry.kind == "LDABS16":
+                return f"ADD_LDABS16({entry.reg}, 0x{opcode:02X});"
+            if entry.kind == "STABS16":
+                return f"ADD_STABS16({entry.reg}, 0x{opcode:02X});"
+            raise ValueError(f"Unknown special entry kind '{entry.kind}'")
+        if isinstance(entry, SimpleEntry):
+            sig = self.SIG_STRINGS[entry.sig_kind]
+            size = self.SIMPLE_SIZES[entry.sig_kind]
+            return f'ADD_SIMPLE("{entry.mnemonic}", {sig}, 0x{opcode:02X}, {size});'
+        raise TypeError(f"Unsupported entry type: {type(entry)!r}")
 
-        with EncodeTableGenerator.OUT.open("w", encoding="utf-8") as f:
-            f.write("\n".join(lines_out) + "\n")
+    def run(self) -> None:
+        self.out_path.parent.mkdir(parents=True, exist_ok=True)
+        lines = ["// DO NOT EDIT — generated from table.csv", ""]
+        for opcode, mnemonic in self.read_rows():
+            entry = self.classify(mnemonic)
+            lines.append(self.format_line(opcode, entry))
+        self.out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def main() -> None:
+    generator = EncodeTableGenerator()
+    generator.run()
+
 
 if __name__ == "__main__":
-    etg = EncodeTableGenerator()
-    etg.procces()
+    main()
