@@ -1,109 +1,68 @@
 import os.path
 from dataclasses import dataclass
-from enum import IntEnum
 from typing import Callable, Generator
 
-
-class ToABus(IntEnum):
-    DISABLE = 0x0
-    STACK_POINTER = 0x1
-    PROGRAM_COUNTER = 0x2
-    TEMPORARY = 0x3
-
-
-class FromDBus(IntEnum):
-    DISABLE = 0x0
-    MEMORY = 0x1
-    STACK_POINTER_HIGH = 0x2
-    STACK_POINTER_LOW = 0x3
-    PROGRAM_COUNTER_HIGH = 0x4
-    PROGRAM_COUNTER_LOW = 0x5
-    TEMPORARY_HIGH = 0x6
-    TEMPORARY_LOW = 0x7
-    ACCUMULATOR = 0x8
-    XH = 0x9
-    YL = 0xA
-    YH = 0xB
-    ZL = 0xC
-    ZH = 0xD
-    FLAGS = 0xE
-    INSTRUCTION_REGISTER = 0xF
-
-
-class ToDBus(IntEnum):
-    DISABLE = 0x0
-    MEMORY = 0x1
-    STACK_POINTER_HIGH = 0x2
-    STACK_POINTER_LOW = 0x3
-    PROGRAM_COUNTER_HIGH = 0x4
-    PROGRAM_COUNTER_LOW = 0x5
-    TEMPORARY_HIGH = 0x6
-    TEMPORARY_LOW = 0x7
-    ACCUMULATOR = 0x8
-    XH = 0x9
-    YL = 0xA
-    YH = 0xB
-    ZL = 0xC
-    ZH = 0xD
-    FLAGS = 0xE
-    INTERRUPT_HANDLE_CONSTANT = 0xF
+import components
+from components import Component
 
 
 def code(
-    from_d_bus: FromDBus = FromDBus.DISABLE,
-    to_d_bus: ToDBus = ToDBus.DISABLE,  # Boundary
-    to_a_bus: ToABus = ToABus.DISABLE,
+    bus_reader: Component = components.DISABLE,
     alu_mode: int = 0,
     alu_carry: int = 0,
-    alu_selection: int = 0,  # Boundary
-    alu_enable: int = 0,
-    flags_from_alu: int = 0,
+    flags_from_alu: int = 0,  # Boundary
+    bus_writer: Component = components.DISABLE,
     step_counter_clear: int = 0,
-    program_counter_increment: int = 0,
-    stack_pointer_increment: int = 0,
-    stack_pointer_decrement: int = 0,
     halt: int = 0,
-    interrupt_acknowledge: int = 0,  # Boundary
-    accumulator_shift_left: int = 0,
+    program_counter_increment: int = 0,  # Boundary
+    alu_selection: int = 0,
+    stack_pointer_decrement: int = 0,
+    stack_pointer_increment: int = 0,
+    accumulator_shift_left: int = 0,  # Boundary
     accumulator_shift_right: int = 0,
     interrupt_enable: int = 0,
     interrupt_disable: int = 0,
+    address_decrement: int = 0,
+    address_increment: int = 0,
 ):
-    if to_a_bus == ToABus.STACK_POINTER and from_d_bus in {
-        FromDBus.STACK_POINTER_HIGH,
-        FromDBus.STACK_POINTER_LOW,
-    }:
-        raise ValueError("illegal simultaneous read/write to stack pointer")
+    if bus_reader.reader is None:
+        raise ValueError(f"Component {bus_reader.name} can't read from bus")
+    if bus_writer.writer is None:
+        raise ValueError(f"Component {bus_writer.name} can't write to bus")
 
     not_halt = 1 - halt
     not_program_counter_increment = 1 - program_counter_increment
-    not_stack_pointer_increment = 1 - stack_pointer_increment
     not_stack_pointer_decrement = 1 - stack_pointer_decrement
+    not_stack_pointer_increment = 1 - stack_pointer_increment
     not_alu_carry = 1 - alu_carry
+    not_address_decrement = 1 - address_decrement
+    not_address_increment = 1 - address_increment
 
     return (
-        ((from_d_bus.value << 0) | (to_d_bus.value << 4)),
         (
-            (to_a_bus.value << 0)
-            | (alu_mode << 2)
-            | (not_alu_carry << 3)
-            | (alu_selection << 4)
+            (bus_reader.reader << 0)
+            | (alu_mode << 5)
+            | (not_alu_carry << 6)
+            | (flags_from_alu << 7)
         ),
         (
-            (alu_enable << 0)
-            | (flags_from_alu << 1)
-            | (step_counter_clear << 2)
-            | (not_program_counter_increment << 3)
-            | (not_stack_pointer_increment << 4)
-            | (not_stack_pointer_decrement << 5)
+            (bus_writer.writer << 0)
+            | (step_counter_clear << 5)
             | (not_halt << 6)
-            | (interrupt_acknowledge << 7)
+            | (not_program_counter_increment << 7)
         ),
         (
-            (accumulator_shift_left << 0)
-            | (accumulator_shift_right << 1)
-            | (interrupt_enable << 2)
-            | (interrupt_disable << 3)
+            (alu_selection << 0)
+            | (not_stack_pointer_decrement << 4)
+            | (not_stack_pointer_increment << 5)
+            | (accumulator_shift_left << 6)
+            | (accumulator_shift_right << 7)
+        ),
+        (
+            (interrupt_enable << 0)
+            | (interrupt_disable << 1)
+            | (not_address_decrement << 2)
+            | (not_address_increment << 3)
         ),
     )
 
