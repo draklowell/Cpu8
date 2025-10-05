@@ -18,7 +18,6 @@ def code(
     alu_selection: int = 0,
     stack_pointer_decrement: int = 0,
     stack_pointer_increment: int = 0,
-    interrupt_acknowledge: int = 0,
     accumulator_shift_left: int = 0,  # Boundary
     accumulator_shift_right: int = 0,
     interrupt_enable: int = 0,
@@ -56,15 +55,14 @@ def code(
             (alu_selection << 0)
             | (not_stack_pointer_decrement << 4)
             | (not_stack_pointer_increment << 5)
-            | (interrupt_acknowledge << 6)
-            | (accumulator_shift_left << 7)
+            | (accumulator_shift_left << 6)
+            | (accumulator_shift_right << 7)
         ),
         (
-            (accumulator_shift_right << 0)
-            | (interrupt_enable << 1)
-            | (interrupt_disable << 2)
-            | (not_address_decrement << 3)
-            | (not_address_increment << 4)
+            (interrupt_enable << 0)
+            | (interrupt_disable << 1)
+            | (not_address_decrement << 2)
+            | (not_address_increment << 3)
         ),
     )
 

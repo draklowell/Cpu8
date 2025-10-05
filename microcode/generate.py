@@ -43,8 +43,8 @@ def ReadWord(to: tuple[Component, Component]):
 
 
 # 3 ticks
-def NextOperation(ctx: Context):
-    if not ctx.interrupt:
+def NextOperation(ctx: Context, ignore_interrupts: bool = False):
+    if (not ctx.interrupt) or ignore_interrupts:
         yield from MoveWord(components.ADDRESS, components.PROGRAM_COUNTER)
         yield code(
             bus_reader=components.INSTRUCTION,
@@ -56,6 +56,14 @@ def NextOperation(ctx: Context):
         yield code(
             bus_reader=components.INSTRUCTION,
             bus_writer=components.INTERRUPT_HANDLE_CONSTANT,
+            step_counter_clear=1,
+        )
+
+        # Filler: if interrupt happend while fetching next instruction:
+        yield code(
+            bus_reader=components.INSTRUCTION,
+            bus_writer=components.MEMORY,
+            program_counter_increment=1,
             step_counter_clear=1,
         )
 
@@ -225,16 +233,11 @@ def nop(ctx: Context):
 @compiler.instruction("inth", 0x1C)
 def inth(ctx: Context):
     yield from PushWord(components.PROGRAM_COUNTER)
-    yield code(
-        bus_reader=components.PROGRAM_COUNTER_LOW,
-        bus_writer=components.MEMORY,
-        interrupt_acknowledge=1,
-    )
-    yield code(
-        bus_reader=components.PROGRAM_COUNTER_HIGH,
-        bus_writer=components.INTERRUPT_HANDLE_CONSTANT,
-    )
-    yield from NextOperation(ctx)
+    yield from Move(components.ADDRESS_LOW, components.INTERRUPT_CODE)
+    yield from Move(components.ADDRESS_HIGH, components.INTERRUPT_HANDLE_CONSTANT)
+    yield from Move(components.PROGRAM_COUNTER_HIGH, components.MEMORY)
+    yield from Move(components.PROGRAM_COUNTER_LOW, components.MEMORY)
+    yield from NextOperation(ctx, ignore_interrupts=True)
 
 
 @compiler.instruction("inte")

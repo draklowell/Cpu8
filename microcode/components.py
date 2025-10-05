@@ -31,6 +31,7 @@ ADDRESS_HIGH = Component(0x10, None, "AddressHigh")
 ADDRESS_LOW = Component(0x11, None, "AddressLow")
 INTERRUPT_HANDLE_CONSTANT = Component(None, 0x0F, "InterruptHandleConstant")
 ALU = Component(None, 0x10, "ALU")
+INTERRUPT_CODE = Component(None, 0x11, "InterruptCode")
 ZERO_CONSTANT = DISABLE
 
 STACK_POINTER = (STACK_POINTER_HIGH, STACK_POINTER_LOW)
