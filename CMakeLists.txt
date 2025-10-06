@@ -1,14 +1,14 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.20)
 project(Cpu8)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(asm_toolchain/src/asm)
-include_directories(asm_toolchain/src/bin_gen)
+include_directories(asm_toolchain/src/binary_generator)
 include_directories(asm_toolchain/src/common)
 include_directories(asm_toolchain/src/link)
-include_directories(asm_toolchain/src/obj_gen)
+include_directories(asm_toolchain/src/object_generator)
 
 add_executable(Cpu8
         asm_toolchain/src/asm/Assembler.cpp
@@ -25,10 +25,10 @@ add_executable(Cpu8
         asm_toolchain/src/asm/Pass2.hpp
         asm_toolchain/src/asm/SymbolTable.cpp
         asm_toolchain/src/asm/SymbolTable.hpp
-        asm_toolchain/src/bin_gen/BootHeader.cpp
-        asm_toolchain/src/bin_gen/BootHeader.hpp
-        asm_toolchain/src/bin_gen/ImageWriter.cpp
-        asm_toolchain/src/bin_gen/ImageWriter.hpp
+        asm_toolchain/src/binary_generator/BootHeader.cpp
+        asm_toolchain/src/binary_generator/BootHeader.hpp
+        asm_toolchain/src/binary_generator/ImageWriter.cpp
+        asm_toolchain/src/binary_generator/ImageWriter.hpp
         asm_toolchain/src/common/ByteBuffer.cpp
         asm_toolchain/src/common/ByteBuffer.hpp
         asm_toolchain/src/common/Logger.cpp
@@ -41,11 +41,11 @@ add_executable(Cpu8
         asm_toolchain/src/link/RelocResolver.hpp
         asm_toolchain/src/link/SectionMerger.cpp
         asm_toolchain/src/link/SectionMerger.hpp
-        asm_toolchain/src/obj_gen/ObjectFormat.cpp
-        asm_toolchain/src/obj_gen/ObjectFormat.hpp
-        asm_toolchain/src/obj_gen/Relocation.cpp
-        asm_toolchain/src/obj_gen/Relocation.hpp
-        asm_toolchain/src/obj_gen/Serializer.cpp
-        asm_toolchain/src/obj_gen/Serializer.hpp
+        asm_toolchain/src/object_generator/ObjectFormat.cpp
+        asm_toolchain/src/object_generator/ObjectFormat.hpp
+        asm_toolchain/src/object_generator/Relocation.cpp
+        asm_toolchain/src/object_generator/Relocation.hpp
+        asm_toolchain/src/object_generator/Serializer.cpp
+        asm_toolchain/src/object_generator/Serializer.hpp
         asm_toolchain/src/asm_cli.cpp
         asm_toolchain/src/ld_cli.cpp)

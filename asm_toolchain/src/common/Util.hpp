@@ -27,7 +27,7 @@ namespace util
         SourcePos pos;
     };
 
-    struct Error : std::runtime_error
+    struct Error final : std::runtime_error
     {
         SourceLoc loc;
         explicit Error(const SourceLoc &l, const std::string &message) : std::runtime_error(message), loc(l) {}

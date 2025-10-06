@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Generate EncodeTable.inc.hpp from the CSV opcode table."""
 
 import csv
@@ -77,25 +76,27 @@ class EncodeTableGenerator:
         if not text:
             raise ValueError("Empty mnemonic")
 
-        if (match := self.MOV_RE.match(text)):
+        if match := self.MOV_RE.match(text):
             dst = self.reg_enum(match.group(1))
             src = self.reg_enum(match.group(2))
             return MovEntry(dst=dst, src=src)
 
-        if (match := self.LDI_RE.match(text)):
+        if match := self.LDI_RE.match(text):
             reg = self.reg_enum(match.group(1))
             width = match.group(2).lower()
             if width == "byte":
                 return SpecialEntry(kind="LDI8", reg=reg)
             if width == "word":
                 return SpecialEntry(kind="LDI16", reg=reg)
-            raise ValueError(f"Unsupported immediate width '{width}' for mnemonic '{mnemonic}'")
+            raise ValueError(
+                f"Unsupported immediate width '{width}' for mnemonic '{mnemonic}'"
+            )
 
-        if (match := self.LDABS_RE.match(text)):
+        if match := self.LDABS_RE.match(text):
             reg = self.reg_enum(match.group(1))
             return SpecialEntry(kind="LDABS16", reg=reg)
 
-        if (match := self.STABS_RE.match(text)):
+        if match := self.STABS_RE.match(text):
             reg = self.reg_enum(match.group(1))
             return SpecialEntry(kind="STABS16", reg=reg)
 

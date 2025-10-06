@@ -24,10 +24,10 @@ namespace obj
      */
     struct RelocEntry
     {
-        uint32_t section_index{};
-        uint32_t offset{};
+        uint8_t section_index{};
+        uint16_t offset{};
         RelocType type;
-        uint32_t symbol_index{};
-        int32_t addend{0};
+        uint16_t symbol_index{};
+        int16_t addend{0};
     };
 }

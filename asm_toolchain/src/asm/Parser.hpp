@@ -98,9 +98,9 @@ namespace asmx
     class Parser
     {
         /**
-         * @brief
+         * @brief Tokenize assembly source text into a sequence of tokens.
          */
-        std::vector<Token> len(const std::string &text, const std::string &file);
+        static std::vector<Token> lex(const std::string &text, const std::string &file);
 
         /**
          * @brief Parse tokens into structured lines
@@ -109,9 +109,16 @@ namespace asmx
          * @param tokens A vector of tokens to be parsed.
          * @return A ParseResult containing the parsed lines.
          */
-        ParseResult parse(const std::vector<Token> &tokens);
+        static ParseResult parse(const std::vector<Token> &tokens);
 
     public:
+        /**
+         * @brief Parse assembly source text from memory.
+         *
+         * Tokenizes the provided text and returns the structured parse result. The optional
+         * @p file argument allows specifying a virtual file name used in diagnostics.
+         */
+        static ParseResult parseText(const std::string &text, const std::string &file = "<input>");
         /**
          * @brief Parse assembly file
          * This method reads an assembly file from the specified path, tokenizes its content,
@@ -119,6 +126,6 @@ namespace asmx
          * @param path The file path of the assembly file to be parsed.
          * @return A ParseResult containing the parsed lines from the assembly file.
          */
-        ParseResult parseFile(const std::string &path);
+        static ParseResult parseFile(const std::string &path);
     };
 }

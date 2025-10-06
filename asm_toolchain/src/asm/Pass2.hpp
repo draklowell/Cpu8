@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Pass1.hpp"
-#include "../obj_gen/ObjectFormat.hpp"
+#include "../object_generator/ObjectFormat.hpp"
 
 namespace asmx
 {
