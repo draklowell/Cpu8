@@ -202,16 +202,38 @@ namespace asmx
             {
                 const auto startLoc = token.loc;
                 ++index;
-                if (index >= line.size() || line[index].kind != TokenKind::Number)
+                if (index >= line.size())
                 {
-                    throw util::Error(token.loc, "Expected number inside memory reference [0xXXXX]");
+                    throw util::Error(startLoc, "Expected expression inside memory reference");
                 }
-                const auto value = parseNumber(line[index]);
-                if (value > 0xFFFF)
+
+                const auto &inner = line[index];
+                bool hasLabel = false;
+                uint32_t value = 0;
+
+                if (inner.kind == TokenKind::Number)
                 {
-                    throw util::Error(line[index].loc, "Memory reference value is out of range");
+                    value = parseNumber(inner);
+                    if (value > 0xFFFF)
+                    {
+                        throw util::Error(inner.loc, "Memory reference value is out of range");
+                    }
+                    ++index;
                 }
-                ++index;
+                else if (inner.kind == TokenKind::Ident)
+                {
+                    if (const auto reg = parseRegisterName(inner.text); reg != Reg::Invalid)
+                    {
+                        throw util::Error(inner.loc, "Registers are not allowed inside absolute memory references");
+                    }
+                    arg.label = inner.text;
+                    hasLabel = true;
+                    ++index;
+                }
+                else
+                {
+                    throw util::Error(inner.loc, "Expected number or label inside memory reference");
+                }
 
                 if (index >= line.size() || line[index].kind != TokenKind::RBracket)
                 {
@@ -220,7 +242,10 @@ namespace asmx
                 ++index;
 
                 arg.operant_type = OperandType::MemAbs16;
-                arg.value = static_cast<uint16_t>(value);
+                if (!hasLabel)
+                {
+                    arg.value = static_cast<uint16_t>(value);
+                }
                 return arg;
             }
             throw util::Error(token.loc, "Unexpected token in argument-_- Try again");

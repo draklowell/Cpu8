@@ -51,13 +51,13 @@ namespace asmx
         auto add_ldabs16 = [&](Reg r, const uint8_t opcode)
         {
             ld16_[static_cast<int>(r)] = opcode;
-            add_simple("ld", Sig({OT::Reg, OT::MemAbs16}), opcode, 3, false, 1);
+            add_simple("ld", Sig({OT::Reg, OT::MemAbs16}), opcode, 3, true, 1);
         };
 
         auto add_stabs16 = [&](Reg r, const uint8_t opcode)
         {
             st16_[static_cast<int>(r)] = opcode;
-            add_simple("st", Sig({OT::MemAbs16, OT::Reg}), opcode, 3, false, 1);
+            add_simple("st", Sig({OT::MemAbs16, OT::Reg}), opcode, 3, true, 1);
         };
 
 #define ADD_SIMPLE(mnem, sig_vec, opc, sz) add_simple(mnem, sig_vec, opc, sz)

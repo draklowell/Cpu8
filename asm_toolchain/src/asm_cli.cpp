@@ -103,6 +103,11 @@ namespace
         case asmx::OperandType::Label:
             return std::string("label:") + arg.label;
         case asmx::OperandType::MemAbs16:
+            if (!arg.label.empty())
+            {
+                oss << '[' << arg.label << ']';
+                return oss.str();
+            }
             oss << "[0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0')
                 << static_cast<unsigned>(arg.value) << ']';
             return oss.str();
@@ -117,7 +122,8 @@ namespace
         for (const auto &line : result.lines)
         {
             const util::SourceLoc *loc = nullptr;
-            std::visit([&](const auto &node) { loc = &node.loc; }, line);
+            std::visit([&](const auto &node)
+                       { loc = &node.loc; }, line);
             std::cout << std::setw(2) << index++ << ": ";
             if (loc)
             {
@@ -208,7 +214,7 @@ int main()
     if (auto spec = table.find("push-ac", sig))
     {
         std::cout << "0x" << std::hex << +spec->opcode << std::dec << "\n";
-        // за бажанням:
+
         std::cout << "size=" << +spec->size << ", reloc=" << (spec->needs_reloc ? "yes" : "no") << "\n";
     }
     else
@@ -219,9 +225,10 @@ int main()
     const std::vector<std::pair<std::string, std::string>> samples = {
         {"control_flow", R"(.text
 main:
-    ldi x, 0x1234
+    ldi x, [value]
     mov ac, xh
     cmp yh
+    ld x, value
     jnz main
     hlt
 )"},
