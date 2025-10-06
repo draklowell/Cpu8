@@ -45,12 +45,9 @@ def ReadWord(to: tuple[Component, Component]):
 # 3 ticks
 def NextOperation(ctx: Context, ignore_interrupts: bool = False):
     if (not ctx.interrupt) or ignore_interrupts:
-        yield from MoveWord(components.ADDRESS, components.PROGRAM_COUNTER)
         yield code(
-            bus_reader=components.INSTRUCTION,
-            bus_writer=components.MEMORY,
-            program_counter_increment=1,
-            step_counter_clear=1,
+            bus_reader=components.ADDRESS_HIGH,
+            bus_writer=components.PROGRAM_COUNTER_HIGH,
         )
     else:
         yield code(
@@ -59,13 +56,16 @@ def NextOperation(ctx: Context, ignore_interrupts: bool = False):
             step_counter_clear=1,
         )
 
-        # Filler: if interrupt happend while fetching next instruction:
-        yield code(
-            bus_reader=components.INSTRUCTION,
-            bus_writer=components.MEMORY,
-            program_counter_increment=1,
-            step_counter_clear=1,
-        )
+    yield code(
+        bus_reader=components.ADDRESS_LOW,
+        bus_writer=components.PROGRAM_COUNTER_LOW,
+    )
+    yield code(
+        bus_reader=components.INSTRUCTION,
+        bus_writer=components.MEMORY,
+        program_counter_increment=1,
+        step_counter_clear=1,
+    )
 
 
 # 3 ticks

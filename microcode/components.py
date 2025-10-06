@@ -11,7 +11,7 @@ class Component:
         return self.name
 
 
-DISABLE = Component(0x00, 0x00, "ZeroConstant")
+DISABLE = Component(0x00, 0x00, "Disable")
 MEMORY = Component(0x01, 0x01, "Memory")
 STACK_POINTER_HIGH = Component(0x02, 0x02, "StackPointerHigh")
 STACK_POINTER_LOW = Component(0x03, 0x03, "StackPointerLow")
@@ -32,7 +32,6 @@ ADDRESS_LOW = Component(0x11, None, "AddressLow")
 INTERRUPT_HANDLE_CONSTANT = Component(None, 0x0F, "InterruptHandleConstant")
 ALU = Component(None, 0x10, "ALU")
 INTERRUPT_CODE = Component(None, 0x11, "InterruptCode")
-ZERO_CONSTANT = DISABLE
 
 STACK_POINTER = (STACK_POINTER_HIGH, STACK_POINTER_LOW)
 PROGRAM_COUNTER = (PROGRAM_COUNTER_HIGH, PROGRAM_COUNTER_LOW)
