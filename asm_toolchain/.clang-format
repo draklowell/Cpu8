@@ -1,0 +1,23 @@
+# .clang-format
+BasedOnStyle: LLVM
+ColumnLimit: 88
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Attach
+ReflowComments: true
+SortIncludes: true
+IncludeBlocks: Regroup
+PointerAlignment: Left
+SpaceAfterCStyleCast: true
+SpacesInAngles: false
+
+#IndentCaseLabels: true
+#IndentWrappedFunctionNames: true
+#IndentCaseBlocks: true
+#AllowShortBlocksOnASingleLine: false
+#AllowShortFunctionsOnASingleLine: Empty
+#AllowShortLoopsOnASingleLine: false
