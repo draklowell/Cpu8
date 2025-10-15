@@ -20,6 +20,7 @@ namespace asmx {
 enum class TokenKind {
     Ident,
     Number,
+    String,
     LBracket,
     RBracket,
     Comma,

@@ -6,6 +6,7 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace asmx {
 /**
@@ -75,8 +76,9 @@ class SymbolTable {
      */
     Symbol define(std::string name, SectionType section, uint32_t offset,
                   SymbolBinding binding_type = SymbolBinding::Local);
+
     [[nodiscard]] std::optional<Symbol> fnd(const std::string& name) const;
 
-    std::vector<Symbol> allSymbols();
+    [[nodiscard]] std::vector<Symbol> allSymbols() const;
 };
 } // namespace asmx

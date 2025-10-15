@@ -518,6 +518,57 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
             continue;
         }
 
+        if (ch == '"') {
+            const auto startCol = col;
+            const size_t start = i;
+            ++i;
+            ++col;
+            bool closed = false;
+
+            while (i < text.size()) {
+                const char cur = text[i];
+                if (cur == '"') {
+                    ++i;
+                    ++col;
+                    closed = true;
+                    break;
+                }
+                if (cur == '\\') {
+                    const auto escapeLoc = makeLoc(currentFile, line, col);
+                    ++i;
+                    ++col;
+                    if (i >= text.size()) {
+                        throw util::Error(
+                            escapeLoc,
+                            "Unterminated escape sequence in string literal");
+                    }
+                    const char esc = text[i];
+                    if (esc == '\n' || esc == '\r') {
+                        throw util::Error(escapeLoc, "Unterminated string literal");
+                    }
+                    ++i;
+                    ++col;
+                    continue;
+                }
+                if (cur == '\n' || cur == '\r') {
+                    throw util::Error(makeLoc(currentFile, line, col),
+                                      "Unterminated string literal");
+                }
+                ++i;
+                ++col;
+            }
+
+            if (!closed) {
+                throw util::Error(makeLoc(currentFile, line, col),
+                                  "Unterminated string literal");
+            }
+
+            pushToken(tokens, TokenKind::String, text.substr(start, i - start),
+                      currentFile, line, startCol);
+            atLineStart = false;
+            continue;
+        }
+
         if (ch == '[') {
             pushToken(tokens, TokenKind::LBracket, "[", currentFile, line, col);
             ++i;

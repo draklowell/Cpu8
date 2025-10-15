@@ -213,7 +213,9 @@ main:
   ld xh, data1
   jmp print
   hlt
+.res 23
 .data
+    .res 2
 data:
     .byte 0x12
 )"},
