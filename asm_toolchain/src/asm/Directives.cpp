@@ -4,6 +4,8 @@
 
 #include "Directives.hpp"
 
+#include "../object_generator/ObjectFormat.hpp"
+
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
@@ -15,14 +17,14 @@
 
 namespace asmx {
 namespace {
-constexpr uint8_t kSectionExec  = 0x01;
+constexpr uint8_t kSectionExec = 0x01;
 constexpr uint8_t kSectionWrite = 0x02;
-constexpr uint8_t kSectionRead  = 0x04;
+constexpr uint8_t kSectionRead = 0x04;
 
 struct PendingReloc {
-    uint8_t         section_index{};
-    uint16_t        offset{};
-    std::string     symbol;
+    uint8_t section_index{};
+    uint16_t offset{};
+    std::string symbol;
     util::SourceLoc loc;
 };
 
@@ -53,12 +55,12 @@ struct PendingReloc {
         return false;
     }
 
-    return std::all_of(std::next(text.begin()), text.end(), [](char ch) {
+    return std::all_of(std::next(text.begin()), text.end(), [](const char ch) {
         return std::isalnum(static_cast<unsigned char>(ch)) || ch == '_' || ch == '.';
     });
 }
 
-[[nodiscard]] std::vector<uint8_t> decodeStringLiteral(const std::string&     token,
+[[nodiscard]] std::vector<uint8_t> decodeStringLiteral(const std::string& token,
                                                        const util::SourceLoc& loc) {
     if (!isStringLiteral(token)) {
         throw util::Error(loc, "string literal expected");
@@ -104,7 +106,7 @@ struct PendingReloc {
     return bytes;
 }
 
-[[nodiscard]] uint64_t parseIntegerLiteral(const std::string&     text,
+[[nodiscard]] uint64_t parseIntegerLiteral(const std::string& text,
                                            const util::SourceLoc& loc) {
     if (text.empty()) {
         throw util::Error(loc, "invalid numeric literal ''");
@@ -114,14 +116,14 @@ struct PendingReloc {
         throw util::Error(loc, "negative values are not supported in directives");
     }
 
-    int         base   = 10;
+    int base = 10;
     std::size_t prefix = 0;
     if (text.size() > 2 && text[0] == '0' && (text[1] == 'x' || text[1] == 'X')) {
-        base   = 16;
+        base = 16;
         prefix = 2;
     } else if (text.size() > 2 && text[0] == '0' &&
                (text[1] == 'b' || text[1] == 'B')) {
-        base   = 2;
+        base = 2;
         prefix = 2;
     }
 
@@ -135,7 +137,7 @@ struct PendingReloc {
     }
 
     uint64_t value = 0;
-    for (char c : digits) {
+    for (const char c : digits) {
         int digit = -1;
         if (std::isdigit(static_cast<unsigned char>(c))) {
             digit = c - '0';
@@ -161,9 +163,9 @@ struct PendingReloc {
     return oss.str();
 }
 
-[[nodiscard]] uint16_t parseWordValue(const std::string&     text,
+[[nodiscard]] uint16_t parseWordValue(const std::string& text,
                                       const util::SourceLoc& loc,
-                                      const char*            directive) {
+                                      const char* directive) {
     const uint64_t value = parseIntegerLiteral(text, loc);
     if (value > 0xFFFFu) {
         throw util::Error(loc, "value " + formatHex(value) + " is out of range for " +
@@ -172,7 +174,7 @@ struct PendingReloc {
     return static_cast<uint16_t>(value);
 }
 
-[[nodiscard]] uint8_t parseByteValue(const std::string&     text,
+[[nodiscard]] uint8_t parseByteValue(const std::string& text,
                                      const util::SourceLoc& loc) {
     const uint64_t value = parseIntegerLiteral(text, loc);
     if (value > 0xFFu) {
@@ -182,7 +184,7 @@ struct PendingReloc {
     return static_cast<uint8_t>(value);
 }
 
-SectionBuffer& selectBuffer(SectionsScratch& scratch, SectionType section) {
+SectionBuffer& selectBuffer(SectionsScratch& scratch, const SectionType section) {
     switch (section) {
     case SectionType::Text:
         return scratch.text;
@@ -199,7 +201,7 @@ SectionBuffer& selectBuffer(SectionsScratch& scratch, SectionType section) {
 }
 
 [[nodiscard]] const SectionBuffer& selectBuffer(const SectionsScratch& scratch,
-                                                SectionType            section) {
+                                                const SectionType section) {
     switch (section) {
     case SectionType::Text:
         return scratch.text;
@@ -215,7 +217,7 @@ SectionBuffer& selectBuffer(SectionsScratch& scratch, SectionType section) {
     throw std::logic_error("invalid section for buffer selection");
 }
 
-uint32_t& selectLocationCounter(Pass1State& state, SectionType section) {
+uint32_t& selectLocationCounter(Pass1State& state, const SectionType section) {
     switch (section) {
     case SectionType::Text:
         return state.lc_text;
@@ -231,7 +233,7 @@ uint32_t& selectLocationCounter(Pass1State& state, SectionType section) {
     throw std::logic_error("invalid section for location counter");
 }
 
-[[nodiscard]] int32_t sectionIndexFromType(SectionType section) {
+[[nodiscard]] int32_t sectionIndexFromType(const SectionType section) {
     switch (section) {
     case SectionType::Text:
         return 0;
@@ -250,13 +252,13 @@ uint32_t& selectLocationCounter(Pass1State& state, SectionType section) {
 void appendBytes(std::vector<uint8_t>& dest, const std::vector<uint8_t>& src) {
     dest.insert(dest.end(), src.begin(), src.end());
 }
-} // namespace
+} // anonymous namespace
 
 void Directives::handlePass1(const Directive& dir, Pass1State& st,
                              SectionsScratch& scratch) {
     const std::string directive = normaliseDirectiveName(dir.name);
 
-    auto ensureArgs = [&dir](bool condition, const std::string& message) {
+    auto ensureArgs = [&dir](const bool condition, const std::string& message) {
         if (!condition) {
             throw util::Error(dir.loc, message);
         }
@@ -285,7 +287,7 @@ void Directives::handlePass1(const Directive& dir, Pass1State& st,
             ensureArgs(isValidIdentifier(name),
                        "invalid symbol name '" + name + "' in .globl");
             Symbol& sym = st.symbol_table.declare(name);
-            sym.bind    = SymbolBinding::Global;
+            sym.bind = SymbolBinding::Global;
         }
         return;
     }
@@ -296,11 +298,46 @@ void Directives::handlePass1(const Directive& dir, Pass1State& st,
             ensureArgs(isValidIdentifier(name),
                        "invalid symbol name '" + name + "' in .extern");
             Symbol& sym = st.symbol_table.declare(name);
-            sym.bind    = SymbolBinding::Global;
+            if (sym.defined) {
+                continue;
+            }
+            sym.bind = SymbolBinding::Global;
             sym.defined = false;
             sym.section = SectionType::None;
-            sym.value   = 0;
+            sym.value = 0;
         }
+        return;
+    }
+
+    if (directive == "res") {
+        if (st.current != SectionType::Bss) {
+            throw util::Error(dir.loc, ".res is only allowed in .bss section");
+        }
+        ensureArgs(!dir.args.empty(), ".res expects at least one numeric argument");
+
+        uint64_t total = 0;
+        for (const std::string& arg : dir.args) {
+            uint64_t value = 0;
+            try {
+                value = parseIntegerLiteral(arg, dir.loc);
+            } catch (const util::Error&) {
+                throw util::Error(dir.loc, ".res expects numeric byte counts");
+            }
+
+            if (value > 0xFFFFFFFFull) {
+                throw util::Error(dir.loc, "value " + formatHex(value) +
+                                               " is too large for .res");
+            }
+
+            total += value;
+            if (total > 0xFFFFFFFFull) {
+                throw util::Error(dir.loc, "sum of .res arguments overflows 32-bit");
+            }
+        }
+
+        uint32_t& lc_bss = selectLocationCounter(st, SectionType::Bss);
+        lc_bss += static_cast<uint32_t>(total);
+        selectBuffer(scratch, SectionType::Bss).lc = lc_bss;
         return;
     }
 
@@ -311,13 +348,13 @@ void Directives::handlePass1(const Directive& dir, Pass1State& st,
     }
 
     SectionBuffer& buffer = selectBuffer(scratch, st.current);
-    uint32_t&      lc     = selectLocationCounter(st, st.current);
+    uint32_t& lc = selectLocationCounter(st, st.current);
 
     if (directive == "byte") {
         ensureArgs(!dir.args.empty(), ".byte expects at least one argument");
         DataItem item;
         item.kind = DataItem::Kind::Byte;
-        item.loc  = dir.loc;
+        item.loc = dir.loc;
 
         for (const std::string& arg : dir.args) {
             if (isStringLiteral(arg)) {
@@ -346,7 +383,7 @@ void Directives::handlePass1(const Directive& dir, Pass1State& st,
         ensureArgs(!dir.args.empty(), ".word expects at least one argument");
         DataItem item;
         item.kind = DataItem::Kind::Word;
-        item.loc  = dir.loc;
+        item.loc = dir.loc;
         item.words.reserve(dir.args.size());
 
         for (const std::string& arg : dir.args) {
@@ -413,20 +450,20 @@ void Directives::emitPass2(const SectionsScratch& scratch, const SymbolTable& sy
 
     out.sections.resize(4);
     auto& text = out.sections[0];
-    text.name  = ".text";
+    text.name = ".text";
     text.flags = static_cast<uint8_t>(kSectionExec | kSectionRead);
 
     auto& data = out.sections[1];
-    data.name  = ".data";
+    data.name = ".data";
     data.flags = static_cast<uint8_t>(kSectionRead | kSectionWrite);
 
-    auto& bss    = out.sections[2];
-    bss.name     = ".bss";
-    bss.flags    = static_cast<uint8_t>(kSectionRead | kSectionWrite);
+    auto& bss = out.sections[2];
+    bss.name = ".bss";
+    bss.flags = static_cast<uint8_t>(kSectionRead | kSectionWrite);
     bss.bss_size = selectBuffer(scratch, SectionType::Bss).lc;
 
     auto& rodata = out.sections[3];
-    rodata.name  = ".rodata";
+    rodata.name = ".rodata";
     rodata.flags = static_cast<uint8_t>(kSectionRead);
 
     std::vector<PendingReloc> pending_relocs;
@@ -444,8 +481,8 @@ void Directives::emitPass2(const SectionsScratch& scratch, const SymbolTable& sy
                 std::size_t base_offset = desc.data.size();
                 desc.data.resize(desc.data.size() + item.words.size() * 2U);
                 for (std::size_t idx = 0; idx < item.words.size(); ++idx) {
-                    const auto& entry  = item.words[idx];
-                    uint8_t*    target = desc.data.data() + base_offset + idx * 2U;
+                    const auto& entry = item.words[idx];
+                    uint8_t* target = desc.data.data() + base_offset + idx * 2U;
                     if (std::holds_alternative<uint16_t>(entry)) {
                         const uint16_t value = std::get<uint16_t>(entry);
                         target[0] = static_cast<uint8_t>((value >> 8U) & 0xFFU);
@@ -481,14 +518,14 @@ void Directives::emitPass2(const SectionsScratch& scratch, const SymbolTable& sy
     symbol_indices.reserve(symbols.size());
 
     for (std::size_t i = 0; i < symbols.size(); ++i) {
-        const Symbol& sym           = symbols[i];
+        const Symbol& sym = symbols[i];
         const int32_t section_index = sectionIndexFromType(sym.section);
 
         obj::SymbolDescription desc;
-        desc.name          = sym.name;
+        desc.name = sym.name;
         desc.section_index = section_index;
-        desc.value         = sym.value;
-        desc.bind          = static_cast<uint8_t>(sym.bind);
+        desc.value = sym.value;
+        desc.bind = static_cast<uint8_t>(sym.bind);
 
         if (section_index >= 0) {
             desc.value = sym.value;
@@ -509,10 +546,10 @@ void Directives::emitPass2(const SectionsScratch& scratch, const SymbolTable& sy
 
         obj::RelocEntry entry;
         entry.section_index = rel.section_index;
-        entry.offset        = rel.offset;
-        entry.type          = obj::RelocType::ABS16;
-        entry.symbol_index  = it->second;
-        entry.addend        = 0;
+        entry.offset = rel.offset;
+        entry.type = obj::RelocType::ABS16;
+        entry.symbol_index = it->second;
+        entry.addend = 0;
         out.reloc_entries.push_back(entry);
     }
 }

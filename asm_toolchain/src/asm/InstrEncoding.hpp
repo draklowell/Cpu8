@@ -67,9 +67,9 @@ enum class OperandType : uint8_t {
  */
 struct Argument {
     OperandType operant_type{OperandType::None};
-    uint16_t    value{0};
+    uint16_t value{0};
     std::string label;
-    Reg         reg{Reg::Invalid};
+    Reg reg{Reg::Invalid};
 };
 
 /**
@@ -88,11 +88,11 @@ struct Argument {
  * instruction.
  */
 struct OpcodeSpecs {
-    uint8_t                  opcode{0};
-    uint8_t                  size{1};
+    uint8_t opcode{0};
+    uint8_t size{1};
     std::vector<OperandType> signature;
-    bool                     needs_reloc{false};
-    uint8_t                  imm_offset{1};
+    bool needs_reloc{false};
+    uint8_t imm_offset{1};
 };
 
 /**
@@ -109,7 +109,7 @@ struct OpcodeSpecs {
  * their mnemonic and signature.
  */
 struct Key {
-    std::string              mnemonic;
+    std::string mnemonic;
     std::vector<OperandType> signature;
 
     bool operator==(const Key& other) const {
@@ -162,8 +162,8 @@ class EncodeTable {
 
   public:
     static const EncodeTable& get();
-    [[nodiscard]] auto        find(const std::string&              mnem,
-                                   const std::vector<OperandType>& sig) const
+    [[nodiscard]] auto find(const std::string& mnem,
+                            const std::vector<OperandType>& sig) const
         -> std::optional<OpcodeSpecs>;
     [[nodiscard]] uint8_t movOpcode(Reg dst, Reg src) const;
     [[nodiscard]] uint8_t ldiImm8Opcode(Reg r) const;

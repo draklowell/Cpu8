@@ -69,7 +69,7 @@ EncodeTable::EncodeTable() {
 }
 std::optional<OpcodeSpecs>
 EncodeTable::find(const std::string& mnem, const std::vector<OperandType>& sig) const {
-    const Key  k{mnem, sig};
+    const Key k{mnem, sig};
     const auto it = table.find(k);
     if (it == table.end())
         return std::nullopt;

@@ -19,10 +19,10 @@ enum class RelocType : uint8_t { ABS16 };
  * index, offset, relocation type, symbol index, and addend.
  */
 struct RelocEntry {
-    uint8_t   section_index{};
+    uint8_t section_index{};
     RelocType type;
-    uint16_t  offset{};
-    uint16_t  symbol_index{};
-    int16_t   addend{0};
+    uint16_t offset{};
+    uint16_t symbol_index{};
+    int16_t addend{0};
 };
 } // namespace obj

@@ -21,7 +21,7 @@ struct SourcePos {
  */
 struct SourceLoc {
     std::string file;
-    SourcePos   pos;
+    SourcePos pos;
 };
 
 struct Error final : std::runtime_error {

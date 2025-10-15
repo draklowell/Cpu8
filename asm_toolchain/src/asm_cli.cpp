@@ -168,7 +168,7 @@ int main() {
 
     std::cout << "Opcode table (" << entries.size() << " entries)\n";
     for (const auto* entry : entries) {
-        const auto& key  = entry->first;
+        const auto& key = entry->first;
         const auto& spec = entry->second;
 
         std::cout << std::uppercase << std::hex << std::setw(2) << std::setfill('0')

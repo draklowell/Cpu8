@@ -16,11 +16,11 @@ namespace obj {
  * alignment, data, and size of uninitialized data (BSS).
  */
 struct SectionDescription {
-    std::string          name;     // ".text",".data",".bss"
-    uint8_t              flags{0}; // 1=EXEC,2=WRITE,4=READ
-    uint8_t              align{1};
+    std::string name; // ".text",".data",".bss"
+    uint8_t flags{0}; // 1=EXEC,2=WRITE,4=READ
+    uint8_t align{1};
     std::vector<uint8_t> data;
-    uint32_t             bss_size{0};
+    uint32_t bss_size{0};
 };
 
 /**
@@ -30,9 +30,9 @@ struct SectionDescription {
  */
 struct SymbolDescription {
     std::string name;
-    int32_t     section_index; // -1 = UNDEF
-    uint32_t    value;         // offset in section
-    uint8_t     bind;          // 0=Local,1=Global,2=Weak
+    int32_t section_index; // -1 = UNDEF
+    uint32_t value;        // offset in section
+    uint8_t bind;          // 0=Local,1=Global,2=Weak
 };
 
 /**
@@ -42,7 +42,7 @@ struct SymbolDescription {
  */
 struct ObjectFile {
     std::vector<SectionDescription> sections; // [0]=.text, [1]=.data, [2]=.bss
-    std::vector<SymbolDescription>  symbols;
-    std::vector<RelocEntry>         reloc_entries;
+    std::vector<SymbolDescription> symbols;
+    std::vector<RelocEntry> reloc_entries;
 };
 } // namespace obj

@@ -33,11 +33,11 @@ enum class SectionType : uint8_t { Text, Data, Bss, None, RoData };
  * value (address or offset), binding type, and whether it is defined.
  */
 struct Symbol {
-    std::string   name;
-    SectionType   section{SectionType::None};
-    uint32_t      value{0};
+    std::string name;
+    SectionType section{SectionType::None};
+    uint32_t value{0};
     SymbolBinding bind{SymbolBinding::Local};
-    bool          defined{false};
+    bool defined{false};
 };
 
 /**
@@ -76,5 +76,7 @@ class SymbolTable {
     Symbol define(std::string name, SectionType section, uint32_t offset,
                   SymbolBinding binding_type = SymbolBinding::Local);
     [[nodiscard]] std::optional<Symbol> fnd(const std::string& name) const;
+
+    std::vector<Symbol> allSymbols();
 };
 } // namespace asmx

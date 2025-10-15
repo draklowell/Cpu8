@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../object_generator//ObjectFormat.hpp"
+#include "../object_generator/ObjectFormat.hpp"
 #include "Parser.hpp"
 #include "Pass1.hpp"
 #include "SymbolTable.hpp"
@@ -12,7 +12,6 @@
 #include <string>
 #include <variant>
 #include <vector>
-
 namespace asmx {
 /**
  *@brief  Captures a single directive payload recorded during pass 1.
@@ -47,7 +46,7 @@ struct DataItem {
  */
 struct SectionBuffer {
     std::vector<DataItem> items;
-    uint32_t              lc{0};
+    uint32_t lc{0};
 };
 
 /**

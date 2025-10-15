@@ -35,8 +35,8 @@ enum class TokenKind {
  * source location.
  */
 struct Token {
-    TokenKind       kind;
-    std::string     text;
+    TokenKind kind;
+    std::string text;
     util::SourceLoc loc;
 };
 
@@ -48,9 +48,9 @@ struct Token {
  * information.
  */
 struct Label {
-    std::string              name;
+    std::string name;
     std::vector<std::string> attrs;
-    util::SourceLoc          loc;
+    util::SourceLoc loc;
 };
 
 /**
@@ -59,9 +59,9 @@ struct Label {
  * arguments, and source location.
  */
 struct Directive {
-    std::string              name;
+    std::string name;
     std::vector<std::string> args;
-    util::SourceLoc          loc;
+    util::SourceLoc loc;
 };
 
 /**
@@ -70,9 +70,9 @@ struct Directive {
  * register, immediate value, label, or memory address.
  */
 struct Instruction {
-    std::string           mnemonic;
+    std::string mnemonic;
     std::vector<Argument> args;
-    util::SourceLoc       loc;
+    util::SourceLoc loc;
 };
 
 /**

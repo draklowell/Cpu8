@@ -112,8 +112,8 @@ void adjustImmediateArgument(Instruction& instr, const size_t position,
     }
 
     const auto mnemonicLower = toLower(instr.mnemonic);
-    bool       allowImm8     = false;
-    bool       allowImm16    = false;
+    bool allowImm8 = false;
+    bool allowImm16 = false;
 
     const auto& entries = EncodeTable::get().entries();
     for (const auto& entry : entries) {
@@ -195,7 +195,7 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
 
 [[nodiscard]] bool tryConsumeLineMarker(const std::string& text, size_t& index,
                                         std::string& currentFile, uint32_t& line) {
-    size_t       i    = index;
+    size_t i = index;
     const size_t size = text.size();
 
     while (i < size && isHorizontalWhitespace(text[i])) {
@@ -281,8 +281,8 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
     }
 
     currentFile = std::move(path);
-    line        = static_cast<uint32_t>(parsedLine);
-    index       = i;
+    line = static_cast<uint32_t>(parsedLine);
+    index = i;
     return true;
 }
 [[nodiscard]] uint32_t parseNumber(const Token& token) {
@@ -292,7 +292,7 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
     }
 
     const size_t text_size = text.size();
-    uint32_t     value     = 0;
+    uint32_t value = 0;
     if (text_size >= 2 && (text[0] == '0') && (text[1] == 'x' || text[1] == 'X')) {
         if (text_size == 2) {
             throw util::Error(token.loc, "Hex literal requires digits after 0x");
@@ -386,17 +386,17 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
         throw std::logic_error("parseArgument called out of range");
     }
     const Token& token = line[index];
-    Argument     arg;
+    Argument arg;
 
     if (token.kind == TokenKind::Ident) {
         if (const auto reg = parseRegisterName(token.text); reg != Reg::Invalid) {
             arg.operant_type = OperandType::Reg;
-            arg.reg          = reg;
+            arg.reg = reg;
             ++index;
             return arg;
         }
         arg.operant_type = OperandType::Label;
-        arg.label        = token.text;
+        arg.label = token.text;
         ++index;
         return arg;
     }
@@ -407,7 +407,7 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
             throw util::Error(token.loc, "Immediate value is out of range");
         }
 
-        arg.value        = static_cast<uint16_t>(value);
+        arg.value = static_cast<uint16_t>(value);
         arg.operant_type = value <= 0xFF ? OperandType::Imm8 : OperandType::Imm16;
         ++index;
         return arg;
@@ -420,9 +420,9 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
             throw util::Error(startLoc, "Expected expression inside memory reference");
         }
 
-        const auto& inner    = line[index];
-        bool        hasLabel = false;
-        uint32_t    value    = 0;
+        const auto& inner = line[index];
+        bool hasLabel = false;
+        uint32_t value = 0;
 
         if (inner.kind == TokenKind::Number) {
             value = parseNumber(inner);
@@ -437,7 +437,7 @@ void pushToken(std::vector<Token>& tokens, const TokenKind kind, std::string tok
                     "Registers are not allowed inside absolute memory references");
             }
             arg.label = inner.text;
-            hasLabel  = true;
+            hasLabel = true;
             ++index;
         } else {
             throw util::Error(inner.loc,
@@ -462,15 +462,15 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
     std::vector<Token> tokens;
     tokens.reserve(text.size() / 2);
 
-    uint32_t    line        = 1;
-    uint32_t    col         = 1;
+    uint32_t line = 1;
+    uint32_t col = 1;
     std::string currentFile = file;
-    bool        atLineStart = true;
+    bool atLineStart = true;
 
     size_t i = 0;
     while (i < text.size()) {
         if (atLineStart && tryConsumeLineMarker(text, i, currentFile, line)) {
-            col         = 1;
+            col = 1;
             atLineStart = true;
             continue;
         }
@@ -484,7 +484,7 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
             ++i;
             pushToken(tokens, TokenKind::NewLine, "", currentFile, line, locCol);
             ++line;
-            col         = 1;
+            col = 1;
             atLineStart = true;
             continue;
         }
@@ -493,7 +493,7 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
             ++i;
             pushToken(tokens, TokenKind::NewLine, "", currentFile, line, locCol);
             ++line;
-            col         = 1;
+            col = 1;
             atLineStart = true;
             continue;
         }
@@ -555,8 +555,8 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
             continue;
         }
         if (isIdentStart(ch)) {
-            const auto   startCol = col;
-            const size_t start    = i;
+            const auto startCol = col;
+            const size_t start = i;
             ++i;
             ++col;
             while (i < text.size() && isIdentChar(text[i])) {
@@ -569,8 +569,8 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
             continue;
         }
         if (std::isdigit(static_cast<unsigned char>(ch)) != 0) {
-            const auto   startCol = col;
-            const size_t start    = i;
+            const auto startCol = col;
+            const size_t start = i;
             ++i;
             ++col;
             while (i < text.size() &&
@@ -627,16 +627,16 @@ ParseResult Parser::parse(const std::vector<Token>& tokens) {
                 }
                 Label label;
                 label.name = first.text;
-                label.loc  = first.loc;
+                label.loc = first.loc;
                 result.lines.emplace_back(std::move(label));
                 continue;
             }
             Instruction instr;
             instr.mnemonic = first.text;
-            instr.loc      = first.loc;
+            instr.loc = first.loc;
 
-            size_t argIndex  = 1;
-            bool   needComma = false;
+            size_t argIndex = 1;
+            bool needComma = false;
             while (argIndex < lineTokens.size()) {
                 const auto& current = lineTokens[argIndex];
                 if (current.kind == TokenKind::Comma) {
@@ -669,10 +669,10 @@ ParseResult Parser::parse(const std::vector<Token>& tokens) {
             }
             Directive dir;
             dir.name = lineTokens[1].text;
-            dir.loc  = first.loc;
+            dir.loc = first.loc;
 
-            size_t argIndex    = 2;
-            bool   expectValue = false;
+            size_t argIndex = 2;
+            bool expectValue = false;
             while (argIndex < lineTokens.size()) {
                 const auto& cur = lineTokens[argIndex];
                 if (cur.kind == TokenKind::Comma) {

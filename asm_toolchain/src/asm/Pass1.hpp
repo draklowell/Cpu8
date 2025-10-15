@@ -17,7 +17,7 @@ namespace asmx {
  */
 struct Pass1State {
     SectionType current{SectionType::Text};
-    uint32_t    lc_text{0}, lc_data{0}, lc_bss{0}, lc_rodata{0};
+    uint32_t lc_text{0}, lc_data{0}, lc_bss{0}, lc_rodata{0};
     SymbolTable symbol_table;
 };
 
@@ -28,7 +28,7 @@ struct Pass1State {
  */
 struct Pass1Out {
     std::vector<Line> lines;
-    Pass1State        state;
+    Pass1State state;
 };
 
 /**
