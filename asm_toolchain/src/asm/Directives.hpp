@@ -63,6 +63,7 @@ struct SectionsScratch {
  *@brief  Directive manager used by pass1 pass2
  */
 class Directives {
+  public:
     /**
      * @brief Consume a directive during pass 1.
      *

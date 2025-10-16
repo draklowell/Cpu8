@@ -10,8 +10,12 @@
 #include <string>
 
 namespace asmx {
+struct SectionsScratch;
+
 class Assembler {
   public:
+    static void pass1(const ParseResult& result, Pass1State& state,
+                      SectionsScratch& scratch);
     obj::ObjectFile assemble(const std::string& path);
 };
 } // namespace asmx
