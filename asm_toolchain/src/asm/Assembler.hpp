@@ -11,11 +11,14 @@
 
 namespace asmx {
 struct SectionsScratch;
-
 class Assembler {
   public:
-    static void pass1(const ParseResult& result, Pass1State& state,
-                      SectionsScratch& scratch);
-    obj::ObjectFile assemble(const std::string& path);
+    static void pass1(const ParseResult& pr, Pass1State& st, SectionsScratch& scratch);
+
+    static void pass2(const ParseResult& pr, const Pass1State& st,
+                      const SectionsScratch& scratch, obj::ObjectFile& out);
+
+    static obj::ObjectFile assembleOne(const std::string& text,
+                                       const std::string& file = "<input>");
 };
 } // namespace asmx

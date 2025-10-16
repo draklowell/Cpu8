@@ -25,8 +25,6 @@ add_executable(Cpu8
         asm_toolchain/src/asm/Pass2.hpp
         asm_toolchain/src/asm/SymbolTable.cpp
         asm_toolchain/src/asm/SymbolTable.hpp
-        asm_toolchain/src/binary_generator/BootHeader.cpp
-        asm_toolchain/src/binary_generator/BootHeader.hpp
         asm_toolchain/src/binary_generator/ImageWriter.cpp
         asm_toolchain/src/binary_generator/ImageWriter.hpp
         asm_toolchain/src/common/ByteBuffer.cpp
@@ -48,4 +46,5 @@ add_executable(Cpu8
         asm_toolchain/src/object_generator/Serializer.cpp
         asm_toolchain/src/object_generator/Serializer.hpp
         asm_toolchain/src/asm_cli.cpp
-        asm_toolchain/src/ld_cli.cpp)
+        asm_toolchain/src/ld_cli.cpp
+        asm_toolchain/main.cpp)

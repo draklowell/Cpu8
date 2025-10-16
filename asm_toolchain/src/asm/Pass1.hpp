@@ -31,21 +31,4 @@ struct Pass1Out {
     Pass1State state;
 };
 
-/**
- * @brief First pass of the assembler
- * This class implements the first pass of the assembler, which processes the parsed
- * lines, updates the symbol table, and manages section transitions and location
- * counters.
- */
-class Pass1 {
-  public:
-    /**
-     * @brief Run the first pass of the assembler
-     * This method takes the parsed result from the parser and processes it to produce
-     * the output for the first pass, including updated lines and the final state.
-     * @param parse_res The parsed result from the parser.
-     * @return The output of the first pass, including processed lines and state.
-     */
-    Pass1Out run(const ParseResult& parse_res);
-};
 } // namespace asmx
