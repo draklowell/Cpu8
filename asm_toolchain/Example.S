@@ -1,27 +1,23 @@
 .text
 main:
-  ldi sp, 0xffff
+  ldi y, 0x1223
   ldi yl, 13
   ldi yh, 31
-  mov ac, yl
-  add yh
-
-  ld  ac, [data]
+  ld ac, [data]
   intd
   shl
   inte
 
   ldi z, data
-  stx ac
   shr
 
   call test
   hlt
 
 test:
-  ldi ac, 0xff
+  ldi ac, 0x88
   ret
 
-.data
+.rodata
 data:
   .byte 0x01

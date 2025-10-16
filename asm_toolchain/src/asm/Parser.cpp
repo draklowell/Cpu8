@@ -542,8 +542,7 @@ std::vector<Token> Parser::lex(const std::string& text, const std::string& file)
                             escapeLoc,
                             "Unterminated escape sequence in string literal");
                     }
-                    const char esc = text[i];
-                    if (esc == '\n' || esc == '\r') {
+                    if (const char esc = text[i]; esc == '\n' || esc == '\r') {
                         throw util::Error(escapeLoc, "Unterminated string literal");
                     }
                     ++i;

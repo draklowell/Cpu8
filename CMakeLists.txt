@@ -39,7 +39,6 @@ add_executable(Cpu8
         asm_toolchain/src/link/RelocResolver.hpp
         asm_toolchain/src/link/SectionMerger.cpp
         asm_toolchain/src/link/SectionMerger.hpp
-        asm_toolchain/src/object_generator/ObjectFormat.cpp
         asm_toolchain/src/object_generator/ObjectFormat.hpp
         asm_toolchain/src/object_generator/Relocation.cpp
         asm_toolchain/src/object_generator/Relocation.hpp
@@ -47,4 +46,4 @@ add_executable(Cpu8
         asm_toolchain/src/object_generator/Serializer.hpp
         asm_toolchain/src/asm_cli.cpp
         asm_toolchain/src/ld_cli.cpp
-        asm_toolchain/main.cpp)
+        asm_toolchain/src/main.cpp)

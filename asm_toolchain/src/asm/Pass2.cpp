@@ -17,12 +17,6 @@
 namespace asmx {
 namespace {
 
-struct PendingTextReloc {
-    uint32_t offset{};
-    std::string symbol;
-    util::SourceLoc loc;
-};
-
 [[nodiscard]] bool sameLocation(const util::SourceLoc& lhs,
                                 const util::SourceLoc& rhs) {
     return lhs.file == rhs.file && lhs.pos.line == rhs.pos.line &&
@@ -50,12 +44,6 @@ struct PendingTextReloc {
     }
     return lowered;
 }
-
-struct SymbolResolution {
-    uint16_t value{0};
-    bool needs_reloc{false};
-};
-
 [[nodiscard]] SymbolResolution resolveSymbolReference(const SymbolTable& symtab,
                                                       const std::string& name,
                                                       const util::SourceLoc& loc) {

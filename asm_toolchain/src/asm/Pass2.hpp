@@ -4,13 +4,16 @@
 #pragma once
 
 #include "../object_generator/ObjectFormat.hpp"
-#include "Pass1.hpp"
 
 namespace asmx {
-/**
- * @brief Second pass of the assembler
- * This class implements the second pass of the assembler, which takes the output from
- * the first pass and generates the final object file.
- */
+struct PendingTextReloc {
+    uint32_t offset{};
+    std::string symbol;
+    util::SourceLoc loc;
+};
 
+struct SymbolResolution {
+    uint16_t value{0};
+    bool needs_reloc{false};
+};
 } // namespace asmx

@@ -2,7 +2,7 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 #pragma once
-
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <unordered_map>

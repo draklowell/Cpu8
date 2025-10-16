@@ -97,21 +97,6 @@ void Assembler::pass1(const ParseResult& result, Pass1State& state,
                 signature.push_back(operand);
             }
 
-            if (inst->args.empty()) {
-                signature.push_back(OperandType::None);
-            } else {
-                for (const Argument& arg : inst->args) {
-                    OperandType operand = arg.operant_type;
-                    if (operand == OperandType::Label) {
-                        operand = OperandType::Imm16;
-                        state.symbol_table.declare(arg.label);
-                    } else if (operand == OperandType::MemAbs16 && !arg.label.empty()) {
-                        state.symbol_table.declare(arg.label);
-                    }
-                    signature.push_back(operand);
-                }
-            }
-
             const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
             const auto specs = encode_table.find(mnemonic_lower, signature);
 

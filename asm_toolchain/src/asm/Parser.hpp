@@ -3,9 +3,9 @@
 
 #pragma once
 
+#include "../common/Util.hpp"
 #include "InstrEncoding.hpp"
 
-#include <../common/Util.hpp>
 #include <string>
 #include <variant>
 #include <vector>
