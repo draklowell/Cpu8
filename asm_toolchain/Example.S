@@ -4,6 +4,7 @@ main:
   ldi yl, 13
   ldi yh, 31
   ld ac, [data]
+  mov ac, yh
   intd
   shl
   inte

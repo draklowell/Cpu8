@@ -16,7 +16,6 @@
 
 namespace asmx {
 namespace {
-
 [[nodiscard]] bool sameLocation(const util::SourceLoc& lhs,
                                 const util::SourceLoc& rhs) {
     return lhs.file == rhs.file && lhs.pos.line == rhs.pos.line &&
@@ -112,6 +111,78 @@ const DataItem* matchTextItem(const SectionsScratch& scratch, std::size_t& index
     ++index;
     return &candidate;
 }
+std::vector<OperandType> buildSignature(const Instruction& instruction) {
+    std::vector<OperandType> signature;
+    signature.reserve(instruction.args.size());
+    for (const auto& a : instruction.args) {
+        auto type = a.operant_type;
+        if (type == OperandType::Label) {
+            type = OperandType::Imm16;
+        }
+        signature.push_back(type);
+    }
+    return signature;
+}
+bool isRegisterDependent(const std::string& mnem_lower,
+                         const std::vector<OperandType>& signature) {
+    if (mnem_lower == "mov" && signature.size() == 2 &&
+        signature.at(0) == OperandType::Reg && signature.at(1) == OperandType::Reg) {
+        return true;
+    }
+    if (mnem_lower == "ldi" && signature.size() == 2 &&
+        signature.at(0) == OperandType::Reg &&
+        (signature.at(1) == OperandType::Imm8 ||
+         signature.at(1) == OperandType::Imm16)) {
+        return true;
+    }
+    if (mnem_lower == "ld" && signature.size() == 2 &&
+        signature.at(0) == OperandType::Reg &&
+        signature.at(1) == OperandType::MemAbs16) {
+        return true;
+    }
+
+    if (mnem_lower == "st" && signature.size() == 2 &&
+        signature.at(0) == OperandType::MemAbs16 &&
+        signature.at(1) == OperandType::Reg) {
+        return true;
+    }
+
+    return false;
+}
+uint8_t pickOpcode(const EncodeTable& table, const Instruction& instruction) {
+    const std::string mnem = toLowerCopy(instruction.mnemonic);
+    const auto signature = buildSignature(instruction);
+
+    if (isRegisterDependent(mnem, signature)) {
+        if (mnem == "mov") {
+            const Reg dst = instruction.args[0].reg;
+            const Reg src = instruction.args[1].reg;
+            return table.movOpcode(dst, src);
+        }
+        if (mnem == "ldi") {
+            const Reg r = instruction.args[0].reg;
+            if (signature[1] == OperandType::Imm8) {
+                return table.ldiImm8Opcode(r);
+            }
+            return table.ldiImm16Opcode(r);
+        }
+        if (mnem == "ld") {
+            const Reg r = instruction.args[0].reg;
+            return table.ldAbs16Opcode(r);
+        }
+        if (mnem == "st") {
+            const Reg reg = instruction.args[1].reg;
+            return table.stAbs16Opcode(reg);
+        }
+        throw util::Error(instruction.loc, "Undefined register dependent mnemonic");
+    }
+    const auto specs = table.find(mnem, signature);
+    if (!specs) {
+        throw util::Error(instruction.loc, "invalid operands for instruction '" +
+                                               instruction.mnemonic + "'");
+    }
+    return specs->opcode;
+}
 } // namespace
 
 void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
@@ -179,7 +250,8 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
         }
 
         const std::size_t inst_start = text_bytes.size();
-        text_bytes.push_back(specs->opcode);
+        const uint8_t opcode = pickOpcode(table, *inst);
+        text_bytes.push_back(opcode);
 
         for (const Argument& arg : inst->args) {
             switch (arg.operant_type) {
