@@ -3,7 +3,7 @@ project(asm_toolchain CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(asm_cli
+add_executable(asm
         src/main.cpp
 
         src/asm/Assembler.cpp
@@ -23,9 +23,10 @@ add_executable(asm_cli
         src/link/SectionMerger.cpp
         src/object_generator/Relocation.cpp
         src/object_generator/Serializer.cpp
+        src/asm/RegisterDependent.hpp
 )
 
-target_include_directories(asm_cli PRIVATE
+target_include_directories(asm PRIVATE
         src
         src/asm
         src/common

@@ -4,10 +4,12 @@
 #include "Assembler.hpp"
 #include "Directives.hpp"
 #include "InstrEncoding.hpp"
+#include "RegisterDependent.hpp"
 
 #include <algorithm>
 #include <cctype>
 #include <iterator>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <variant>
@@ -98,9 +100,13 @@ void Assembler::pass1(const ParseResult& result, Pass1State& state,
             }
 
             const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
-            const auto specs = encode_table.find(mnemonic_lower, signature);
-
-            if (!specs) {
+            auto specs = encode_table.find(mnemonic_lower, signature);
+            uint8_t size = 0;
+            if (specs) {
+                size = specs->size;
+            } else if (auto s = inferRegisterDependentSize(mnemonic_lower, signature)) {
+                size = *s;
+            } else {
                 if (!mnemonicExists(encode_table, mnemonic_lower)) {
                     throw util::Error(inst->loc,
                                       "unknown instruction '" + inst->mnemonic + "'");
@@ -109,7 +115,7 @@ void Assembler::pass1(const ParseResult& result, Pass1State& state,
                                                  inst->mnemonic + "'");
             }
 
-            state.lc_text += specs->size;
+            state.lc_text += size;
             scratch.text.lc = state.lc_text;
         }
     }

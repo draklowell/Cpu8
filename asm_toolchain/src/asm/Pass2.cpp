@@ -4,10 +4,12 @@
 #include "Assembler.hpp"
 #include "Directives.hpp"
 #include "InstrEncoding.hpp"
+#include "RegisterDependent.hpp"
 
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -123,37 +125,11 @@ std::vector<OperandType> buildSignature(const Instruction& instruction) {
     }
     return signature;
 }
-bool isRegisterDependent(const std::string& mnem_lower,
-                         const std::vector<OperandType>& signature) {
-    if (mnem_lower == "mov" && signature.size() == 2 &&
-        signature.at(0) == OperandType::Reg && signature.at(1) == OperandType::Reg) {
-        return true;
-    }
-    if (mnem_lower == "ldi" && signature.size() == 2 &&
-        signature.at(0) == OperandType::Reg &&
-        (signature.at(1) == OperandType::Imm8 ||
-         signature.at(1) == OperandType::Imm16)) {
-        return true;
-    }
-    if (mnem_lower == "ld" && signature.size() == 2 &&
-        signature.at(0) == OperandType::Reg &&
-        signature.at(1) == OperandType::MemAbs16) {
-        return true;
-    }
-
-    if (mnem_lower == "st" && signature.size() == 2 &&
-        signature.at(0) == OperandType::MemAbs16 &&
-        signature.at(1) == OperandType::Reg) {
-        return true;
-    }
-
-    return false;
-}
 uint8_t pickOpcode(const EncodeTable& table, const Instruction& instruction) {
     const std::string mnem = toLowerCopy(instruction.mnemonic);
     const auto signature = buildSignature(instruction);
 
-    if (isRegisterDependent(mnem, signature)) {
+    if (isRegisterDependentMnemonic(mnem, signature)) {
         if (mnem == "mov") {
             const Reg dst = instruction.args[0].reg;
             const Reg src = instruction.args[1].reg;
@@ -243,8 +219,13 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
         }
 
         const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
-        const auto specs = table.find(mnemonic_lower, signature);
-        if (!specs) {
+        auto specs = table.find(mnemonic_lower, signature);
+        uint8_t size = 0;
+        if (specs) {
+            size = specs->size;
+        } else if (auto s = inferRegisterDependentSize(mnemonic_lower, signature)) {
+            size = *s;
+        } else {
             throw util::Error(inst->loc, "invalid operands for instruction '" +
                                              inst->mnemonic + "'");
         }
@@ -304,8 +285,8 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             }
         }
 
-        if (const std::size_t emitted = text_bytes.size() - inst_start;
-            emitted != specs->size) {
+        const std::size_t emitted = text_bytes.size() - inst_start;
+        if (emitted != size) {
             throw std::logic_error("instruction size mismatch during pass2");
         }
     }
