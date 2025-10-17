@@ -1,8 +1,11 @@
+#define NUMBER 13
+#define ALLNUMBER 67
+
 .text
 main:
   ldi sp, 0xffff
-  ldi yl, 13
-  ldi yh, 31
+  ldi yl, NUMBER
+  ldi yh, ALLNUMBER
   mov ac, yl
 
   ld  ac, [data]
@@ -12,7 +15,7 @@ main:
 
   ldi z, data
   shr
-  ldi z, [n]
+  ld z, [n]
   call test
   hlt
 
