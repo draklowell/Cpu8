@@ -1269,3 +1269,4 @@ dkms.conf
 *.zip
 fp-info-cache
 alu.kicad_pro
+alu.kicad_prl
