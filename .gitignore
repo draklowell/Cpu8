@@ -1265,3 +1265,6 @@ dkms.conf
 
 .idea
 .PVS-Studio/
+
+*.zip
+fp-info-cache
