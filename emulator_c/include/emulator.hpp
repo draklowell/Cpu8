@@ -12,6 +12,12 @@ struct Instruction {
     int minCycles;
 };
 
+enum class DebugVerbosity {
+    SILENT, // No output during run
+    TRACE,  // Single-line trace per instruction
+    STEP    // Full dump and wait for user input after each instruction
+};
+
 class CPU {
   private:
     std::array<uint8_t, 65536> memory{};
@@ -24,13 +30,17 @@ class CPU {
     std::array<std::function<int(CPU&)>, 256> opcodeHandlers;
     uint8_t STEP;
     uint8_t IR;
+    uint8_t curr_inst_opcode;
 
     // LOAD INSTRUCTION TABLE
     void loadInstructionTable(const std::string& file);
     // OPCODEHANDLER TABLE
     void setupOpcodeHandlers();
 
+
+
   public:
+    std::string dumpMemory(uint16_t startAddr, int lines) const;
     // constructor and reset
     explicit CPU(const std::string& tablePath);
     void reset();
@@ -189,7 +199,7 @@ class CPU {
 
     std::string getStatusString() const;
 
-    void run(uint64_t halt_after = -1);
+    void run(uint64_t max_instructions, DebugVerbosity verbosity);
     void clear_memory() { memory.fill(0); };
 };
 #endif // EMULATOR_C_EMULATOR_HPP

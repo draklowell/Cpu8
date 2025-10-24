@@ -1,11 +1,13 @@
 #include "emulator.hpp"
 
 #include <bitset>
+#include <csignal>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <ranges>
 #include <sstream>
+#include <string>
 #include <vector>
 
 void CPU::setFlags(int result, bool carryFlag) {
@@ -791,6 +793,7 @@ int CPU::executeInstruction() {
     if (halted)
         return 0;                 // if CPU is halted, do nothing
     uint8_t opcode = fetchByte(); // fetch next opcode
+    curr_inst_opcode = opcode;
     int cycles = opcodeHandlers[opcode](*this);
     cyclesCount += cycles;
     return cycles;
@@ -849,62 +852,159 @@ CPU::CPU(const std::string& tablePath) {
     IR = 0;
     loadInstructionTable(tablePath);
     setupOpcodeHandlers();
-    ґ
+}
+
+
+// Helper function to create a more useful memory dump.
+// It shows 'lines' of memory (16 bytes per line) starting around 'startAddr'.
+std::string CPU::dumpMemory(uint16_t startAddr, int lines) const {
+    std::ostringstream oss;
+    oss << std::hex << std::uppercase << std::setfill('0');
+
+    // Align start address to a 16-byte boundary for a cleaner look
+    uint16_t addr = startAddr & 0xFFF0;
+    // Show a bit of context before the target address if possible
+    if (startAddr > 16) addr -= 16;
+
+    for (int i = 0; i < lines; ++i) {
+        // Print the memory address for the current line
+        oss << "0x" << std::setw(4) << addr << ": ";
+
+        std::string ascii_line;
+        // Print 16 bytes in hex
+        for (int j = 0; j < 16; ++j) {
+            uint16_t current_addr = addr + j;
+            if (current_addr < memory.size()) { // Basic bounds check
+                uint8_t val = memory[current_addr];
+                oss << std::setw(2) << static_cast<int>(val) << " ";
+            } else {
+                oss << "   "; // Pad if we're past the end of memory
+            }
+        }
+
+        oss << " \n";
+
+        addr += 16;
+        if (addr >= memory.size()) break; // Stop if we run out of memory to display
+    }
+    return oss.str();
 }
 
 std::string CPU::getStatusString() const {
     std::ostringstream oss;
+    const int content_width = 34;
 
-    oss << std::hex << std::uppercase << std::setfill('0');
+    auto format_line = [&](const std::string& content) {
+        oss << "│ " << std::left << std::setfill(' ') << std::setw(content_width)
+            << content << " │\n";
+    };
 
-    // Registers
-    oss << "CPU STATE\n";
-    oss << "---------\n";
-    oss << "PC:  0x" << std::setw(4) << PC << "    SP:  0x" << std::setw(4) << SP
-        << "\n";
-    oss << "AC:  0x" << std::setw(2) << int(AC) << "    XH:  0x" << std::setw(2)
-        << int(XH) << "\n";
-    oss << "YL:  0x" << std::setw(2) << int(YL) << "    YH:  0x" << std::setw(2)
-        << int(YH) << "\n";
-    oss << "ZL:  0x" << std::setw(2) << int(ZL) << "    ZH:  0x" << std::setw(2)
-        << int(ZH) << "\n";
-    oss << "FR:  0b" << std::bitset<8>(FR) << "    [Z=" << flagZ() << " C=" << flagC()
-        << " S=" << flagS() << "]\n";
+    const std::string h_border = "┌────────────────────────────────────┐";
+    const std::string f_border = "└────────────────────────────────────┘";
+    const std::string m_border = "├────────────────────────────────────┤";
 
-    oss << "X:   0x" << std::setw(4) << getX() << "    Y:  0x" << std::setw(4) << getY()
-        << "    Z:  0x" << std::setw(4) << getZ() << "\n";
+    // --- Build Header ---
+    oss << h_border << "\n";
+    oss << "│              CPU STATE             │\n";
+    oss << m_border << "\n";
 
-    oss << "Cycles: " << std::dec << cyclesCount << "\n\n";
+    // --- Build Register Content ---
+    // Use temporary string streams to build the content for each line
+    std::ostringstream line_content;
 
-    // Memory
-    oss << "Memory [0x0000 – 0x0063]:\n";
-    for (int i = 0; i < 100; ++i) {
-        if (i % 8 == 0)
-            oss << "0x" << std::setw(4) << std::hex << i << ": ";
-        oss << std::setw(2) << int(memory[i]) << " ";
-        if (i % 8 == 7 || i == 99)
-            oss << "\n";
-    }
+    // PC and SP
+    line_content << "PC: 0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << PC
+                 << "        SP: 0x" << std::setw(4) << SP;
+    format_line(line_content.str());
+    oss << m_border << "\n";
+
+    // AC, X, Y, Z Registers
+    line_content.str(""); line_content.clear(); // Clear the stream for reuse
+    line_content << "AC: 0x" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(AC);
+    format_line(line_content.str());
+
+    line_content.str(""); line_content.clear();
+    line_content << "X:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getX();
+    format_line(line_content.str());
+
+    line_content.str(""); line_content.clear();
+    line_content << "Y:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getY();
+    format_line(line_content.str());
+
+    line_content.str(""); line_content.clear();
+    line_content << "Z:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getZ();
+    format_line(line_content.str());
+    oss << m_border << "\n";
+
+    // Flags Register
+    line_content.str(""); line_content.clear();
+    line_content << "FR: " << std::bitset<8>(FR) << " [S:" << flagS()
+                 << " Z:" << flagZ() << " C:" << flagC() << "]";
+    format_line(line_content.str());
+    oss << m_border << "\n";
+
+    // Cycle Count
+    line_content.str(""); line_content.clear();
+    line_content << "Cycles: " << std::dec << cyclesCount;
+    format_line(line_content.str());
+
+    // --- Build Footer ---
+    oss << f_border << "\n\n";
+
+    oss << "Memory view near PC:\n";
+    oss << dumpMemory(PC, 8);
 
     return oss.str();
 }
 
-void CPU::run(uint64_t halt_after) {
-    std::cout << "Starting status of CPU" << std::endl;
+void CPU::run(uint64_t max_instructions, DebugVerbosity verbosity) {
+    // 1. Print the initial state.
+    std::cout << "--- CPU Initial State ---\n";
     std::cout << getStatusString() << std::endl;
-    std::cout << "CPU started running" << std::endl;
-    int i = 0;
-    while (i < halt_after) {
+    std::cout << "--- Starting Execution ---\n";
+
+    // 2. Main execution loop.
+    for (uint64_t i = 0; i < max_instructions; ++i) {
         if (halted) {
-            std::cout << getStatusString() << std::endl;
-            std::cout << "CPU halted!\n" << std::endl;
+            std::cout << "\n🛑 CPU Halted!\n";
             break;
         }
-        cyclesCount = executeInstruction();
-        if (i % 1 == 0) {
-            std::cout << "Instruction number " << i << "completed." << std::endl;
+
+        // Capture state *before* execution for the log.
+        const uint16_t addr_of_inst = PC;
+        const std::string mnemonic = instructionTable[memory[PC]].mnemonic;
+
+        // Execute the instruction.
+        executeInstruction();
+        // 3. Log output based on verbosity.
+        if (verbosity == DebugVerbosity::TRACE) {
+            std::cout << std::uppercase << std::hex;
+
+            std::cout << "[0x" << std::setw(4) << std::setfill('0') << addr_of_inst << "] "
+                      << std::left << std::setw(10) << std::setfill(' ') << mnemonic
+                      << " -> "
+                      << "AC:0x" << std::right << std::setw(2) << std::setfill('0') << int(AC) << ", "
+                      << "X:0x"  << std::right << std::setw(4) << std::setfill('0') << getX()  << ", "
+                      << "Y:0x"  << std::right << std::setw(4) << std::setfill('0') << getY()  << ", "
+                      << "SP:0x" << std::right << std::setw(4) << std::setfill('0') << SP      << ", "
+                      << "Flags:" << std::bitset<8>(FR)
+                      << std::dec << std::endl;
+
         }
-        i++;
+        else if (verbosity == DebugVerbosity::STEP) {
+            // Prints the full state box AND waits for user input.
+            std::cout << "\n--- After instruction " << std::dec << (i + 1)
+                      << ": " << mnemonic << " ---\n";
+            std::cout << getStatusString() << std::endl;
+            std::cout << "Press Enter to step, or 'q' then Enter to quit..." << std::flush;
+            char input = std::cin.get();
+            if (input == 'q') {
+                std::cin.ignore(10000, '\n');
+                break;
+            }
+        }
     }
-    std::cout << "Run has ended" << std::endl;
+
+    std::cout << "\n--- Execution Finished ---\n";
+    std::cout << getStatusString() << std::endl;
 }

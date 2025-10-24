@@ -3,16 +3,9 @@
 #include <iostream>
 
 int main(int argc, char** argv) {
-    if (argc < 3) {
-        throw std::runtime_error("Wrong number of arguments.");
-        return 1;
-    }
-    CPU cpu{argv[1]};
-    std::cout << cpu.getStatusString() << std::endl;
-    cpu.loadProgramFromFile(argv[2]);
-    std::cout << cpu.getStatusString() << std::endl;
-    cpu.run(20);
-    cpu.clear_memory();
-    cpu.reset();
+
+    CPU cpu{"/home/luka/study/pok/Cpu8/emulator_c/instructions/table.csv"};
+    cpu.loadProgramFromFile("/home/luka/study/pok/Cpu8/emulator_c/code_programs/emu.bin");
+    cpu.run(52, DebugVerbosity::TRACE);
     return 0;
 }
