@@ -12,6 +12,7 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <variant>
 #include <vector>
@@ -45,7 +46,26 @@ namespace {
     }
     return lowered;
 }
-[[nodiscard]] SymbolResolution resolveSymbolReference(const SymbolTable& symtab,
+constexpr uint16_t kRamBaseAddress = 0x4000;
+
+[[nodiscard]] uint32_t sectionBaseAddress(const Pass1State& st, SectionType section) {
+    switch (section) {
+    case SectionType::Text:
+        return 0u;
+    case SectionType::RoData:
+        return st.lc_text;
+    case SectionType::Data:
+        return st.lc_text + st.lc_rodata;
+    case SectionType::Bss:
+        return kRamBaseAddress;
+    case SectionType::None:
+        break;
+    }
+    return 0u;
+}
+
+[[nodiscard]] SymbolResolution resolveSymbolReference(const Pass1State& st,
+                                                      const SymbolTable& symtab,
                                                       const std::string& name,
                                                       const util::SourceLoc& loc) {
     const auto sym_opt = symtab.fnd(name);
@@ -61,11 +81,18 @@ namespace {
         return SymbolResolution{0u, true};
     }
 
-    return SymbolResolution{static_cast<uint16_t>(sym.value & 0xFFFFu), false};
+    const uint32_t base = sectionBaseAddress(st, sym.section);
+    const uint64_t absolute = base + static_cast<uint64_t>(sym.value);
+    if (absolute > 0xFFFFu) {
+        throw util::Error(loc,
+                          "address for symbol '" + name + "' exceeds 16-bit range");
+    }
+
+    return SymbolResolution{static_cast<uint16_t>(absolute & 0xFFFFu), false};
 }
 
-void emitDataItemIntoText(const DataItem& item, const SymbolTable& symtab,
-                          std::vector<uint8_t>& text_bytes,
+void emitDataItemIntoText(const Pass1State& st, const DataItem& item,
+                          const SymbolTable& symtab, std::vector<uint8_t>& text_bytes,
                           std::vector<PendingTextReloc>& relocations) {
     switch (item.kind) {
     case DataItem::Kind::Byte:
@@ -83,7 +110,7 @@ void emitDataItemIntoText(const DataItem& item, const SymbolTable& symtab,
             } else {
                 const auto& symbol_name = std::get<std::string>(word_entry);
                 const auto resolved =
-                    resolveSymbolReference(symtab, symbol_name, item.loc);
+                    resolveSymbolReference(st, symtab, symbol_name, item.loc);
                 value = resolved.value;
                 needs_reloc = resolved.needs_reloc;
                 if (needs_reloc) {
@@ -192,7 +219,7 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             if (current_section == SectionType::Text) {
                 if (const DataItem* item =
                         matchTextItem(scratch, text_item_index, directive->loc)) {
-                    emitDataItemIntoText(*item, st.symbol_table, text_bytes,
+                    emitDataItemIntoText(st, *item, st.symbol_table, text_bytes,
                                          pending_text_relocs);
                 }
             }
@@ -208,6 +235,31 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             continue;
         }
 
+        const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
+        const bool implicit_candidate = isImplicitRegMnemonic(mnemonic_lower);
+        const auto compound = makeImplicitRegKey(mnemonic_lower, *inst);
+        if (compound) {
+            const auto specs = table.find(*compound, std::vector<OperandType>{});
+            if (!specs) {
+                throw util::Error(inst->loc,
+                                  "unknown instruction variant '" + *compound + "'");
+            }
+
+            const std::size_t inst_start = text_bytes.size();
+            text_bytes.push_back(specs->opcode);
+            const std::size_t emitted = text_bytes.size() - inst_start;
+            if (emitted != specs->size) {
+                throw std::logic_error("instruction size mismatch during pass2");
+            }
+            continue;
+        }
+
+        if (implicit_candidate) {
+            throw util::Error(inst->loc, "invalid operands for instruction '" +
+                                             inst->mnemonic +
+                                             "' — expected exactly one register");
+        }
+
         std::vector<OperandType> signature;
         signature.reserve(inst->args.size());
         for (const Argument& arg : inst->args) {
@@ -218,7 +270,6 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             signature.push_back(operand);
         }
 
-        const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
         auto specs = table.find(mnemonic_lower, signature);
         uint8_t size = 0;
         if (specs) {
@@ -249,7 +300,7 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             case OperandType::Label: {
                 const auto reloc_offset = static_cast<uint32_t>(text_bytes.size());
                 const auto resolved =
-                    resolveSymbolReference(st.symbol_table, arg.label, inst->loc);
+                    resolveSymbolReference(st, st.symbol_table, arg.label, inst->loc);
                 if (resolved.needs_reloc) {
                     pending_text_relocs.push_back(
                         PendingTextReloc{reloc_offset, arg.label, inst->loc});
@@ -262,8 +313,8 @@ void Assembler::pass2(const ParseResult& pr, const Pass1State& st,
             case OperandType::MemAbs16: {
                 const auto reloc_offset = static_cast<uint32_t>(text_bytes.size());
                 if (!arg.label.empty()) {
-                    const auto resolved =
-                        resolveSymbolReference(st.symbol_table, arg.label, inst->loc);
+                    const auto resolved = resolveSymbolReference(st, st.symbol_table,
+                                                                 arg.label, inst->loc);
                     if (resolved.needs_reloc) {
                         pending_text_relocs.push_back(
                             PendingTextReloc{reloc_offset, arg.label, inst->loc});

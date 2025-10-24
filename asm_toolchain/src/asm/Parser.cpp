@@ -3,6 +3,8 @@
 
 #include "Parser.hpp"
 
+#include "RegisterDependent.hpp"
+
 #include <cctype>
 #include <fstream>
 #include <iomanip>
@@ -58,37 +60,6 @@ namespace {
         return true;
     default:
         return false;
-    }
-}
-
-[[nodiscard]] std::string registerName(const Reg reg) {
-    switch (reg) {
-    case Reg::AC:
-        return "ac";
-    case Reg::XH:
-        return "xh";
-    case Reg::YL:
-        return "yl";
-    case Reg::YH:
-        return "yh";
-    case Reg::ZL:
-        return "zl";
-    case Reg::ZH:
-        return "zh";
-    case Reg::FR:
-        return "fr";
-    case Reg::SP:
-        return "sp";
-    case Reg::PC:
-        return "pc";
-    case Reg::X:
-        return "x";
-    case Reg::Y:
-        return "y";
-    case Reg::Z:
-        return "z";
-    default:
-        return "invalid";
     }
 }
 
@@ -161,9 +132,10 @@ void adjustImmediateArgument(Instruction& instr, const size_t position,
         if (isEightBitRegister(targetReg)) {
             if (value > 0xFF) {
                 std::ostringstream msg;
+                const std::string token = regToTokenLower(targetReg);
                 msg << "Immediate value " << formatImmediateValue(value, 2)
-                    << " does not fit into 8-bit register '" << registerName(targetReg)
-                    << "'";
+                    << " does not fit into 8-bit register '"
+                    << (token.empty() ? "invalid" : token) << "'";
                 throw util::Error(loc, msg.str());
             }
             arg.operant_type = OperandType::Imm8;

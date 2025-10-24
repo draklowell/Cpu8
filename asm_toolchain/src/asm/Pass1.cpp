@@ -12,6 +12,7 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <variant>
 #include <vector>
 
@@ -86,6 +87,27 @@ void Assembler::pass1(const ParseResult& result, Pass1State& state,
                                   "instructions are only allowed in .text section");
             }
 
+            const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
+            const bool implicit_candidate = isImplicitRegMnemonic(mnemonic_lower);
+            const auto compound = makeImplicitRegKey(mnemonic_lower, *inst);
+            if (compound) {
+                auto specs = encode_table.find(*compound, std::vector<OperandType>{});
+                if (!specs) {
+                    throw util::Error(inst->loc, "unknown instruction variant '" +
+                                                     *compound + "'");
+                }
+
+                state.lc_text += specs->size;
+                scratch.text.lc = state.lc_text;
+                continue;
+            }
+
+            if (implicit_candidate) {
+                throw util::Error(inst->loc, "invalid operands for instruction '" +
+                                                 inst->mnemonic +
+                                                 "' — expected exactly one register");
+            }
+
             std::vector<OperandType> signature;
             signature.reserve(inst->args.size());
             for (const Argument& arg : inst->args) {
@@ -99,7 +121,6 @@ void Assembler::pass1(const ParseResult& result, Pass1State& state,
                 signature.push_back(operand);
             }
 
-            const std::string mnemonic_lower = toLowerCopy(inst->mnemonic);
             auto specs = encode_table.find(mnemonic_lower, signature);
             uint8_t size = 0;
             if (specs) {
