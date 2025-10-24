@@ -8,7 +8,6 @@
 		(title "ALU Module CPU8/16")
 		(date "20/10/2025")
 		(rev "1.0.0")
-		(company "HardServe Inc.")
 	)
 	(lib_symbols
 		(symbol "74xx:74LS02"
@@ -12209,7 +12208,7 @@
 		(uuid "4705a654-e382-41e2-99ad-c814c02a2200")
 	)
 	(label "H5"
-		(at 199.39 36.83 180)
+		(at 198.12 36.83 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -12489,7 +12488,7 @@
 		(uuid "72cf89c6-c4e4-407a-af43-b3cb59069ef2")
 	)
 	(label "H4"
-		(at 199.39 34.29 180)
+		(at 198.12 34.29 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -12879,7 +12878,7 @@
 		(uuid "ae2909f1-d988-4dce-8526-649c7c80ab31")
 	)
 	(label "H7"
-		(at 199.39 41.91 180)
+		(at 198.12 41.91 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -13049,7 +13048,7 @@
 		(uuid "dcf50854-f443-4ab0-9f7e-94d403538b54")
 	)
 	(label "H6"
-		(at 199.39 39.37 180)
+		(at 198.12 39.37 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -19455,7 +19454,7 @@
 			)
 		)
 		(property "Type" "ShiftRight"
-			(at 370.84 128.27 0)
+			(at 370.84 123.952 0)
 			(effects
 				(font
 					(size 1.27 1.27)
