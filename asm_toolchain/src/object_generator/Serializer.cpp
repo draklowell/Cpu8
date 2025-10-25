@@ -219,7 +219,8 @@ ObjectFile Serializer::readFromFile(const std::string& path) {
 
     BinaryReader reader(in, path);
     reader.verifyMagic();
-    if (const uint16_t version = reader.readU16LE(); version != kCurrentVersion) {
+    const uint16_t version = reader.readU16LE();
+    if (version != kCurrentVersion) {
         throw std::runtime_error("Unsupported object file version: " +
                                  std::to_string(version));
     }

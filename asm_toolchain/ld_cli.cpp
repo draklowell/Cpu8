@@ -1,6 +1,6 @@
-#include "binary_generator/ImageWriter.hpp"
-#include "link/Linker.hpp"
-#include "object_generator/Serializer.hpp"
+#include "src/binary_generator/ImageWriter.hpp"
+#include "src/link/Linker.hpp"
+#include "src/object_generator/Serializer.hpp"
 
 #include <cstdint>
 #include <exception>
@@ -47,7 +47,7 @@ uint8_t parseUint8(const std::string& value) {
 
 } // namespace
 
-int main(int argc, char** argv) {
+int main(const int argc, char** argv) {
     if (argc < 3) {
         printUsage();
         return 1;
