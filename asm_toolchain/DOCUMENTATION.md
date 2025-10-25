@@ -201,13 +201,13 @@ This system allows the assembler and linker to work independently: the assembler
 
 ## Object File Structure
 
-Each object file is composed of three main tables:
+Кожен об'єктний файл складається з трьох основних таблиць:
 
-| Component       | Description                                                                 |
-|-----------------|-----------------------------------------------------------------------------|
-| **Sections**    | Contain raw bytes of code or data (e.g., `.text`, `.data`, `.bss`).         |
-| **Symbols**     | Contain all defined and referenced names with their addresses and bindings. |
-| **Relocations** | Contain all positions where the linker must patch addresses.                |
+| Component       | Description                                                                        |
+|-----------------|------------------------------------------------------------------------------------|
+| **Sections**    | Містять байти коду або даних (наприклад, `.text`, `.data`, `.bss`).                |
+| **Symbols**     | Містять всі визначені та згадані імена з їхніми адресами та типами зв'язування.    |
+| **Relocations** | Містять всі позиції, де лінкер повинен підставити адреси.                          |
 
 ### SectionDescription
 
@@ -223,19 +223,19 @@ struct SectionDescription {
 
 #### Fields Explained
 
-* **name** — name of the section.
-* **flags** — section permissions (EXEC, WRITE, READ). Bitwise encoded.
-* **align** — memory alignment for the section (must be a power of 2).
-* **data** — machine code or initialized data.
-* **bss_size** — memory size reserved for uninitialized data (.bss).
+* **name** — ім'я секції.
+* **flags** — права доступу секції (EXEC, WRITE, READ). Бітове кодування.
+* **align** — вирівнювання пам'яті для секції (має бути степенем 2).
+* **data** — машинний код або ініціалізовані дані.
+* **bss_size** — розмір пам'яті для неініціалізованих даних (.bss).
 
 #### Example
 
-| Section | Flags          | Align | Description                |
-|---------|----------------|-------|----------------------------|
-| `.text` | EXEC (1)       | 1     | Code section, executable   |
-| `.data` | WRITE+READ (6) | 2     | Initialized data           |
-| `.bss`  | WRITE+READ (6) | 2     | Zero-initialized variables |
+| Section | Flags          | Align | Description                        |
+|---------|----------------|-------|------------------------------------|
+| `.text` | EXEC (1)       | 1     | Секція коду, виконується           |
+| `.data` | WRITE+READ (6) | 2     | Ініціалізовані дані                |
+| `.bss`  | WRITE+READ (6) | 2     | Змінні, ініціалізовані нулями      |
 
 ---
 
@@ -252,22 +252,22 @@ struct SymbolDescription {
 
 #### Fields Explained
 
-* **name** — symbol identifier (e.g., `main`, `msg`).
-* **section_index** — section this symbol belongs to (`-1` means undefined).
-* **value** — offset from the start of the section.
-* **bind** — visibility and linkage type.
+* **name** — ідентифікатор символу (наприклад, `main`, `msg`).
+* **section_index** — секція, до якої належить символ (`-1` означає невизначений).
+* **value** — зміщення від початку секції.
+* **bind** — видимість і тип зв'язування.
 
 #### Usage
 
-* **Local** symbols are visible only inside the same object file.
-* **Global** symbols are visible to other object files.
-* **Weak** symbols can be overridden by stronger ones.
+* **Local** символи видимі тільки всередині одного об'єктного файлу.
+* **Global** символи видимі для інших об'єктних файлів.
+* **Weak** символи можуть бути перевизначені сильнішими.
 
 ---
 
 ## Relocation System
 
-When an instruction refers to a label or variable whose address is not yet known, the assembler cannot directly encode the address. Instead, it generates a **RelocEntry** that describes where and how to patch the value once the final layout is known.
+Коли інструкція посилається на мітку або змінну, адреса якої ще не відома, асемблер не може безпосередньо закодувати адресу. Замість цього він генерує **RelocEntry**, який описує де і як підставити значення, коли фінальне розміщення буде відоме.
 
 ### RelocEntry
 
@@ -283,19 +283,19 @@ struct RelocEntry {
 
 #### Fields Explained
 
-| Field             | Meaning                                                           |
-|-------------------|-------------------------------------------------------------------|
-| **section_index** | In which section to apply the relocation (e.g., .text).           |
-| **offset**        | The exact byte position inside that section that must be patched. |
-| **type**          | Defines how to apply relocation (e.g., absolute 16-bit address).  |
-| **symbol_index**  | Points to the symbol whose address should be inserted.            |
-| **addend**        | Extra constant added to the symbol's address (for `label + N`).   |
+| Field             | Meaning                                                                      |
+|-------------------|------------------------------------------------------------------------------|
+| **section_index** | У якій секції застосувати релокацію (наприклад, .text).                      |
+| **offset**        | Точна позиція байта всередині цієї секції, яку потрібно підставити.         |
+| **type**          | Визначає як застосувати релокацію (наприклад, абсолютна 16-бітна адреса).   |
+| **symbol_index**  | Вказує на символ, адреса якого має бути вставлена.                          |
+| **addend**        | Додаткова константа, яка додається до адреси символу (для `label + N`).     |
 
 #### RelocType
 
-| Name    | Meaning                                              |
-|---------|------------------------------------------------------|
-| `ABS16` | Absolute 16-bit address, stored in Big Endian order. |
+| Name    | Meaning                                                       |
+|---------|---------------------------------------------------------------|
+| `ABS16` | Абсолютна 16-бітна адреса, збережена у форматі Big Endian.   |
 
 ---
 
@@ -314,13 +314,13 @@ msg:
 
 #### Pass1
 
-* Defines `main` and `msg` in `.text` and `.data` sections.
+* Визначає `main` та `msg` у секціях `.text` та `.data`.
 
 #### Pass2
 
-* Encodes `ldi z, msg` → opcode + placeholder for address.
-* Since `msg` is known (in `.data`), its offset is inserted.
-* If `msg` were in another object, assembler would instead add a relocation:
+* Кодує `ldi z, msg` → опкод + заповнювач для адреси.
+* Оскільки `msg` відомий (у `.data`), його зміщення вставляється.
+* Якби `msg` був в іншому об'єкті, асемблер би створив релокацію:
 
 ```cpp
 RelocEntry {
@@ -334,14 +334,14 @@ RelocEntry {
 
 #### Linking
 
-* The linker loads all `.o` files, merges sections.
-* It replaces every relocation with the final absolute address:
+* Лінкер завантажує всі `.o` файли, об'єднує секції.
+* Він замінює кожну релокацію фінальною абсолютною адресою:
 
   ```
   final_value = symbol_address + addend
   ```
 
-  and writes it at `offset` inside the corresponding section.
+  і записує її у `offset` всередині відповідної секції.
 
 ---
 
