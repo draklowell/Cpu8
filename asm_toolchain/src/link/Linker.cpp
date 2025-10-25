@@ -43,7 +43,8 @@ LinkedImage Linker::link(const std::vector<obj::ObjectFile>& objects,
     std::vector<uint8_t> merged_text;
     std::vector<uint8_t> merged_rodata;
     uint32_t merged_bss_size = 0;
-    SectionMerger::mergeBytes(objects, plan, merged_text, merged_rodata, merged_bss_size);
+    SectionMerger::mergeBytes(objects, plan, merged_text, merged_rodata,
+                              merged_bss_size);
 
     const auto gsym = RelocResolver::buildGlobalSymtab(objects, plan);
     RelocResolver::apply(objects, plan, gsym, merged_text, merged_rodata);
@@ -76,7 +77,8 @@ LinkedImage Linker::link(const std::vector<obj::ObjectFile>& objects,
 
     const auto entry_it = gsym.find(opt.entry_symbol);
     if (entry_it == gsym.end() || entry_it->second.section_index < 0) {
-        throw std::runtime_error("Entry symbol '" + opt.entry_symbol + "' is undefined");
+        throw std::runtime_error("Entry symbol '" + opt.entry_symbol +
+                                 "' is undefined");
     }
 
     const auto& entry_sym = entry_it->second;
@@ -86,8 +88,9 @@ LinkedImage Linker::link(const std::vector<obj::ObjectFile>& objects,
     }
 
     const auto rom_min = static_cast<uint64_t>(opt.rom_base);
-    if (const uint64_t rom_max = rom_min + image.rom.size(); static_cast<uint64_t>(entry_sym.abs_addr) < rom_min ||
-                                                             static_cast<uint64_t>(entry_sym.abs_addr) >= rom_max) {
+    if (const uint64_t rom_max = rom_min + image.rom.size();
+        static_cast<uint64_t>(entry_sym.abs_addr) < rom_min ||
+        static_cast<uint64_t>(entry_sym.abs_addr) >= rom_max) {
         throw std::runtime_error("Entry symbol '" + opt.entry_symbol +
                                  "' lies outside the generated ROM image");
     }
@@ -114,8 +117,8 @@ LinkedImage Linker::link(const std::vector<obj::ObjectFile>& objects,
         for (const auto& sym : image.final_symbols) {
             map << "0x" << std::uppercase << std::hex << std::setfill('0')
                 << std::setw(4) << sym.value << std::dec << std::nouppercase
-                << std::setfill(' ')
-                << ' ' << bindToString(sym.bind) << ' ' << sym.name << "\n";
+                << std::setfill(' ') << ' ' << bindToString(sym.bind) << ' ' << sym.name
+                << "\n";
         }
 
         if (!map) {

@@ -13,8 +13,7 @@ namespace binout {
 
 std::vector<uint8_t> ImageWriter::makeFlatROM(const std::vector<uint8_t>& text,
                                               const std::vector<uint8_t>& rodata,
-                                              uint32_t rom_size,
-                                              uint8_t fill) {
+                                              uint32_t rom_size, uint8_t fill) {
     std::vector<uint8_t> rom;
     rom.reserve(text.size() + rodata.size());
     rom.insert(rom.end(), text.begin(), text.end());

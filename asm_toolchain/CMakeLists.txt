@@ -3,8 +3,9 @@ project(asm_toolchain CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(asm
-        src/main.cpp
+add_executable(asm_cpu
+        asm_cli.cpp
+        ld_cli.cpp
 
         src/asm/Assembler.cpp
         src/asm/Directives.cpp
@@ -15,8 +16,6 @@ add_executable(asm
         src/asm/SymbolTable.cpp
 
         src/binary_generator/ImageWriter.cpp
-        src/common/ByteBuffer.cpp
-        src/common/Logger.cpp
         src/common/Util.cpp
         src/link/Linker.cpp
         src/link/RelocResolver.cpp
@@ -26,7 +25,7 @@ add_executable(asm
         src/asm/RegisterDependent.hpp
 )
 
-target_include_directories(asm PRIVATE
+target_include_directories(asm_cpu PRIVATE
         src
         src/asm
         src/common
