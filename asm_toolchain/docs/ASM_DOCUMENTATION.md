@@ -138,6 +138,80 @@ main:
 | `invalid operands for instruction`           | Невідповідні операнди, наприклад `mov ac, 0x12`.|
 | `cannot load 16-bit immediate into 8-bit register` | Спроба `ldi zl, label` або `ldi ac, 0x1234`. |
 | `.byte not allowed in .bss`                  | Заборонені директиви в секції `.bss`.          |
-| `unknown instruction`                        | Мнемонік відсутній у `table.csv`.              |
+| `unknown instruction`                        | Мнемоніка відсутня у `table.csv`.              |
 
 ---
+
+## CLI утиліти
+
+### `asm_cli`
+
+```bash
+Usage: asm_cli [options] <input.asm> [output]
+Options:
+  -o <file>         Output path (bin or obj)
+  --object          Emit relocatable object (.o)
+  --no-preprocess   Do not run external preprocessor
+  --verbose         Print section size summary
+  --help            Show this help message
+```
+
+* **Базова збірка ROM** (16 КБ образ, заповнений `0xFF`):
+
+  ```bash
+  ./asm_cpu program.S build/program.bin
+  ```
+
+* **Вивід обʼєкта для лінкера**:
+
+  ```bash
+  ./asm_cpu --object -o build/program.o program.S
+  ```
+
+  У цьому режимі `.text`, `.rodata` та релокації зберігаються для подальшого лінкування.
+
+* **Вимкнення зовнішнього препроцесора** — корисно, якщо файл уже пройшов `cpp` або препроцесор не потрібен (притримуємось конвенції, що .s файли не потребують препроцесингу, а .S файли — потребують):
+
+  ```bash
+  ./asm_cpu --no-preprocess program_pp.S build/program.bin
+  ```
+
+* **Додаткові підказки про розмір секцій**:
+
+  ```bash
+  ./asm_cpu --verbose program.S build/program.bin
+  ```
+
+  Після успішної збірки утиліта виведе кількість байтів у `.text` та `.rodata`, а також сумарний розмір ROM.
+
+### `ld_cli`
+
+```bash
+Usage: ld <out.bin> <in1.o> <in2.o> ... [--map <file.map>] [--entry <sym>] [--rom-size N] [--rom-fill 0xFF]
+```
+
+* **Стандартне лінкування кількох обʼєктів**:
+
+  ```bash
+  ./ld_cpu build/program.bin build/startup.o build/main.o
+  ```
+
+  За замовчуванням точка входу — символ `main`, а результатом буде 16 КБ ROM із заповненням `0xFF`.
+
+* **Зміна точки входу**:
+
+  ```bash
+  ./ld_cpu build/program.bin build/startup.o build/main.o --entry reset
+  ```
+
+* **Генерація map-файлу з розкладкою символів**:
+
+  ```bash
+  ./ld_cpu build/program.bin build/main.o --map build/program.map
+  ```
+
+* **Контроль розміру та заповнення ROM** (байтове значення можна задавати у будь-якій нотації, що підтримується `std::stoul`):
+
+  ```bash
+  ./ld_cpu build/program.bin build/main.o --rom-size 8192 --rom-fill 0x00
+  ```
