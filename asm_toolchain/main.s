@@ -1,4 +1,6 @@
-.extern sum
+#include "sum.inc"
+#define ONE 1
+#define TWO 2
 .global main
 .text
 main:
@@ -10,6 +12,6 @@ main:
 
 .rodata
 one:
-    .byte 1
+    .byte ONE
 two:
-    .byte 2
+    .byte TWO

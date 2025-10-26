@@ -28,7 +28,7 @@ void printUsage() {
 }
 
 std::string runPreprocessor(const std::string& path) {
-    std::string command = "cpp -E \"" + path + "\" -";
+    std::string command = "cpp -E \"" + path + "\"";
     FILE* pipe = popen(command.c_str(), "r");
     if (!pipe) {
         throw std::runtime_error("Failed to invoke preprocessor: cpp");
