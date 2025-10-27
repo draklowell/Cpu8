@@ -37,8 +37,6 @@ class CPU {
     // OPCODEHANDLER TABLE
     void setupOpcodeHandlers();
 
-
-
   public:
     std::string dumpMemory(uint16_t startAddr, int lines) const;
     // constructor and reset

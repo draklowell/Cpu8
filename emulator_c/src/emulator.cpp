@@ -854,7 +854,6 @@ CPU::CPU(const std::string& tablePath) {
     setupOpcodeHandlers();
 }
 
-
 // Helper function to create a more useful memory dump.
 // It shows 'lines' of memory (16 bytes per line) starting around 'startAddr'.
 std::string CPU::dumpMemory(uint16_t startAddr, int lines) const {
@@ -864,7 +863,8 @@ std::string CPU::dumpMemory(uint16_t startAddr, int lines) const {
     // Align start address to a 16-byte boundary for a cleaner look
     uint16_t addr = startAddr & 0xFFF0;
     // Show a bit of context before the target address if possible
-    if (startAddr > 16) addr -= 16;
+    if (startAddr > 16)
+        addr -= 16;
 
     for (int i = 0; i < lines; ++i) {
         // Print the memory address for the current line
@@ -885,7 +885,8 @@ std::string CPU::dumpMemory(uint16_t startAddr, int lines) const {
         oss << " \n";
 
         addr += 16;
-        if (addr >= memory.size()) break; // Stop if we run out of memory to display
+        if (addr >= memory.size())
+            break; // Stop if we run out of memory to display
     }
     return oss.str();
 }
@@ -913,38 +914,48 @@ std::string CPU::getStatusString() const {
     std::ostringstream line_content;
 
     // PC and SP
-    line_content << "PC: 0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << PC
-                 << "        SP: 0x" << std::setw(4) << SP;
+    line_content << "PC: 0x" << std::hex << std::uppercase << std::setw(4)
+                 << std::setfill('0') << PC << "        SP: 0x" << std::setw(4) << SP;
     format_line(line_content.str());
     oss << m_border << "\n";
 
     // AC, X, Y, Z Registers
-    line_content.str(""); line_content.clear(); // Clear the stream for reuse
-    line_content << "AC: 0x" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(AC);
+    line_content.str("");
+    line_content.clear(); // Clear the stream for reuse
+    line_content << "AC: 0x" << std::hex << std::uppercase << std::setw(2)
+                 << std::setfill('0') << static_cast<int>(AC);
     format_line(line_content.str());
 
-    line_content.str(""); line_content.clear();
-    line_content << "X:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getX();
+    line_content.str("");
+    line_content.clear();
+    line_content << "X:  0x" << std::hex << std::uppercase << std::setw(4)
+                 << std::setfill('0') << getX();
     format_line(line_content.str());
 
-    line_content.str(""); line_content.clear();
-    line_content << "Y:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getY();
+    line_content.str("");
+    line_content.clear();
+    line_content << "Y:  0x" << std::hex << std::uppercase << std::setw(4)
+                 << std::setfill('0') << getY();
     format_line(line_content.str());
 
-    line_content.str(""); line_content.clear();
-    line_content << "Z:  0x" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << getZ();
+    line_content.str("");
+    line_content.clear();
+    line_content << "Z:  0x" << std::hex << std::uppercase << std::setw(4)
+                 << std::setfill('0') << getZ();
     format_line(line_content.str());
     oss << m_border << "\n";
 
     // Flags Register
-    line_content.str(""); line_content.clear();
+    line_content.str("");
+    line_content.clear();
     line_content << "FR: " << std::bitset<8>(FR) << " [S:" << flagS()
                  << " Z:" << flagZ() << " C:" << flagC() << "]";
     format_line(line_content.str());
     oss << m_border << "\n";
 
     // Cycle Count
-    line_content.str(""); line_content.clear();
+    line_content.str("");
+    line_content.clear();
     line_content << "Cycles: " << std::dec << cyclesCount;
     format_line(line_content.str());
 
@@ -980,23 +991,23 @@ void CPU::run(uint64_t max_instructions, DebugVerbosity verbosity) {
         if (verbosity == DebugVerbosity::TRACE) {
             std::cout << std::uppercase << std::hex;
 
-            std::cout << "[0x" << std::setw(4) << std::setfill('0') << addr_of_inst << "] "
-                      << std::left << std::setw(10) << std::setfill(' ') << mnemonic
-                      << " -> "
-                      << "AC:0x" << std::right << std::setw(2) << std::setfill('0') << int(AC) << ", "
-                      << "X:0x"  << std::right << std::setw(4) << std::setfill('0') << getX()  << ", "
-                      << "Y:0x"  << std::right << std::setw(4) << std::setfill('0') << getY()  << ", "
-                      << "SP:0x" << std::right << std::setw(4) << std::setfill('0') << SP      << ", "
-                      << "Flags:" << std::bitset<8>(FR)
-                      << std::dec << std::endl;
+            std::cout << "[0x" << std::setw(4) << std::setfill('0') << addr_of_inst
+                      << "] " << std::left << std::setw(10) << std::setfill(' ')
+                      << mnemonic << " -> " << "AC:0x" << std::right << std::setw(2)
+                      << std::setfill('0') << int(AC) << ", " << "X:0x" << std::right
+                      << std::setw(4) << std::setfill('0') << getX() << ", " << "Y:0x"
+                      << std::right << std::setw(4) << std::setfill('0') << getY()
+                      << ", " << "SP:0x" << std::right << std::setw(4)
+                      << std::setfill('0') << SP << ", "
+                      << "Flags:" << std::bitset<8>(FR) << std::dec << std::endl;
 
-        }
-        else if (verbosity == DebugVerbosity::STEP) {
+        } else if (verbosity == DebugVerbosity::STEP) {
             // Prints the full state box AND waits for user input.
-            std::cout << "\n--- After instruction " << std::dec << (i + 1)
-                      << ": " << mnemonic << " ---\n";
+            std::cout << "\n--- After instruction " << std::dec << (i + 1) << ": "
+                      << mnemonic << " ---\n";
             std::cout << getStatusString() << std::endl;
-            std::cout << "Press Enter to step, or 'q' then Enter to quit..." << std::flush;
+            std::cout << "Press Enter to step, or 'q' then Enter to quit..."
+                      << std::flush;
             char input = std::cin.get();
             if (input == 'q') {
                 std::cin.ignore(10000, '\n');
