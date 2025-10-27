@@ -1,6 +1,6 @@
-#include "src/binary_generator/ImageWriter.hpp"
-#include "src/link/Linker.hpp"
-#include "src/object_generator/Serializer.hpp"
+#include "binary_generator/ImageWriter.hpp"
+#include "link/Linker.hpp"
+#include "object_generator/Serializer.hpp"
 
 #include <cstdint>
 #include <exception>

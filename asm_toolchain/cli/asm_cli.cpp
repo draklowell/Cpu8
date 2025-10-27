@@ -1,10 +1,10 @@
-#include "src/asm/Assembler.hpp"
-#include "src/asm/Directives.hpp"
-#include "src/asm/Parser.hpp"
-#include "src/asm/Pass1.hpp"
-#include "src/binary_generator/ImageWriter.hpp"
-#include "src/common/Util.hpp"
-#include "src/object_generator/Serializer.hpp"
+#include "asm/Assembler.hpp"
+#include "asm/Directives.hpp"
+#include "asm/Parser.hpp"
+#include "asm/Pass1.hpp"
+#include "binary_generator/ImageWriter.hpp"
+#include "common/Util.hpp"
+#include "object_generator/Serializer.hpp"
 
 #include <array>
 #include <cstdint>
