@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
         return 0;
     } catch (const util::Error& err) {
         std::cerr << "Assembler error at " << err.loc.file << ':' << err.loc.pos.line
-                  << ':' << err.loc.pos.col << " → " << err.what() << "\n";
+                  << ':' << err.loc.pos.col << " -> " << err.what() << "\n";
         return 1;
     } catch (const std::runtime_error& ex) {
         std::cerr << "Error: " << ex.what() << "\n";

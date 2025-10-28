@@ -1,5 +1,5 @@
 // This is a personal academic project. Dear PVS-Studio, please check it.
-// Simple single-file assembler frontend (two-pass → flat binary)
+// Simple single-file assembler frontend (two-pass -> flat binary)
 
 #include "asm/Assembler.hpp"
 #include "asm/Directives.hpp"
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
                   static_cast<std::streamsize>(rom.size()));
         ofs.close();
 
-        std::cout << "✅ Assembled successfully: " << outputPath << "\n";
+        std::cout << "Assembled successfully: " << outputPath << "\n";
         std::cout << "   .text size: " << text.data.size()
                   << " bytes, .rodata size: " << rodata.data.size() << " bytes\n";
         std::cout << "   Total ROM image: " << rom.size() << " bytes\n";
@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
 
     } catch (const util::Error& err) {
         std::cerr << "Assembler error at " << err.loc.file << ":" << err.loc.pos.line
-                  << ":" << err.loc.pos.col << " → " << err.what() << "\n";
+                  << ":" << err.loc.pos.col << " -> " << err.what() << "\n";
         return 1;
     } catch (const std::exception& e) {
         std::cerr << "Fatal: " << e.what() << "\n";

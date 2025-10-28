@@ -1,6 +1,6 @@
 #define NUMBER 13
 #define ALLNUMBER 67
-
+.global main
 .text
 main:
   ldi sp, 0xffff

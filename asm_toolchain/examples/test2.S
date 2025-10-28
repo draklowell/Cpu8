@@ -1,2 +1,0 @@
-extern print
-extern aaa
