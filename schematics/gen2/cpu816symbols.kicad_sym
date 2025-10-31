@@ -1432,7 +1432,7 @@
 			(pin passive line
 				(at -15.24 -46.99 0)
 				(length 3.81)
-				(name "~{RINST}"
+				(name "~{RCONST}"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1450,7 +1450,7 @@
 			(pin passive line
 				(at -15.24 -49.53 0)
 				(length 3.81)
-				(name "~{RADRH}"
+				(name "~{RALU}"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1468,7 +1468,7 @@
 			(pin passive line
 				(at -15.24 -52.07 0)
 				(length 3.81)
-				(name "~{RADRL}"
+				(name "~{RINTC}"
 					(effects
 						(font
 							(size 1.27 1.27)
