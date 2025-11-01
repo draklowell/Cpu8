@@ -12288,7 +12288,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "ac3354cb-eb52-4263-9e76-b4793962f708")
 		(property "Reference" "U1"
 			(at 101.2033 38.1 0)
@@ -12333,6 +12332,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Type" "Accumulator"
+			(at 99.06 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "14"

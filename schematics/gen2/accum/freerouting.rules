@@ -1,0 +1,91 @@
+
+(rules PCB freerouting.dsn
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute off)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 1)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 3.5)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 3.5)
+    )
+  )
+  (rule
+    (width 200.0)
+    (clearance 200.0)
+    (clearance 100.0 (type smd_to_turn_gap))
+    (clearance 50.0 (type smd))
+    (clearance 200.0 (type "kicad_default"))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    "unconnected-(BC1-PCINC-PadB47)" VCC GND /DATA3 /LAC "unconnected-(BC1-~{RARGH}-PadB19)" "unconnected-(BC1-~{WAIT}-PadA68)" /DATA4
+    "unconnected-(BC1-STATE15-PadA49)" "unconnected-(BC1-~{LYH}-PadA25)" "unconnected-(BC1-STATE6-PadA39)" "unconnected-(BC1-LSPL-PadA16)" "unconnected-(BC1-~{ALUCI}-PadB38)" "unconnected-(BC1-INTREQ-PadA67)" "unconnected-(BC1-STATE5-PadA38)" "unconnected-(BC1-STATE2-PadA35)"
+    "unconnected-(BC1-PULSE-PadB74)" "unconnected-(BC1-ALUS2-PadB51)" "unconnected-(BC1-STATE13-PadA47)" "unconnected-(BC1-STATE0-PadA33)" /DATA2 /DATA1 "unconnected-(BC1-ALUS0-PadB48)" "unconnected-(BC1-STATE4-PadA37)"
+    "unconnected-(BC1-~{RALU}-PadB30)" "unconnected-(BC1-~{RMEM}-PadB14)" "unconnected-(BC1-RESET-PadA69)" "unconnected-(BC1-~{RPCH}-PadB17)" "unconnected-(BC1-STATE1-PadA34)" "unconnected-(BC1-~{RPCL}-PadB18)" /ACSHRIGHT "unconnected-(BC1-ALUSO-PadA62)"
+    /DATA0 "unconnected-(BC1-L0-PadB33)" "unconnected-(BC1-~{HALT}-PadB46)" "unconnected-(BC1-ADRDEC-PadB60)" "unconnected-(BC1-~{LFR}-PadA28)" "unconnected-(BC1-~{RSPH}-PadB15)" "unconnected-(BC1-STATE8-PadA42)" "unconnected-(BC1-ALUS1-PadB49)"
+    "unconnected-(BC1-~{RYH}-PadB25)" "unconnected-(BC1-INTE-PadB57)" "unconnected-(BC1-LADRH-PadA30)" "unconnected-(BC1-~{RARGL}-PadB20)" "unconnected-(BC1-~{RCONST}-PadB29)" "unconnected-(BC1-~{LINST}-PadA29)" "unconnected-(BC1-STATE9-PadA43)" "unconnected-(BC1-~{RFR}-PadB28)"
+    "unconnected-(BC1-STATE11-PadA45)" "unconnected-(BC1-~{RZL}-PadB26)" /DATA5 "unconnected-(BC1-STATE12-PadA46)" "unconnected-(BC1-~{SCCLR}-PadB45)" "unconnected-(BC1-STATE14-PadA48)" "unconnected-(BC1-~{LARGL}-PadA20)" "unconnected-(BC1-R1-PadB42)"
+    "unconnected-(BC1-~{LYL}-PadA24)" "unconnected-(BC1-~{RXH}-PadB22)" "unconnected-(BC1-~{LZL}-PadA26)" "unconnected-(BC1-L3-PadB36)" "unconnected-(BC1-~{RYL}-PadB24)" "unconnected-(BC1-ALUS3-PadB52)" "unconnected-(BC1-R2-PadB43)" /~{CLK}
+    "unconnected-(BC1-LADRL-PadA31)" "unconnected-(BC1-~{INTD}-PadB58)" "unconnected-(BC1-LPCL-PadA18)" "unconnected-(BC1-~{LXH}-PadA22)" "unconnected-(BC1-L1-PadB34)" "unconnected-(BC1-STATE3-PadA36)" "unconnected-(BC1-LSPH-PadA15)" "unconnected-(BC1-R0-PadB40)"
+    "unconnected-(BC1-STATE7-PadA40)" "unconnected-(BC1-~{ALUCO}-PadA61)" "unconnected-(BC1-~{RSPL}-PadB16)" /DATA6 "unconnected-(BC1-~{LARGH}-PadA19)" "unconnected-(BC1-ALUZO-PadA60)" /~{RAC} "unconnected-(BC1-STATE10-PadA44)"
+    "unconnected-(BC1-~{RINTC}-PadB31)" "unconnected-(BC1-~{RZH}-PadB27)" "unconnected-(BC1-LPCH-PadA17)" "unconnected-(BC1-ALUM-PadB37)" "unconnected-(BC1-SPINC-PadB54)" "unconnected-(BC1-FRUpd-PadB39)" /DATA7 "unconnected-(BC1-ADDRINC-PadB61)"
+    "unconnected-(BC1-L2-PadB35)" "unconnected-(BC1-SPDEC-PadB53)" "unconnected-(BC1-R3-PadB44)" "unconnected-(BC1-~{LMEM}-PadA14)" "unconnected-(BC1-~{LZH}-PadA27)" /ACSHLEFT /ACCUM3 /ACCUM1
+    "Net-(U1-Cp)" /ACCUM5 /ACCUM2 /ACCUM7 /ACCUM4 /ACCUM0 /ACCUM6 "unconnected-(U2-O3-Pad12)"
+    "unconnected-(U2-O6-Pad9)" "unconnected-(U2-O4-Pad11)" "unconnected-(U2-O7-Pad7)" "unconnected-(U2-O5-Pad10)" "Net-(U2-E3)" "unconnected-(U3-Pad6)" "unconnected-(U3-Pad4)" "unconnected-(U3-Pad11)"
+    "unconnected-(U3-Pad10)" "unconnected-(U3-Pad5)" "unconnected-(U3-Pad12)" "unconnected-(U3-Pad9)" "unconnected-(U3-Pad8)" "unconnected-(U3-Pad13)"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
