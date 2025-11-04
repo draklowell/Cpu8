@@ -10386,7 +10386,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "297975c6-b5a2-4676-9b73-7165dfff7a32")
-		(property "Reference" "C13"
+		(property "Reference" "C5"
 			(at 246.38 73.66 90)
 			(effects
 				(font
@@ -10402,7 +10402,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 250.19 80.3148 0)
 			(effects
 				(font
@@ -10438,7 +10438,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C13")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -10454,7 +10454,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2ab712fd-44fc-414c-a624-8ad1fc2dc31b")
-		(property "Reference" "C12"
+		(property "Reference" "C4"
 			(at 210.82 19.05 90)
 			(effects
 				(font
@@ -10470,7 +10470,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 214.63 25.7048 0)
 			(effects
 				(font
@@ -10506,7 +10506,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C12")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -10641,110 +10641,6 @@
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
 					(reference "#PWR032")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74HC00")
-		(at 135.89 166.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3f754ccc-5ae6-465b-9b79-aa7b40fa5a00")
-		(property "Reference" "U1"
-			(at 135.8817 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74HC00"
-			(at 135.8817 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 135.89 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
-			(at 135.89 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "quad 2-input NAND gate"
-			(at 135.89 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "12"
-			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
-		)
-		(pin "1"
-			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce95")
-		)
-		(pin "8"
-			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
-		)
-		(pin "13"
-			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
-		)
-		(pin "3"
-			(uuid "6c76c829-245a-465c-966e-11463a8e090b")
-		)
-		(pin "4"
-			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
-		)
-		(pin "6"
-			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
-		)
-		(pin "5"
-			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
-		)
-		(pin "9"
-			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
-		)
-		(pin "10"
-			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
-		)
-		(pin "2"
-			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b5")
-		)
-		(pin "11"
-			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
-		)
-		(pin "14"
-			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
-		)
-		(pin "7"
-			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
-		)
-		(instances
-			(project ""
-				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -11371,6 +11267,110 @@
 		)
 	)
 	(symbol
+		(lib_id "74xx:74HC00")
+		(at 135.89 207.01 0)
+		(unit 2)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "702e8a2c-5e96-4c05-85b7-298922c593a0")
+		(property "Reference" "U1"
+			(at 135.8817 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74HC00"
+			(at 135.8817 200.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+			(at 135.89 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
+			(at 135.89 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "quad 2-input NAND gate"
+			(at 135.89 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "12"
+			(uuid "7b18c65d-32b1-4807-b5ae-a45a82927911")
+		)
+		(pin "1"
+			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce98")
+		)
+		(pin "8"
+			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6fa0")
+		)
+		(pin "13"
+			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9f")
+		)
+		(pin "3"
+			(uuid "6c76c829-245a-465c-966e-11463a8e090e")
+		)
+		(pin "4"
+			(uuid "4ca6c43b-82df-445e-b478-5982d912fc35")
+		)
+		(pin "6"
+			(uuid "5a3dbbf2-5d98-4530-99eb-542d6061c444")
+		)
+		(pin "5"
+			(uuid "6991264a-d4e6-4361-87be-22b66f040c5b")
+		)
+		(pin "9"
+			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09e")
+		)
+		(pin "10"
+			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20847")
+		)
+		(pin "2"
+			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b8")
+		)
+		(pin "11"
+			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278f")
+		)
+		(pin "14"
+			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39254")
+		)
+		(pin "7"
+			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed4")
+		)
+		(instances
+			(project "pc"
+				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
+					(reference "U1")
+					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 149.86 27.94 0)
 		(unit 1)
@@ -11616,110 +11616,6 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC00")
-		(at 135.89 207.01 0)
-		(unit 4)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "73423ac7-eaca-4df1-ad6b-d7e6f82874ee")
-		(property "Reference" "U1"
-			(at 135.8817 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74HC00"
-			(at 135.8817 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 135.89 207.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
-			(at 135.89 207.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "quad 2-input NAND gate"
-			(at 135.89 207.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "12"
-			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
-		)
-		(pin "1"
-			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce95")
-		)
-		(pin "8"
-			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
-		)
-		(pin "13"
-			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
-		)
-		(pin "3"
-			(uuid "6c76c829-245a-465c-966e-11463a8e090b")
-		)
-		(pin "4"
-			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
-		)
-		(pin "6"
-			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
-		)
-		(pin "5"
-			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
-		)
-		(pin "9"
-			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
-		)
-		(pin "10"
-			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
-		)
-		(pin "2"
-			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b5")
-		)
-		(pin "11"
-			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
-		)
-		(pin "14"
-			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
-		)
-		(pin "7"
-			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
-		)
-		(instances
-			(project ""
-				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "U1")
-					(unit 4)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74HC00")
 		(at 135.89 224.79 0)
 		(unit 3)
 		(exclude_from_sim no)
@@ -11772,46 +11668,46 @@
 			)
 		)
 		(pin "12"
-			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
+			(uuid "7b18c65d-32b1-4807-b5ae-a45a82927910")
 		)
 		(pin "1"
-			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce95")
+			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce97")
 		)
 		(pin "8"
-			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
+			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9f")
 		)
 		(pin "13"
-			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
+			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9e")
 		)
 		(pin "3"
-			(uuid "6c76c829-245a-465c-966e-11463a8e090b")
+			(uuid "6c76c829-245a-465c-966e-11463a8e090d")
 		)
 		(pin "4"
-			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
+			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241d")
 		)
 		(pin "6"
-			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
+			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b329")
 		)
 		(pin "5"
-			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
+			(uuid "2879db1d-db7a-4d89-97fe-a364260e9907")
 		)
 		(pin "9"
-			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
+			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09d")
 		)
 		(pin "10"
-			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
+			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20846")
 		)
 		(pin "2"
-			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b5")
+			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b7")
 		)
 		(pin "11"
-			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
+			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278e")
 		)
 		(pin "14"
-			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
+			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39253")
 		)
 		(pin "7"
-			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
+			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed3")
 		)
 		(instances
 			(project ""
@@ -11832,8 +11728,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "85535ddc-870e-41b4-92e9-979fe0195998")
-		(property "Reference" "C11"
-			(at 162.56 102.5398 90)
+		(property "Reference" "C3"
+			(at 162.56 101.6 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11841,14 +11737,14 @@
 			)
 		)
 		(property "Value" "C"
-			(at 162.56 105.0798 90)
+			(at 162.56 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 166.37 108.2548 0)
 			(effects
 				(font
@@ -11884,7 +11780,111 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C11")
+					(reference "C3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "74xx:74HC00")
+		(at 135.89 180.34 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8917f65b-8fa1-4af8-99ec-8b9c221fa773")
+		(property "Reference" "U1"
+			(at 135.8817 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74HC00"
+			(at 135.8817 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+			(at 135.89 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
+			(at 135.89 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "quad 2-input NAND gate"
+			(at 135.89 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "12"
+			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
+		)
+		(pin "1"
+			(uuid "08934f94-6692-4fc4-bde9-4f9c145728cd")
+		)
+		(pin "8"
+			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
+		)
+		(pin "13"
+			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
+		)
+		(pin "3"
+			(uuid "620b306a-9279-450c-9aa6-89f34f2b397b")
+		)
+		(pin "4"
+			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
+		)
+		(pin "6"
+			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
+		)
+		(pin "5"
+			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
+		)
+		(pin "9"
+			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
+		)
+		(pin "10"
+			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
+		)
+		(pin "2"
+			(uuid "f327aea9-ca06-458b-870c-a5749903eaa1")
+		)
+		(pin "11"
+			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
+		)
+		(pin "14"
+			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
+		)
+		(pin "7"
+			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
+		)
+		(instances
+			(project "pc"
+				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -12098,7 +12098,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9d119be7-beff-4d2a-85d3-2fbad637b97f")
-		(property "Reference" "C16"
+		(property "Reference" "C8"
 			(at 358.14 151.13 90)
 			(effects
 				(font
@@ -12114,7 +12114,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 354.33 159.7152 0)
 			(effects
 				(font
@@ -12150,7 +12150,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C16")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -12300,7 +12300,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a1bc2ffb-2bb1-40d4-9d89-eb3eb4c662b3")
-		(property "Reference" "C9"
+		(property "Reference" "C1"
 			(at 88.9 74.93 90)
 			(effects
 				(font
@@ -12316,7 +12316,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 92.71 83.5152 0)
 			(effects
 				(font
@@ -12352,7 +12352,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C9")
+					(reference "C1")
 					(unit 1)
 				)
 			)
@@ -12620,110 +12620,6 @@
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
 					(reference "#PWR027")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "74xx:74HC00")
-		(at 135.89 180.34 0)
-		(unit 2)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b8041d76-bb2e-491e-8398-4005f106380e")
-		(property "Reference" "U1"
-			(at 135.8817 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74HC00"
-			(at 135.8817 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 135.89 180.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
-			(at 135.89 180.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "quad 2-input NAND gate"
-			(at 135.89 180.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "12"
-			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
-		)
-		(pin "1"
-			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce95")
-		)
-		(pin "8"
-			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
-		)
-		(pin "13"
-			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
-		)
-		(pin "3"
-			(uuid "6c76c829-245a-465c-966e-11463a8e090b")
-		)
-		(pin "4"
-			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
-		)
-		(pin "6"
-			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
-		)
-		(pin "5"
-			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
-		)
-		(pin "9"
-			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
-		)
-		(pin "10"
-			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
-		)
-		(pin "2"
-			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b5")
-		)
-		(pin "11"
-			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
-		)
-		(pin "14"
-			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
-		)
-		(pin "7"
-			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
-		)
-		(instances
-			(project ""
-				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "U1")
-					(unit 2)
 				)
 			)
 		)
@@ -13414,7 +13310,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bdc0858f-15a6-49a7-9e2c-5cd83622b11e")
-		(property "Reference" "C10"
+		(property "Reference" "C2"
 			(at 153.67 20.32 90)
 			(effects
 				(font
@@ -13430,7 +13326,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 157.48 26.9748 0)
 			(effects
 				(font
@@ -13466,7 +13362,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C10")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -13540,6 +13436,110 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC00")
+		(at 135.89 166.37 0)
+		(unit 4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c54a105f-7e4b-4eca-bddc-d3bc43295456")
+		(property "Reference" "U1"
+			(at 135.8817 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74HC00"
+			(at 135.8817 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+			(at 135.89 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
+			(at 135.89 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "quad 2-input NAND gate"
+			(at 135.89 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "12"
+			(uuid "7532755f-cf40-4cc7-9d96-58b8ddc8e1ce")
+		)
+		(pin "1"
+			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce96")
+		)
+		(pin "8"
+			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9e")
+		)
+		(pin "13"
+			(uuid "f60583ba-0e33-485a-a967-909ee431d4f6")
+		)
+		(pin "3"
+			(uuid "6c76c829-245a-465c-966e-11463a8e090c")
+		)
+		(pin "4"
+			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241c")
+		)
+		(pin "6"
+			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b328")
+		)
+		(pin "5"
+			(uuid "2879db1d-db7a-4d89-97fe-a364260e9906")
+		)
+		(pin "9"
+			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09c")
+		)
+		(pin "10"
+			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20845")
+		)
+		(pin "2"
+			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b6")
+		)
+		(pin "11"
+			(uuid "62948d01-5ba9-4fe4-8214-493748c01fd7")
+		)
+		(pin "14"
+			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39252")
+		)
+		(pin "7"
+			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed2")
+		)
+		(instances
+			(project "pc"
+				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
+					(reference "U1")
+					(unit 4)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "74xx:74HC00")
 		(at 168.91 123.19 0)
 		(unit 5)
 		(exclude_from_sim no)
@@ -13594,46 +13594,46 @@
 			)
 		)
 		(pin "12"
-			(uuid "7b18c65d-32b1-4807-b5ae-a45a8292790e")
+			(uuid "7b18c65d-32b1-4807-b5ae-a45a82927912")
 		)
 		(pin "1"
-			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce95")
+			(uuid "e863acf8-287b-4187-ad9a-c8959e61ce99")
 		)
 		(pin "8"
-			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6f9d")
+			(uuid "f77f60d4-db0c-4bb2-ab99-55b8d01a6fa1")
 		)
 		(pin "13"
-			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4cce9c")
+			(uuid "a6eabfa2-b043-4b3d-8d8e-0700cd4ccea0")
 		)
 		(pin "3"
-			(uuid "6c76c829-245a-465c-966e-11463a8e090b")
+			(uuid "6c76c829-245a-465c-966e-11463a8e090f")
 		)
 		(pin "4"
-			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241b")
+			(uuid "9582f552-d8cf-4f79-b6c2-cb5aab8f241f")
 		)
 		(pin "6"
-			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b327")
+			(uuid "75c7ae6e-3820-4062-b612-bcb26ef8b32b")
 		)
 		(pin "5"
-			(uuid "2879db1d-db7a-4d89-97fe-a364260e9905")
+			(uuid "2879db1d-db7a-4d89-97fe-a364260e9909")
 		)
 		(pin "9"
-			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09b")
+			(uuid "dc0d7bbd-bf69-43ed-a538-dfc7b285b09f")
 		)
 		(pin "10"
-			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20844")
+			(uuid "1e718089-f3d9-4ff5-affe-7dac29b20848")
 		)
 		(pin "2"
-			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b5")
+			(uuid "6baae8fe-2bff-40d9-a2e3-d0b20791d1b9")
 		)
 		(pin "11"
-			(uuid "0037a4f1-64b7-4f05-ab12-aec315c0278c")
+			(uuid "0037a4f1-64b7-4f05-ab12-aec315c02790")
 		)
 		(pin "14"
-			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39251")
+			(uuid "4140b1f5-37cd-416e-94dd-ea4a13b39255")
 		)
 		(pin "7"
-			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed1")
+			(uuid "ac6ad68d-eddf-4c48-a01d-4fe242ed3ed5")
 		)
 		(instances
 			(project ""
@@ -13964,7 +13964,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e93b253e-c588-4055-ac67-4b578ba82924")
-		(property "Reference" "C15"
+		(property "Reference" "C7"
 			(at 300.99 153.67 90)
 			(effects
 				(font
@@ -13980,7 +13980,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 297.18 162.2552 0)
 			(effects
 				(font
@@ -14016,7 +14016,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C15")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -14164,7 +14164,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f86d5c7b-b7eb-4fa9-bd83-fce8a77abae0")
-		(property "Reference" "C14"
+		(property "Reference" "C6"
 			(at 292.1 72.39 90)
 			(effects
 				(font
@@ -14180,7 +14180,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D4.0mm_P1.50mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 295.91 79.0448 0)
 			(effects
 				(font
@@ -14216,7 +14216,7 @@
 		(instances
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
-					(reference "C14")
+					(reference "C6")
 					(unit 1)
 				)
 			)
