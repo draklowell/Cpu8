@@ -1960,6 +1960,130 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "cpu816symbols:BusConnector"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -5029,6 +5153,12 @@
 		(uuid "bea69611-f22b-44f7-93a2-b33ffd20b4fd")
 	)
 	(junction
+		(at 147.32 179.07)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ccf79f93-2630-4e6a-bf47-d3c2569b544a")
+	)
+	(junction
 		(at 222.25 196.85)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5049,10 +5179,6 @@
 	(no_connect
 		(at 237.49 120.65)
 		(uuid "0a3ac1a3-1177-4238-bbb6-3a5ab30cd997")
-	)
-	(no_connect
-		(at 128.27 182.88)
-		(uuid "0fe63129-6369-49b9-a0db-51d4f43ddaf0")
 	)
 	(no_connect
 		(at 88.9 144.78)
@@ -5121,6 +5247,10 @@
 	(no_connect
 		(at 88.9 142.24)
 		(uuid "3cd9dea4-80d5-4fd5-b424-ea96c8b47509")
+	)
+	(no_connect
+		(at 170.18 181.61)
+		(uuid "411ef176-d1eb-49a6-8ca0-e34b95fd3230")
 	)
 	(no_connect
 		(at 58.42 201.93)
@@ -5213,10 +5343,6 @@
 	(no_connect
 		(at 58.42 191.77)
 		(uuid "7f1cc0dc-952b-4979-99e5-ec309196bfa6")
-	)
-	(no_connect
-		(at 143.51 180.34)
-		(uuid "81229755-aecd-4b6b-a105-8d8e4d967c89")
 	)
 	(no_connect
 		(at 88.9 179.07)
@@ -5313,10 +5439,6 @@
 	(no_connect
 		(at 88.9 186.69)
 		(uuid "d7ab6f0c-01de-494a-ac51-4c63a9d8ffb6")
-	)
-	(no_connect
-		(at 128.27 177.8)
-		(uuid "d96c7394-91ff-4664-ac05-d8a19e916dca")
 	)
 	(no_connect
 		(at 227.33 49.53)
@@ -6052,6 +6174,16 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 179.07) (xy 154.94 179.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "037dfe0c-d967-4135-a610-3fcb39f95f80")
+	)
+	(wire
+		(pts
 			(xy 194.31 142.24) (xy 264.16 142.24)
 		)
 		(stroke
@@ -6189,6 +6321,16 @@
 			(type default)
 		)
 		(uuid "155fe383-1f00-40d9-8a1b-c3622eccc782")
+	)
+	(wire
+		(pts
+			(xy 147.32 179.07) (xy 147.32 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "156eb2d6-c7b4-4803-97ff-5d5fedc0596a")
 	)
 	(wire
 		(pts
@@ -6540,6 +6682,16 @@
 		)
 		(uuid "3208d52b-6309-44e5-9f0d-791535a49a0a")
 	)
+	(wire
+		(pts
+			(xy 137.16 179.07) (xy 134.62 179.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3210dad9-479c-4b6b-983f-27bee98507d5")
+	)
 	(bus
 		(pts
 			(xy 270.51 138.43) (xy 271.78 138.43)
@@ -6729,6 +6881,16 @@
 			(type default)
 		)
 		(uuid "4026b9b3-e6ae-44fe-a41b-f37e94687b53")
+	)
+	(wire
+		(pts
+			(xy 144.78 179.07) (xy 147.32 179.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "418bbf3f-b18f-4c79-9c26-d5de8cb0eb6a")
 	)
 	(wire
 		(pts
@@ -9042,6 +9204,16 @@
 	)
 	(wire
 		(pts
+			(xy 147.32 184.15) (xy 154.94 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb15ed67-e2f4-4df8-b5f4-a86cf6a14944")
+	)
+	(wire
+		(pts
 			(xy 106.68 222.25) (xy 128.27 222.25)
 		)
 		(stroke
@@ -10253,6 +10425,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:VCC")
+		(at 134.62 179.07 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1bd12515-1715-429c-a949-12e33ba408b0")
+		(property "Reference" "#PWR01"
+			(at 134.62 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VCC"
+			(at 134.62 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 134.62 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "51862ac4-88b1-428e-b378-b488b7c06ca5")
+		)
+		(instances
+			(project ""
+				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74HC245")
 		(at 361.95 187.96 0)
 		(unit 1)
@@ -10402,7 +10640,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 250.19 80.3148 0)
 			(effects
 				(font
@@ -10470,7 +10708,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 214.63 25.7048 0)
 			(effects
 				(font
@@ -11744,7 +11982,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 166.37 108.2548 0)
 			(effects
 				(font
@@ -11788,7 +12026,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC00")
-		(at 135.89 180.34 0)
+		(at 162.56 181.61 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11797,7 +12035,7 @@
 		(fields_autoplaced yes)
 		(uuid "8917f65b-8fa1-4af8-99ec-8b9c221fa773")
 		(property "Reference" "U1"
-			(at 135.8817 171.45 0)
+			(at 162.5517 172.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11805,7 +12043,7 @@
 			)
 		)
 		(property "Value" "74HC00"
-			(at 135.8817 173.99 0)
+			(at 162.5517 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11813,7 +12051,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
-			(at 135.89 180.34 0)
+			(at 162.56 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11822,7 +12060,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.ti.com/lit/gpn/sn74hc00"
-			(at 135.89 180.34 0)
+			(at 162.56 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11831,7 +12069,7 @@
 			)
 		)
 		(property "Description" "quad 2-input NAND gate"
-			(at 135.89 180.34 0)
+			(at 162.56 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12114,7 +12352,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 354.33 159.7152 0)
 			(effects
 				(font
@@ -12316,7 +12554,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
 			(at 92.71 83.5152 0)
 			(effects
 				(font
@@ -13326,7 +13564,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 157.48 26.9748 0)
 			(effects
 				(font
@@ -13429,6 +13667,74 @@
 			(project "pc"
 				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
 					(reference "#PWR040")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 140.97 179.07 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c4440c56-8196-4ab9-99e1-a8c6299d7fa8")
+		(property "Reference" "R1"
+			(at 140.97 172.72 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "R"
+			(at 140.97 175.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+			(at 140.97 180.848 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 140.97 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 140.97 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "98559533-67fc-4634-b563-77d9cae52fb3")
+		)
+		(pin "1"
+			(uuid "7add7973-bb5e-4884-bf7a-2d17aba3077b")
+		)
+		(instances
+			(project ""
+				(path "/34f7239d-5890-443b-b0ee-b6e214f6aaae"
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -13980,7 +14286,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 297.18 162.2552 0)
 			(effects
 				(font
@@ -14180,7 +14486,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
 			(at 295.91 79.0448 0)
 			(effects
 				(font
