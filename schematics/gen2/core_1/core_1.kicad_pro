@@ -451,7 +451,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "core_2.kicad_pro",
+    "filename": "core_1.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -567,7 +567,7 @@
       "include_excluded_from_bom": true,
       "name": "Default Editing",
       "sort_asc": true,
-      "sort_field": "Налаштування"
+      "sort_field": "Reference"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -597,14 +597,6 @@
       "version": 1
     },
     "net_format_name": "",
-    "ngspice": {
-      "fix_include_paths": true,
-      "meta": {
-        "version": 0
-      },
-      "model_mode": 4,
-      "workbook_filename": ""
-    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "space_save_all_events": true,
@@ -619,7 +611,7 @@
   },
   "sheets": [
     [
-      "59b2db81-41fa-4862-96ef-fb4ce3ab7be6",
+      "17441c17-d186-429b-a2db-836f86810133",
       "Root"
     ]
   ],
