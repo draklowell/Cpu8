@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [],
@@ -478,7 +478,19 @@
     "meta": {
       "version": 4
     },
-    "net_colors": null,
+    "net_colors": {
+      "/R4": "rgb(255, 42, 245)",
+      "/STATE0": "rgb(255, 16, 12)",
+      "/STATE1": "rgb(255, 18, 20)",
+      "/STATE2": "rgb(255, 38, 17)",
+      "/STATE3": "rgb(255, 14, 20)",
+      "/STATE4": "rgb(255, 12, 18)",
+      "/STATE5": "rgb(255, 21, 10)",
+      "/STATE6": "rgb(255, 10, 21)",
+      "/STATE7": "rgb(255, 6, 19)",
+      "/~{ALUWriter}": "rgb(17, 255, 55)",
+      "/~{IntAck}": "rgb(255, 138, 17)"
+    },
     "netclass_assignments": null,
     "netclass_patterns": []
   },
