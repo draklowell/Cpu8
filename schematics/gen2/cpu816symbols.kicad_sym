@@ -1840,6 +1840,24 @@
 				)
 			)
 			(pin passive line
+				(at 15.24 63.5 180)
+				(length 3.81)
+				(name "STATE16"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "A79"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
 				(at 15.24 60.96 180)
 				(length 3.81)
 				(name "DATA0"
