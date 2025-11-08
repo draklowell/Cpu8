@@ -7621,6 +7621,12 @@
 		(uuid "2ea50115-1bc6-4702-a966-906e09d8fbe5")
 	)
 	(junction
+		(at 215.9 55.88)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2ea523cc-057b-47be-a3c9-44fc5146a587")
+	)
+	(junction
 		(at 309.88 262.89)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -9688,6 +9694,16 @@
 	)
 	(wire
 		(pts
+			(xy 215.9 53.34) (xy 215.9 55.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "452bd14d-a1ea-45b9-adf6-3afc70d5b3b7")
+	)
+	(wire
+		(pts
 			(xy 300.99 125.73) (xy 303.53 125.73)
 		)
 		(stroke
@@ -9715,6 +9731,16 @@
 			(type default)
 		)
 		(uuid "46789ed9-2b72-405d-b0b9-203d9eb4589a")
+	)
+	(wire
+		(pts
+			(xy 215.9 55.88) (xy 215.9 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4915657e-a382-4b92-87e2-43160f544077")
 	)
 	(wire
 		(pts
@@ -15102,6 +15128,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 223.52 55.88 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4503e60c-00cc-4cce-92d6-fe64e3af6ea5")
+		(property "Reference" "#PWR021"
+			(at 223.52 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 227.076 56.134 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 223.52 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9863d412-cd6a-4df7-8588-210a40d72b89")
+		)
+		(instances
+			(project ""
+				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
+					(reference "#PWR021")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "74xx:74LS574")
 		(at 414.02 284.48 0)
 		(unit 1)
@@ -16010,6 +16101,74 @@
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
 					(reference "U3")
 					(unit 4)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 219.71 55.88 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "61b4f593-ade9-4187-be84-a26930451ffb")
+		(property "Reference" "C4"
+			(at 219.71 48.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "C"
+			(at 219.71 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+			(at 223.52 54.9148 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 219.71 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 219.71 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "09b06b81-54e7-47d2-9097-47cb597b77c1")
+		)
+		(pin "1"
+			(uuid "7a1c1fc0-f0ff-4f7d-a91f-0550c9b7e8f2")
+		)
+		(instances
+			(project ""
+				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
+					(reference "C4")
+					(unit 1)
 				)
 			)
 		)
@@ -18300,7 +18459,7 @@
 	)
 	(symbol
 		(lib_id "power:VCC")
-		(at 215.9 59.69 0)
+		(at 215.9 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -18309,7 +18468,7 @@
 		(fields_autoplaced yes)
 		(uuid "af753c25-3469-44b1-b0b7-94b31759d550")
 		(property "Reference" "#PWR07"
-			(at 215.9 63.5 0)
+			(at 215.9 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18318,7 +18477,7 @@
 			)
 		)
 		(property "Value" "VCC"
-			(at 215.9 54.61 0)
+			(at 215.9 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18326,7 +18485,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 215.9 59.69 0)
+			(at 215.9 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18335,7 +18494,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 215.9 59.69 0)
+			(at 215.9 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18344,7 +18503,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 215.9 59.69 0)
+			(at 215.9 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
