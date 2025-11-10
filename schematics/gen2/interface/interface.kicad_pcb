@@ -4472,6 +4472,7 @@
 			(net 6 "VCC")
 			(pinfunction "VCC")
 			(pintype "power_in")
+			(zone_connect 0)
 			(uuid "bdde59b6-6a30-4538-9451-4525f4272da5")
 		)
 		(embedded_fonts no)
