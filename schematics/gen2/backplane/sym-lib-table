@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "cpu816symbols")(type "KiCad")(uri "/home/andriy/PCO/Cpu8/schematics/gen2/cpu816symbols.kicad_sym")(options "")(descr ""))
+)
