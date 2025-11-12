@@ -624,7 +624,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U8"
-			(at 3.81 -2.33 90)
+			(at 5.045 -2.445 90)
 			(layer "F.SilkS")
 			(uuid "10fc9980-4745-49bf-aa3f-780b783e4549")
 			(effects
@@ -1254,7 +1254,7 @@
 		(descr "C, Disc series, Radial, pin pitch=2.50mm, diameter*width=5*2.5mm^2, Capacitor, http://cdn-reichelt.de/documents/datenblatt/B300/DS_KERKO_TC.pdf")
 		(tags "C Disc series Radial pin pitch 2.50mm diameter 5mm width 2.5mm Capacitor")
 		(property "Reference" "C5"
-			(at 1.25 -2.5 90)
+			(at 0.37 -2.56 90)
 			(layer "F.SilkS")
 			(uuid "85d87952-76fd-444d-86c9-e7a44590b684")
 			(effects
@@ -1786,7 +1786,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U7"
-			(at 3.81 -2.33 90)
+			(at 2.8712 -2.445 90)
 			(layer "F.SilkS")
 			(uuid "bf23bc0c-5843-4590-966b-800b482412be")
 			(effects
@@ -2430,7 +2430,7 @@
 		(descr "C, Radial series, Radial, pin pitch=2.50mm, diameter=6.3mm, height=5mm, Non-Polar Electrolytic Capacitor")
 		(tags "C Radial series Radial pin pitch 2.50mm diameter 6.3mm height 5mm Non-Polar Electrolytic Capacitor")
 		(property "Reference" "C11"
-			(at 1.25 -4.4 0)
+			(at 5.7 2.8 0)
 			(layer "F.SilkS")
 			(uuid "1b276383-0c68-4174-bd32-384a9997a906")
 			(effects
@@ -2932,7 +2932,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U1"
-			(at 3.81 -2.33 90)
+			(at 0.35 -2.695 90)
 			(layer "F.SilkS")
 			(uuid "13eeefa1-d26d-4ae7-9855-6ab6bbd6e57e")
 			(effects
@@ -3575,7 +3575,7 @@
 		(descr "24-lead though-hole mounted DIP package, row spacing 15.24mm (600 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 15.24mm 600mil Socket LongPads")
 		(property "Reference" "U4"
-			(at 7.62 -2.33 90)
+			(at 4.515 -2.72 90)
 			(layer "F.SilkS")
 			(uuid "31bfb70a-8af7-4c2a-89f9-b7c2844f6763")
 			(effects
@@ -4557,7 +4557,7 @@
 		(descr "PCIexpress Bus Edge Connector x1 http://www.ritrontek.com/uploadfile/2016/1026/20161026105231124.pdf#page=70")
 		(tags "PCIe")
 		(property "Reference" "BC1"
-			(at 5 -3.5 0)
+			(at 7.5 -3.75 0)
 			(layer "F.SilkS")
 			(uuid "134cf1f1-65e6-4fe9-8812-ab732baf7c8a")
 			(effects
@@ -6930,7 +6930,7 @@
 		(descr "14-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U10"
-			(at 3.81 -2.33 90)
+			(at 2.07 -2.58 90)
 			(layer "F.SilkS")
 			(uuid "79454ef9-6d99-4712-9d86-d5750df49d62")
 			(effects
@@ -8126,7 +8126,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U6"
-			(at 3.81 -2.33 90)
+			(at 1.9475 -2.445 90)
 			(layer "F.SilkS")
 			(uuid "d087581b-3eaa-4d89-9af5-ea9f3eb83c4e")
 			(effects
@@ -13204,28 +13204,12 @@
 		(uuid "57b3d77f-4c51-440f-b968-ce705ea46234")
 	)
 	(segment
-		(start 143.475 85.425)
-		(end 141.64 85.425)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 32)
-		(uuid "57f33fe6-781d-43a5-8075-f848ec6e287c")
-	)
-	(segment
 		(start 161 137.325)
 		(end 162.226 136.099)
 		(width 0.2)
 		(layer "F.Cu")
 		(net 32)
 		(uuid "5e2c4e44-38b8-48cd-9e45-5402b109e4b0")
-	)
-	(segment
-		(start 141.64 85.425)
-		(end 133.2 76.985)
-		(width 0.2)
-		(layer "F.Cu")
-		(net 32)
-		(uuid "65f2f1d3-a8f3-4d30-8125-b5c83a99dc48")
 	)
 	(segment
 		(start 174.761049 87.8265)
@@ -13276,6 +13260,22 @@
 		(uuid "98bc4f8f-8998-4386-b76a-f06500dd2d4a")
 	)
 	(segment
+		(start 143.475 85.425)
+		(end 140.925 85.425)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 32)
+		(uuid "b1bc8dd5-3303-437c-a00e-34676b68fff1")
+	)
+	(segment
+		(start 140.925 85.425)
+		(end 133.2 77.7)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 32)
+		(uuid "b6cc511f-8c1b-492c-a801-68abc9e7102a")
+	)
+	(segment
 		(start 162.226 136.099)
 		(end 169.851 136.099)
 		(width 0.2)
@@ -13314,6 +13314,14 @@
 		(layer "F.Cu")
 		(net 32)
 		(uuid "e80bbb12-13a2-4189-9208-32ae217fa22d")
+	)
+	(segment
+		(start 133.2 77.7)
+		(end 133.2 76.985)
+		(width 0.2)
+		(layer "F.Cu")
+		(net 32)
+		(uuid "eb97a1a9-dc12-4fbb-8f7a-5f9d2be0d5c8")
 	)
 	(segment
 		(start 173.848951 87.8265)
