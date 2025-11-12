@@ -13,7 +13,7 @@
       "shapes": 1.0,
       "tracks": 1.0,
       "vias": 1.0,
-      "zones": 0.6
+      "zones": 0.6000000238418579
     },
     "selection_filter": {
       "dimensions": true,
@@ -45,6 +45,7 @@
       "pads",
       "zones",
       "drc_warnings",
+      "drc_exclusions",
       "locked_item_shadows",
       "conflict_shadows",
       "shapes"
@@ -87,16 +88,16 @@
       9
     ],
     "col_widths": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      156,
+      141,
+      103,
+      71,
+      103,
+      103,
+      103,
+      74,
+      103,
+      103
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
