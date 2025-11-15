@@ -88,8 +88,8 @@ constexpr uint16_t kRamBaseAddress = 0x4000;
                           "address for symbol '" + name + "' exceeds 16-bit range");
     }
     const bool relocatable =
-    sym.section == SectionType::Text || sym.section == SectionType::RoData ||
-    sym.section == SectionType::Data || sym.section == SectionType::Bss;
+        sym.section == SectionType::Text || sym.section == SectionType::RoData ||
+        sym.section == SectionType::Data || sym.section == SectionType::Bss;
 
     return SymbolResolution{static_cast<uint16_t>(absolute & 0xFFFFu), relocatable};
 }

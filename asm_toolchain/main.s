@@ -1,17 +1,17 @@
-#include "sum.inc"
-#define ONE 1
-#define TWO 2
+
 .global main
+.extern sum
 .text
 main:
-    ld ac, [one]
-    ld zh, [two]
+    ldi sp, 0xFFFE
+    ld ac, [num1]
+    ld zh, [num2]
     call sum
     hlt
 
 
 .rodata
-one:
-    .byte ONE
-two:
-    .byte TWO
+num1:
+    .byte 12
+num2:
+    .byte 8

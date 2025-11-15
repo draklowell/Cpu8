@@ -37,7 +37,11 @@ add_executable(cpul
         ${ASM_HEADERS}
 )
 
-set_target_properties(cpua cpul
+add_executable(cpu_objdump
+        cpu_objdump.cpp
+)
+
+set_target_properties(cpua cpul cpu_objdump
 	PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
@@ -58,7 +62,7 @@ target_include_directories(cpul PRIVATE
 
 
 include(GNUInstallDirs)
-install(TARGETS cpua cpul
+install(TARGETS cpua cpul cpu_objdump
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 

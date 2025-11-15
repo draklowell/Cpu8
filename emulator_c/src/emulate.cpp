@@ -1,4 +1,5 @@
 #include "emulator.hpp"
+
 #include <iostream>
 #include <string>
 
@@ -7,8 +8,7 @@ int main(int argc, char** argv) {
         std::cerr << "Usage: " << argv[0]
                   << " <instruction_table.csv> <program.bin> [steps] [verbosity]\n"
                   << "Example:\n"
-                  << "  " << argv[0]
-                  << " table.csv emu.bin 52 TRACE\n"
+                  << "  " << argv[0] << " table.csv emu.bin 52 TRACE\n"
                   << "Notes:\n"
                   << "  - Steps default = -1, Verbosity default = TRACE"
                   << "  - If steps = -1, runs until HALT.\n"
@@ -22,9 +22,12 @@ int main(int argc, char** argv) {
     const std::string verbosityStr = (argc >= 5) ? argv[4] : "TRACE";
 
     DebugVerbosity verbosity;
-    if (verbosityStr == "SILENT") verbosity = DebugVerbosity::SILENT;
-    else if (verbosityStr == "STEP") verbosity = DebugVerbosity::STEP;
-    else if (verbosityStr == "TRACE") verbosity = DebugVerbosity::TRACE;
+    if (verbosityStr == "SILENT")
+        verbosity = DebugVerbosity::SILENT;
+    else if (verbosityStr == "STEP")
+        verbosity = DebugVerbosity::STEP;
+    else if (verbosityStr == "TRACE")
+        verbosity = DebugVerbosity::TRACE;
     else {
         std::cerr << "Unknown verbosity: " << verbosityStr
                   << " (use SILENT, STEP, or TRACE)\n";
