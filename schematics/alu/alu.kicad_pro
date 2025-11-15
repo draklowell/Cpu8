@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.0,
-          "height": 4.3,
-          "width": 0.7
+          "drill": 0.8,
+          "height": 1.27,
+          "width": 2.54
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.3
+          "min_clearance": 0.5
         }
       },
       "diff_pair_dimensions": [],
@@ -451,7 +451,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "alu_hub.kicad_pro",
+    "filename": "alu.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -488,7 +488,7 @@
       "idf": "",
       "netlist": "",
       "plot": "",
-      "pos_files": "/Users/nikitalenyk/Downloads/place/",
+      "pos_files": "",
       "specctra_dsn": "",
       "step": "",
       "svg": "",
@@ -611,7 +611,7 @@
   },
   "sheets": [
     [
-      "63bf5833-673b-41a8-8365-6351cd154882",
+      "efcf37e1-b2eb-4e0a-ac02-850b67bb2987",
       "Root"
     ]
   ],
