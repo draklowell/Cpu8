@@ -16757,7 +16757,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+		(property "Footprint" "TerminalBlock_Degson:SHDR2W100P0X500_1X2_1000X780X1020P"
 			(at 149.86 -2.54 0)
 			(effects
 				(font
