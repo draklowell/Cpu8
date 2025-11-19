@@ -5997,6 +5997,12 @@
 		(uuid "3f7a6642-2326-484d-8283-b8aa3a6fa27b")
 	)
 	(junction
+		(at 80.01 90.17)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3fb3c675-caac-4634-a2ce-9b9743be0823")
+	)
+	(junction
 		(at 292.1 43.18)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -9102,6 +9108,16 @@
 		)
 		(uuid "612b66f6-9ac6-4ab8-9263-6fc3b3fdc565")
 	)
+	(wire
+		(pts
+			(xy 80.01 90.17) (xy 74.93 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61869ce1-fef7-46b2-9a3f-a5f5772ffe88")
+	)
 	(bus
 		(pts
 			(xy 134.62 111.76) (xy 134.62 114.3)
@@ -9274,7 +9290,7 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 90.17) (xy 74.93 90.17)
+			(xy 86.36 90.17) (xy 80.01 90.17)
 		)
 		(stroke
 			(width 0)
@@ -15020,7 +15036,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 80.01 91.44 180)
+		(at 80.01 90.17 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15028,7 +15044,7 @@
 		(dnp no)
 		(uuid "56f8290b-0a1a-4049-be8e-cf410a61f751")
 		(property "Reference" "TP14"
-			(at 77.47 96.0121 0)
+			(at 77.47 94.7421 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15037,7 +15053,7 @@
 			)
 		)
 		(property "Value" "Sign"
-			(at 77.47 93.4721 0)
+			(at 77.47 92.2021 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15046,7 +15062,7 @@
 			)
 		)
 		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
-			(at 74.93 91.44 0)
+			(at 74.93 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15055,7 +15071,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 74.93 91.44 0)
+			(at 74.93 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15064,7 +15080,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 80.01 91.44 0)
+			(at 80.01 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
