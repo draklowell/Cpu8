@@ -19097,7 +19097,7 @@
 		(dnp no)
 		(uuid "d6a0f4ac-c8b3-4888-97e7-e1908c31dc43")
 		(property "Reference" "S3"
-			(at 119.38 137.6679 0)
+			(at 118.364 140.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)

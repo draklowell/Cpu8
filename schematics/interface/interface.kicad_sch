@@ -6274,6 +6274,12 @@
 		(uuid "277de9d3-0817-4a98-b116-70b653345bee")
 	)
 	(junction
+		(at 106.68 184.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "39a4f585-8377-46af-8893-6778e320ae6e")
+	)
+	(junction
 		(at 109.22 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7489,7 +7495,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 179.07) (xy 106.68 193.04)
+			(xy 106.68 179.07) (xy 106.68 184.15)
 		)
 		(stroke
 			(width 0)
@@ -8907,6 +8913,16 @@
 		)
 		(uuid "88d07bd2-706e-4799-a3eb-660ce9f3c40d")
 	)
+	(wire
+		(pts
+			(xy 105.41 184.15) (xy 106.68 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "893e7501-f1fe-4935-85fa-1549216d253d")
+	)
 	(bus
 		(pts
 			(xy 203.2 41.91) (xy 203.2 44.45)
@@ -9426,6 +9442,16 @@
 			(type default)
 		)
 		(uuid "b6ac5681-86a1-4d8f-ac27-4471a737c872")
+	)
+	(wire
+		(pts
+			(xy 106.68 184.15) (xy 106.68 193.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b85b88ab-4f10-4446-8aff-1406ddefbb64")
 	)
 	(wire
 		(pts
@@ -11513,7 +11539,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0a60e27e-d847-471d-90f2-2e40f2316ca1")
-		(property "Reference" "TP6"
+		(property "Reference" "LLow1"
 			(at 105.918 133.35 90)
 			(effects
 				(font
@@ -11529,7 +11555,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 109.22 133.35 0)
 			(effects
 				(font
@@ -11562,7 +11588,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP6")
+					(reference "LLow1")
 					(unit 1)
 				)
 			)
@@ -11576,10 +11602,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "0fa9c53b-7876-4f6e-b96f-c04bbbbde67f")
-		(property "Reference" "TP3"
-			(at 231.14 97.0279 0)
+		(property "Reference" "Drt1"
+			(at 230.632 97.028 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11588,7 +11613,7 @@
 			)
 		)
 		(property "Value" "Direction"
-			(at 231.14 99.5679 0)
+			(at 230.124 99.568 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11596,7 +11621,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 233.68 101.6 0)
 			(effects
 				(font
@@ -11629,7 +11654,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP3")
+					(reference "Drt1")
 					(unit 1)
 				)
 			)
@@ -11823,7 +11848,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1675a93c-b57e-4cac-844c-3f2d39331823")
-		(property "Reference" "TP2"
+		(property "Reference" "Pulse1"
 			(at 46.99 147.8279 0)
 			(effects
 				(font
@@ -11841,7 +11866,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 49.53 152.4 0)
 			(effects
 				(font
@@ -11874,7 +11899,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP2")
+					(reference "Pulse1")
 					(unit 1)
 				)
 			)
@@ -13832,7 +13857,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7c31b186-7af5-4ba5-86e7-f91261918596")
-		(property "Reference" "TP5"
+		(property "Reference" "LHIGH1"
 			(at 105.918 30.48 90)
 			(effects
 				(font
@@ -13848,7 +13873,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 109.22 30.48 0)
 			(effects
 				(font
@@ -13881,7 +13906,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP5")
+					(reference "LHIGH1")
 					(unit 1)
 				)
 			)
@@ -13897,7 +13922,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d2da6f1-e84d-4b7d-bccc-2aede091cb91")
-		(property "Reference" "TP8"
+		(property "Reference" "Decrm1"
 			(at 115.57 197.6119 0)
 			(effects
 				(font
@@ -13915,7 +13940,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 107.95 195.58 0)
 			(effects
 				(font
@@ -13948,7 +13973,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP8")
+					(reference "Decrm1")
 					(unit 1)
 				)
 			)
@@ -13964,7 +13989,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7d80a6cb-0560-46db-8931-3a51f9ee4f0a")
-		(property "Reference" "TP7"
+		(property "Reference" "Incrm1"
 			(at 102.108 179.07 90)
 			(effects
 				(font
@@ -13980,7 +14005,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 105.41 179.07 0)
 			(effects
 				(font
@@ -14013,7 +14038,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP7")
+					(reference "Incrm1")
 					(unit 1)
 				)
 			)
@@ -14231,7 +14256,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "85671e1d-990f-4e1c-b43b-82f24559f748")
-		(property "Reference" "TP9"
+		(property "Reference" "Reset1"
 			(at 123.19 45.7199 90)
 			(effects
 				(font
@@ -14249,7 +14274,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 118.11 52.07 0)
 			(effects
 				(font
@@ -14282,7 +14307,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP9")
+					(reference "Reset1")
 					(unit 1)
 				)
 			)
@@ -15364,7 +15389,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b4599688-63fd-4f44-a10d-0bb10bab21db")
-		(property "Reference" "TP4"
+		(property "Reference" "Enbl1"
 			(at 246.38 109.9819 0)
 			(effects
 				(font
@@ -15382,7 +15407,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 238.76 107.95 0)
 			(effects
 				(font
@@ -15415,7 +15440,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP4")
+					(reference "Enbl1")
 					(unit 1)
 				)
 			)
@@ -15931,7 +15956,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf7eea78-dfcd-4636-a966-7abeeca4012e")
-		(property "Reference" "TP10"
+		(property "Reference" "PWR1"
 			(at 50.038 -1.27 90)
 			(effects
 				(font
@@ -15947,7 +15972,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 53.34 -2.54 0)
 			(effects
 				(font
@@ -15980,7 +16005,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP10")
+					(reference "PWR1")
 					(unit 1)
 				)
 			)
@@ -16269,7 +16294,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ddf481be-4931-4822-979d-acc87276a6c4")
-		(property "Reference" "TP1"
+		(property "Reference" "~{CLK}1"
 			(at 24.638 134.62 90)
 			(effects
 				(font
@@ -16285,7 +16310,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 27.94 134.62 0)
 			(effects
 				(font
@@ -16318,7 +16343,7 @@
 		(instances
 			(project "interface"
 				(path "/a2b820ea-2fb5-45d1-b9ac-854bc1de3ffd"
-					(reference "TP1")
+					(reference "~{CLK}1")
 					(unit 1)
 				)
 			)
