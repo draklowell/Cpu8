@@ -3190,7 +3190,7 @@
 		(descr "16-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U5"
-			(at 2.61 -2.26 90)
+			(at 3.75 -3.47 90)
 			(layer "F.SilkS")
 			(uuid "d5e9fdaf-320b-4fff-8d61-44afebd9c8bd")
 			(effects
@@ -3962,7 +3962,7 @@
 		(descr "C, Disc series, Radial, pin pitch=5.00mm, diameter*width=5*2.5mm^2, Capacitor, http://cdn-reichelt.de/documents/datenblatt/B300/DS_KERKO_TC.pdf")
 		(tags "C Disc series Radial pin pitch 5.00mm diameter 5mm width 2.5mm Capacitor")
 		(property "Reference" "C6"
-			(at 2.5 -2.5 0)
+			(at 2.49 2.37 0)
 			(layer "F.SilkS")
 			(uuid "771d9987-6676-4873-941d-467bea487125")
 			(effects
@@ -4328,7 +4328,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U7"
-			(at 1.654777 -2.792254 90)
+			(at 3.615735 -2.68 90)
 			(layer "F.SilkS")
 			(uuid "ab519bbd-ea22-4394-8b09-20e2cac79480")
 			(effects
@@ -4775,7 +4775,7 @@
 		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U6"
-			(at 2.915735 -2.392254 90)
+			(at 4.135735 -3.242254 90)
 			(layer "F.SilkS")
 			(uuid "6014b70a-e67b-40dd-a6df-7a4448c81ac9")
 			(effects
@@ -5406,7 +5406,7 @@
 		(descr "16-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U2"
-			(at 3.81 -2.33 90)
+			(at 4.25 -3.22 90)
 			(layer "F.SilkS")
 			(uuid "c340ee2b-a861-47b4-9a06-8b0d2038e0bb")
 			(effects
@@ -5809,7 +5809,7 @@
 		(descr "16-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U3"
-			(at 4.81 -2.46 90)
+			(at 3.62 -4.26 90)
 			(layer "F.SilkS")
 			(uuid "458b1e14-7a08-4696-bf52-5ee1f86cd3c1")
 			(effects
@@ -6212,7 +6212,7 @@
 		(descr "16-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
 		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U4"
-			(at 3.81 -2.33 90)
+			(at 4.25 -2.97 90)
 			(layer "F.SilkS")
 			(uuid "aab0d864-1085-419d-82f0-dfa72b2a9b8a")
 			(effects
