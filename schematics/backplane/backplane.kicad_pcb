@@ -23767,6 +23767,84 @@
 		(layer "Edge.Cuts")
 		(uuid "a47352ad-6fe8-44f6-8145-4c187a2ac710")
 	)
+	(gr_text "NIKITA LENYK"
+		(at 74 103 90)
+		(layer "F.SilkS")
+		(uuid "3ee1f321-b491-4c49-8a84-26c976ee783e")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "ANDRII MOROZ"
+		(at 72.5 63 90)
+		(layer "F.SilkS")
+		(uuid "7c38f9f0-452e-45cb-8e2d-ea9b5de5725e")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "MADE BY"
+		(at 73 114.5 90)
+		(layer "F.SilkS")
+		(uuid "83899cf5-292d-48a9-b4e7-424f48552806")
+		(effects
+			(font
+				(size 3 3)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify bottom)
+		)
+	)
+	(gr_text "ANDRII KRYVYI"
+		(at 70.25 103 90)
+		(layer "F.SilkS")
+		(uuid "a08d3662-d66f-4e12-8d55-480ce7a555c3")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "OSTAP KOSTIUK"
+		(at 74 84.5 90)
+		(layer "F.SilkS")
+		(uuid "cb0cc5a5-eac2-470b-b710-b81e152f7b85")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "LUKA KONOVALOV"
+		(at 70.25 84.5 90)
+		(layer "F.SilkS")
+		(uuid "edf6a188-411d-4efe-8168-23f468e5af7f")
+		(effects
+			(font
+				(size 1.5 1.5)
+				(thickness 0.3)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(segment
 		(start 104.46 27.5)
 		(end 106.96 30)
