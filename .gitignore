@@ -1266,18 +1266,10 @@ dkms.conf
 .idea
 .PVS-Studio/
 
-
 **/*-backups
 **/fp-info-cache
 **/~*.lck
 
-# Adapted from:
-# https://github.com/github/gitignore/blob/master/KiCad.gitignore
-
-# For PCBs designed using KiCad: http://www.kicad-pcb.org/
-# Format documentation: http://kicad-pcb.org/help/file-formats/
-
-# Temporary files
 *.000
 *.bak
 *.bck
@@ -1293,22 +1285,18 @@ _autosave-*
 fp-info-cache
 /build
 
-# Netlist files (exported from Eeschema)
 *.net
 
-# Autorouter files (exported from Pcbnew)
 *.dsn
 *.ses
 
-# Footprint association file (exported from Pcbnew)
 *.cmp
 
-# Exported BOM files
 *.xml
 *.csv
 *.tsv
 
-# Misc
 *.log
 *.raw
 .svg2shenzhen-cache
+*.zip
