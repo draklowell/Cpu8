@@ -11841,7 +11841,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "217c44df-381d-4995-8f67-aa585bf6220a")
-		(property "Reference" "TP6"
+		(property "Reference" "~{IntE}1"
 			(at 156.21 222.7579 0)
 			(effects
 				(font
@@ -11859,7 +11859,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 158.75 227.33 0)
 			(effects
 				(font
@@ -11892,7 +11892,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP6")
+					(reference "~{IntE}1")
 					(unit 1)
 				)
 			)
@@ -12279,7 +12279,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "35c4f908-398d-44e6-b09d-2243200c719b")
-		(property "Reference" "TP4"
+		(property "Reference" "IntS1"
 			(at 132.08 225.2979 0)
 			(effects
 				(font
@@ -12297,7 +12297,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 134.62 229.87 0)
 			(effects
 				(font
@@ -12330,7 +12330,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP4")
+					(reference "IntS1")
 					(unit 1)
 				)
 			)
@@ -14049,7 +14049,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7c31b186-7af5-4ba5-86e7-f91261918596")
-		(property "Reference" "TP1"
+		(property "Reference" "Power1"
 			(at 74.1679 139.7 0)
 			(effects
 				(font
@@ -14067,7 +14067,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 78.74 137.16 0)
 			(effects
 				(font
@@ -14100,7 +14100,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP1")
+					(reference "Power1")
 					(unit 1)
 				)
 			)
@@ -14962,7 +14962,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9f203252-a544-4905-9e1a-4b7401c7ed17")
-		(property "Reference" "TP3"
+		(property "Reference" "~{Clock}1"
 			(at 66.04 269.7479 0)
 			(effects
 				(font
@@ -14980,7 +14980,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 68.58 274.32 0)
 			(effects
 				(font
@@ -15013,7 +15013,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP3")
+					(reference "~{Clock}1")
 					(unit 1)
 				)
 			)
@@ -15642,7 +15642,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c899da9d-bf7f-436d-9461-5bad690269b2")
-		(property "Reference" "TP5"
+		(property "Reference" "~{LI}1"
 			(at 184.15 113.5379 0)
 			(effects
 				(font
@@ -15660,7 +15660,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 186.69 118.11 0)
 			(effects
 				(font
@@ -15693,7 +15693,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP5")
+					(reference "~{LI}1")
 					(unit 1)
 				)
 			)
@@ -16775,7 +16775,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e4974323-3caa-4a45-8904-a616575c6cf6")
-		(property "Reference" "TP2"
+		(property "Reference" "Reset1"
 			(at 91.44 281.4321 0)
 			(effects
 				(font
@@ -16793,7 +16793,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 88.9 276.86 0)
 			(effects
 				(font
@@ -16826,7 +16826,7 @@
 		(instances
 			(project "core_1"
 				(path "/17441c17-d186-429b-a2db-836f86810133"
-					(reference "TP2")
+					(reference "Reset1")
 					(unit 1)
 				)
 			)
