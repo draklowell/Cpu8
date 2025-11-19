@@ -10559,7 +10559,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "02a0f593-be40-4c50-a4da-f0ca28f18603")
-		(property "Reference" "TP6"
+		(property "Reference" "Pls1"
 			(at 101.6 215.1379 0)
 			(effects
 				(font
@@ -10577,7 +10577,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 104.14 219.71 0)
 			(effects
 				(font
@@ -10610,7 +10610,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP6")
+					(reference "Pls1")
 					(unit 1)
 				)
 			)
@@ -11296,7 +11296,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3b067c07-1364-4ad6-98d1-8b66741bfa7a")
-		(property "Reference" "TP3"
+		(property "Reference" "Lh1"
 			(at 140.97 197.3579 0)
 			(effects
 				(font
@@ -11314,7 +11314,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 143.51 201.93 0)
 			(effects
 				(font
@@ -11347,7 +11347,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP3")
+					(reference "Lh1")
 					(unit 1)
 				)
 			)
@@ -11475,7 +11475,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "42e70961-eeaf-4c63-a103-b80d65b5ff7c")
-		(property "Reference" "TP1"
+		(property "Reference" "Inc1"
 			(at 140.97 165.6079 0)
 			(effects
 				(font
@@ -11493,7 +11493,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 143.51 170.18 0)
 			(effects
 				(font
@@ -11526,7 +11526,7 @@
 		(instances
 			(project ""
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP1")
+					(reference "Inc1")
 					(unit 1)
 				)
 			)
@@ -11911,7 +11911,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5e874266-3cee-45fd-b9e8-199814a0169b")
-		(property "Reference" "TP5"
+		(property "Reference" "~{Clk}1"
 			(at 107.95 168.1479 0)
 			(effects
 				(font
@@ -11929,7 +11929,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 110.49 172.72 0)
 			(effects
 				(font
@@ -11962,7 +11962,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP5")
+					(reference "~{Clk}1")
 					(unit 1)
 				)
 			)
@@ -12179,7 +12179,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "84a1775e-6ce3-4aaa-8878-efa1ec00b614")
-		(property "Reference" "TP10"
+		(property "Reference" "Pwr1"
 			(at 58.42 81.7879 0)
 			(effects
 				(font
@@ -12197,7 +12197,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 60.96 86.36 0)
 			(effects
 				(font
@@ -12230,7 +12230,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP10")
+					(reference "Pwr1")
 					(unit 1)
 				)
 			)
@@ -13261,7 +13261,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b3c00ed2-7fec-4573-b677-f77a5de15846")
-		(property "Reference" "TP9"
+		(property "Reference" "~{RH}1"
 			(at 312.928 208.28 90)
 			(effects
 				(font
@@ -13277,7 +13277,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 316.23 208.28 0)
 			(effects
 				(font
@@ -13310,7 +13310,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP9")
+					(reference "~{RH}1")
 					(unit 1)
 				)
 			)
@@ -14314,7 +14314,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cc1d12f4-14bf-435d-b241-ff2e24421afe")
-		(property "Reference" "TP4"
+		(property "Reference" "LL1"
 			(at 140.97 212.5979 0)
 			(effects
 				(font
@@ -14332,7 +14332,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 143.51 217.17 0)
 			(effects
 				(font
@@ -14365,7 +14365,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP4")
+					(reference "LL1")
 					(unit 1)
 				)
 			)
@@ -14493,7 +14493,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf5608b4-f1af-4d16-9641-4d549521f6a0")
-		(property "Reference" "TP8"
+		(property "Reference" "~{RL}1"
 			(at 277.368 205.74 90)
 			(effects
 				(font
@@ -14509,7 +14509,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 280.67 205.74 0)
 			(effects
 				(font
@@ -14542,7 +14542,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP8")
+					(reference "~{RL}1")
 					(unit 1)
 				)
 			)
@@ -14693,7 +14693,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e23c1039-c91d-4ad5-9fdd-11adebd04e2b")
-		(property "Reference" "TP2"
+		(property "Reference" "Dcr1"
 			(at 140.97 180.8479 0)
 			(effects
 				(font
@@ -14711,7 +14711,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 143.51 185.42 0)
 			(effects
 				(font
@@ -14744,7 +14744,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP2")
+					(reference "Dcr1")
 					(unit 1)
 				)
 			)
@@ -14760,7 +14760,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e2b10ebf-f920-4039-a2a7-69e7c4a9803d")
-		(property "Reference" "TP7"
+		(property "Reference" "Rst1"
 			(at 39.878 222.25 90)
 			(effects
 				(font
@@ -14776,7 +14776,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_Pin:Pin_D1.0mm_L10.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 43.18 222.25 0)
 			(effects
 				(font
@@ -14809,7 +14809,7 @@
 		(instances
 			(project "step_counter"
 				(path "/f5389107-3d60-400a-ba2f-c69edfa4a2c5"
-					(reference "TP7")
+					(reference "Rst1")
 					(unit 1)
 				)
 			)
