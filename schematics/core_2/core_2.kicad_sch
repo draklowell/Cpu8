@@ -14182,9 +14182,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "1597e049-2f37-4cf3-8f1e-8f0a98728ce7")
-		(property "Reference" "TP3"
+		(property "Reference" "~{SignIn}1"
 			(at 280.67 279.9079 0)
 			(effects
 				(font
@@ -14235,7 +14234,7 @@
 		(instances
 			(project ""
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP3")
+					(reference "~{SignIn}1")
 					(unit 1)
 				)
 			)
@@ -14314,10 +14313,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "1e4fe99d-57a1-4727-a235-f5d946f4eec1")
-		(property "Reference" "TP7"
-			(at 439.42 266.6999 90)
+		(property "Reference" "ZerroO1"
+			(at 435.102 270.002 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14367,7 +14365,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP7")
+					(reference "ZerroO1")
 					(unit 1)
 				)
 			)
@@ -14704,7 +14702,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "23654f04-79a8-4e07-82af-64733fe445aa")
-		(property "Reference" "TP1"
+		(property "Reference" "PWR1"
 			(at 212.598 49.53 90)
 			(effects
 				(font
@@ -14753,7 +14751,7 @@
 		(instances
 			(project ""
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP1")
+					(reference "PWR1")
 					(unit 1)
 				)
 			)
@@ -15072,7 +15070,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "33f712a1-eb4b-4c86-9317-5e6ee0acd817")
-		(property "Reference" "TP8"
+		(property "Reference" "~{ENBL}1"
 			(at 392.938 287.02 90)
 			(effects
 				(font
@@ -15121,7 +15119,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP8")
+					(reference "~{ENBL}1")
 					(unit 1)
 				)
 			)
@@ -15444,7 +15442,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "37e5644e-6771-45ba-bc70-3b37d499e5db")
-		(property "Reference" "TP11"
+		(property "Reference" "~{L_FR}1"
 			(at 356.108 247.65 90)
 			(effects
 				(font
@@ -15493,7 +15491,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP11")
+					(reference "~{L_FR}1")
 					(unit 1)
 				)
 			)
@@ -15575,9 +15573,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "39f667a5-fa17-40d4-ad70-fd5afb2364e4")
-		(property "Reference" "TP6"
+		(property "Reference" "CarryO1"
 			(at 434.34 263.3979 0)
 			(effects
 				(font
@@ -15628,7 +15625,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP6")
+					(reference "CarryO1")
 					(unit 1)
 				)
 			)
@@ -15644,7 +15641,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3d102489-e925-4f3d-8c27-e0eb2fb9eb1e")
-		(property "Reference" "TP9"
+		(property "Reference" "~{UPD_FR}1"
 			(at 350.52 299.2119 0)
 			(effects
 				(font
@@ -15695,7 +15692,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP9")
+					(reference "~{UPD_FR}1")
 					(unit 1)
 				)
 			)
@@ -15944,10 +15941,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "46c8dde7-0b25-46d3-8694-29f871125843")
-		(property "Reference" "TP2"
-			(at 425.958 264.16 90)
+		(property "Reference" "SignO1"
+			(at 425.704 264.668 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15995,7 +15991,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP2")
+					(reference "SignO1")
 					(unit 1)
 				)
 			)
@@ -18148,10 +18144,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "8020883a-7317-49bd-91d4-455ba6e99bd5")
-		(property "Reference" "TP4"
-			(at 278.13 282.4479 0)
+		(property "Reference" "~{CarrIn}1"
+			(at 270.51 285.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18201,7 +18196,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP4")
+					(reference "~{CarrIn}1")
 					(unit 1)
 				)
 			)
@@ -19409,7 +19404,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b17b843c-8770-4055-9eb4-24eea23c9908")
-		(property "Reference" "TP5"
+		(property "Reference" "ZerroIn1"
 			(at 276.86 291.5919 0)
 			(effects
 				(font
@@ -19460,7 +19455,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP5")
+					(reference "ZerroIn1")
 					(unit 1)
 				)
 			)
@@ -20233,7 +20228,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cfb36506-f75c-4af2-9172-4bb8c771fa52")
-		(property "Reference" "TP10"
+		(property "Reference" "~{OUT_FR}1"
 			(at 461.518 312.42 90)
 			(effects
 				(font
@@ -20282,7 +20277,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP10")
+					(reference "~{OUT_FR}1")
 					(unit 1)
 				)
 			)
@@ -20963,7 +20958,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f9398c5c-38af-425a-9d42-9e156c67af3c")
-		(property "Reference" "TP14"
+		(property "Reference" "~{CLK}1"
 			(at 192.278 191.77 90)
 			(effects
 				(font
@@ -21012,7 +21007,7 @@
 		(instances
 			(project "core_2"
 				(path "/59b2db81-41fa-4862-96ef-fb4ce3ab7be6"
-					(reference "TP14")
+					(reference "~{CLK}1")
 					(unit 1)
 				)
 			)
