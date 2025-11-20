@@ -44,7 +44,7 @@ Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7
 
 <https://www.rcscomponents.kiev.ua/product/klemnyk-dg126-5-0-02p-14-00z-h_18375.html>
 
-**Foorprint:**
+**Footprint:**
 
 <https://www.tme.eu/en/details/dg126-5.0-2p14/pcb-terminal-blocks/degson-electronics/dg126-5-0-02p-14-00a-h/>
 
