@@ -439,23 +439,23 @@ for condition, name in CONDITIONS:
 
 
 # alu operations (95)
-for operation, selection, mode, carry_mode, to_mode in [
+for operation, selection, mode, carry_mode, to_mode, is_binary in [
     # to_mode = 0 - nowhere
     # to_mode = 1 - accumulator
     # to_mode = 2 - same register
-    ("add", 0x9, 0, CarryMode.ALWAYS_ZERO, 1),
-    ("sub", 0x6, 0, CarryMode.ALWAYS_ZERO, 1),
-    ("nand", 0x4, 1, CarryMode.ALWAYS_ZERO, 1),
-    ("xor", 0x6, 1, CarryMode.ALWAYS_ZERO, 1),
-    ("nor", 0x1, 1, CarryMode.ALWAYS_ZERO, 1),
-    ("adc", 0x9, 0, CarryMode.TRANSPARENT, 1),
-    ("sbb", 0xF, 0, CarryMode.TRANSPARENT, 1),
-    ("inc", 0x0, 0, CarryMode.ALWAYS_ONE, 2),
-    ("dec", 0xF, 0, CarryMode.ALWAYS_ZERO, 2),
-    ("icc", 0x0, 0, CarryMode.TRANSPARENT, 2),
-    ("dcb", 0xF, 0, CarryMode.INVERTED, 2),
-    ("not", 0x0, 1, CarryMode.ALWAYS_ZERO, 2),
-    ("cmp", 0x6, 0, CarryMode.ALWAYS_ZERO, 0),
+    ("add", 0x9, 0, CarryMode.ALWAYS_ZERO, 1, True),
+    ("sub", 0x6, 0, CarryMode.ALWAYS_ONE, 1, True),
+    ("nand", 0x4, 1, CarryMode.ALWAYS_ZERO, 1, True),
+    ("xor", 0x6, 1, CarryMode.ALWAYS_ZERO, 1, True),
+    ("nor", 0x1, 1, CarryMode.ALWAYS_ZERO, 1, True),
+    ("adc", 0x9, 0, CarryMode.TRANSPARENT, 1, True),
+    ("sbb", 0x6, 0, CarryMode.INVERTED, 1, True),
+    ("inc", 0x0, 0, CarryMode.ALWAYS_ONE, 2, False),
+    ("dec", 0xF, 0, CarryMode.ALWAYS_ZERO, 2, False),
+    ("icc", 0x0, 0, CarryMode.TRANSPARENT, 2, False),
+    ("dcb", 0xF, 0, CarryMode.INVERTED, 2, False),
+    ("not", 0x0, 1, CarryMode.ALWAYS_ZERO, 2, False),
+    ("cmp", 0x6, 0, CarryMode.ALWAYS_ZERO, 0, True),
 ]:
     for register, name in REGISTERS_BYTE_ARITHMETICS:
         if to_mode == 0:
@@ -469,7 +469,12 @@ for operation, selection, mode, carry_mode, to_mode in [
 
         @compiler.instruction(f"{operation}-{name}")
         def op(ctx: Context):
-            yield from Move(components.ARGUMENT_HIGH, register)
+            if is_binary:
+                yield from Move(components.ARGUMENT_LOW, register)
+                yield from Move(components.ARGUMENT_HIGH, components.ACCUMULATOR)
+            else:
+                yield from Move(components.ARGUMENT_HIGH, register)
+
             yield from ApplyALU(
                 ctx,
                 to,
@@ -478,6 +483,9 @@ for operation, selection, mode, carry_mode, to_mode in [
                 mode,
             )
             yield from NextOperation(ctx)
+
+    if not is_binary:
+        continue
 
     if to_mode == 0:
         to = components.DISABLE
@@ -488,7 +496,8 @@ for operation, selection, mode, carry_mode, to_mode in [
 
     @compiler.instruction(f"{operation}i-[byte]")
     def opi(ctx: Context):
-        yield from Read(components.ARGUMENT_HIGH)
+        yield from Read(components.ARGUMENT_LOW)
+        yield from Move(components.ARGUMENT_HIGH, components.ACCUMULATOR)
         yield from ApplyALU(
             ctx,
             to,

@@ -11,15 +11,15 @@ def code(
     bus_reader: Component = components.DISABLE,
     alu_mode: int = 0,
     alu_carry: int = 0,
-    flags_from_alu: int = 0,  # Boundary
+    flags_from_alu: int = 0,
     bus_writer: Component = components.DISABLE,
     step_counter_clear: int = 0,
     halt: int = 0,
-    program_counter_increment: int = 0,  # Boundary
+    program_counter_increment: int = 0,
     alu_selection: int = 0,
     stack_pointer_decrement: int = 0,
     stack_pointer_increment: int = 0,
-    accumulator_shift_left: int = 0,  # Boundary
+    accumulator_shift_left: int = 0,
     accumulator_shift_right: int = 0,
     interrupt_enable: int = 0,
     interrupt_disable: int = 0,
@@ -31,39 +31,66 @@ def code(
     if bus_writer.writer is None:
         raise ValueError(f"Component {bus_writer.name} can't write to bus")
 
-    not_halt = 1 - halt
-    not_program_counter_increment = 1 - program_counter_increment
-    not_stack_pointer_decrement = 1 - stack_pointer_decrement
-    not_stack_pointer_increment = 1 - stack_pointer_increment
+    not_flags_from_alu = 1 - flags_from_alu
     not_alu_carry = 1 - alu_carry
-    not_address_decrement = 1 - address_decrement
-    not_address_increment = 1 - address_increment
+    not_step_counter_clear = 1 - step_counter_clear
+    not_halt = 1 - halt
+    not_interrupt_enable = 1 - interrupt_enable
+    not_interrupt_disable = 1 - interrupt_disable
+
+    reader_0 = bus_reader.reader & 0x01
+    reader_1 = (bus_reader.reader & 0x02) >> 1
+    reader_2 = (bus_reader.reader & 0x04) >> 2
+    reader_3 = (bus_reader.reader & 0x08) >> 3
+    reader_4 = (bus_reader.reader & 0x10) >> 4
+
+    writer_0 = bus_writer.writer & 0x01
+    writer_1 = (bus_writer.writer & 0x02) >> 1
+    writer_2 = (bus_writer.writer & 0x04) >> 2
+    writer_3 = (bus_writer.writer & 0x08) >> 3
+    writer_4 = (bus_writer.writer & 0x10) >> 4
+
+    alu_selection_0 = alu_selection & 0x1
+    alu_selection_1 = (alu_selection & 0x2) >> 1
+    alu_selection_2 = (alu_selection & 0x4) >> 2
+    alu_selection_3 = (alu_selection & 0x8) >> 3
 
     return (
         (
-            (bus_reader.reader << 0)
-            | (alu_mode << 5)
-            | (not_alu_carry << 6)
-            | (flags_from_alu << 7)
+            (reader_2 << 0)
+            | (reader_1 << 1)
+            | (reader_0 << 2)
+            | (writer_0 << 3)
+            | (not_flags_from_alu << 4)
+            | (not_alu_carry << 5)
+            | (alu_mode << 6)
+            | (reader_3 << 7)
         ),
         (
-            (bus_writer.writer << 0)
-            | (step_counter_clear << 5)
+            (writer_3 << 0)
+            | (writer_2 << 1)
+            | (writer_1 << 2)
+            | (alu_selection_1 << 3)
+            | (alu_selection_0 << 4)
+            | (program_counter_increment << 5)
             | (not_halt << 6)
-            | (not_program_counter_increment << 7)
+            | (not_step_counter_clear << 7)
         ),
         (
-            (alu_selection << 0)
-            | (not_stack_pointer_decrement << 4)
-            | (not_stack_pointer_increment << 5)
+            (stack_pointer_decrement << 0)
+            | (alu_selection_3 << 1)
+            | (alu_selection_2 << 2)
+            | (writer_4 << 3)
+            | (reader_4 << 4)
+            | (accumulator_shift_right << 5)
             | (accumulator_shift_left << 6)
-            | (accumulator_shift_right << 7)
+            | (stack_pointer_increment << 7)
         ),
         (
-            (interrupt_enable << 0)
-            | (interrupt_disable << 1)
-            | (not_address_decrement << 2)
-            | (not_address_increment << 3)
+            (not_interrupt_enable << 0)
+            | (not_interrupt_disable << 1)
+            | (address_decrement << 2)
+            | (address_increment << 3)
         ),
     )
 
@@ -77,11 +104,12 @@ class Context:
 
     def get_value(self) -> int:
         not_carry = 1 - self.carry
+        not_interrupt = 1 - self.interrupt
         return (
             (self.sign << 8)
             | (not_carry << 9)
             | (self.zero << 10)
-            | (self.interrupt << 15)
+            | (not_interrupt << 15)
         )
 
 
