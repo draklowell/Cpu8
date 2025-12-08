@@ -179,8 +179,16 @@ class Compiler:
         self.table[code] = (name, cycles)
 
     def save(self, path: str):
+        physical_blocks = []
         for index, block in enumerate(self.blocks):
+            physical_blocks.append(block[:32768])
+            physical_blocks.append(block[32768:])
+
             with open(os.path.join(path, f"rom{index}.bin"), "wb") as file:
+                file.write(block)
+
+        for index, block in enumerate(physical_blocks):
+            with open(os.path.join(path, f"table{index}.bin"), "wb") as file:
                 file.write(block)
 
         with open(os.path.join(path, "table.csv"), "w") as file:
