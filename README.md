@@ -1,4 +1,4 @@
-# Architecture of CPU
+# Architecture of Dragonfly 8b9m CPU
 
 ## CPU4/4 (Made by previous students 2024)
 
