@@ -43,5 +43,6 @@ class BusConnector(Component):
                 self.set(pin, value)
             else:
                 # Write to motherboard
+                # Conflict resolution: handled by network.set()
                 value = self.pins[pin].get()
                 network.set(value)
