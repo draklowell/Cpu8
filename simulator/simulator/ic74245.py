@@ -1,26 +1,26 @@
-from simulator.base import Component
+from base import Component
 
 
 class IC74245(Component):
     VCC = "20"
-    E = "19"
-    # B1 = "18"
-    # B2 = "17"
-    # B3 = "16"
-    # B4 = "15"
-    # B5 = "14"
-    # B6 = "13"
-    # B7 = "12"
-    # B8 = "11"
+    OE = "19"  # inverted
+    B1 = "18"
+    B2 = "17"
+    B3 = "16"
+    B4 = "15"
+    B5 = "14"
+    B6 = "13"
+    B7 = "12"
+    B8 = "11"
     GND = "10"
-    # A8 = "9"
-    # A7 = "8"
-    # A6 = "7"
-    # A5 = "6"
-    # A4 = "5"
-    # A3 = "4"
-    # A2 = "3"
-    # A1 = "2"
+    A8 = "9"
+    A7 = "8"
+    A6 = "7"
+    A5 = "6"
+    A4 = "5"
+    A3 = "4"
+    A2 = "3"
+    A1 = "2"
     DIR = "1"
 
     def propagate(self):
@@ -29,7 +29,7 @@ class IC74245(Component):
             self.log("Not powered, outputs float")
             return
 
-        if not self.get(self.E):
+        if self.get(self.OE):
             return
 
         direction = self.get(self.DIR)
