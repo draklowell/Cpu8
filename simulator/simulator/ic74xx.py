@@ -77,6 +77,7 @@ class IC7402(Component):
         b4 = self.get(self.B0)
         self.set(self.Y0, not (a4 or b4))
 
+
 class IC7404(Component):
     VCC = "14"
     A6 = "13"
@@ -110,21 +111,21 @@ class IC74109(Component):
     VCC = "16"
     GND = "8"
 
-    CLR1 = "15" # Active Low
+    CLR1 = "15"  # Active Low
     PRE1 = "4"  # Active Low
     CLK1 = "12"
-    J1   = "14"
-    nK1  = "13"
-    Q1   = "10"
-    nQ1  = "11"
+    J1 = "14"
+    nK1 = "13"
+    Q1 = "10"
+    nQ1 = "11"
 
     CLR2 = "1"
     PRE2 = "5"
     CLK2 = "6"
-    J2   = "2"
-    nK2  = "3"
-    Q2   = "7"
-    nQ2  = "9"
+    J2 = "2"
+    nK2 = "3"
+    Q2 = "7"
+    nQ2 = "9"
 
     state1: bool
     state2: bool
@@ -138,23 +139,24 @@ class IC74109(Component):
         self.prev_clk2 = False
 
     def propagate(self):
-        if not self.get(self.VCC) or self.get(self.GND): return
+        if not self.get(self.VCC) or self.get(self.GND):
+            return
 
         self._process_flipflop(
-            self.CLR1, self.PRE1, self.CLK1, self.J1, self.nK1, 
-            self.Q1, self.nQ1, 1
+            self.CLR1, self.PRE1, self.CLK1, self.J1, self.nK1, self.Q1, self.nQ1, 1
         )
         self._process_flipflop(
-            self.CLR2, self.PRE2, self.CLK2, self.J2, self.nK2, 
-            self.Q2, self.nQ2, 2
+            self.CLR2, self.PRE2, self.CLK2, self.J2, self.nK2, self.Q2, self.nQ2, 2
         )
 
-    def _process_flipflop(self, clr_pin, pre_pin, clk_pin, j_pin, nk_pin, q_pin, nq_pin, idx):
+    def _process_flipflop(
+        self, clr_pin, pre_pin, clk_pin, j_pin, nk_pin, q_pin, nq_pin, idx
+    ):
         clr = self.get(clr_pin)
         pre = self.get(pre_pin)
 
         current_q = self.state1 if idx == 1 else self.state2
-        
+
         next_q = current_q
 
         if not clr and pre:
@@ -181,11 +183,15 @@ class IC74109(Component):
                 elif j and k:
                     next_q = not current_q
 
-            if idx == 1: self.prev_clk1 = clk
-            else: self.prev_clk2 = clk
+            if idx == 1:
+                self.prev_clk1 = clk
+            else:
+                self.prev_clk2 = clk
 
-        if idx == 1: self.state1 = next_q
-        else: self.state2 = next_q
+        if idx == 1:
+            self.state1 = next_q
+        else:
+            self.state2 = next_q
 
         self.set(q_pin, next_q)
         self.set(nq_pin, not next_q)
