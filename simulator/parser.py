@@ -3,12 +3,12 @@ from simulator.busconnector import BusConnector
 from simulator.ic74xx import IC7400
 from simulator.ic74193 import IC74193
 from simulator.ic74245 import IC74245
+from simulator.interface import Interface
 
 FOOTPRINTS_FILTERED_OUT = {
     "TestPoint:TestPoint_Pad_D1.0mm",
     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm",
     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
-    "Connector_PinSocket_2.54mm:PinSocket_2x19_P2.54mm_Vertical",
 }
 
 MAPPING = {
@@ -16,6 +16,7 @@ MAPPING = {
     "74LS245": IC74245,
     "74LS193": IC74193,
     "BusConnector": BusConnector,
+    "Conn_02x19_Counter_Clockwise": Interface,
 }
 
 
