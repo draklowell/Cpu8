@@ -1,0 +1,448 @@
+.HEA
+.TIM 2026-01-06T16:20:24+0200
+.APP "Eeschema 9.0.6"
+.TYP FULL
+
+.ADD_COM     ~{LoadXH}1     "~{LoadXH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     YH1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     U1     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{LoadZH}1     "~{LoadZH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U4     "74LS138"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{ReadZL}1     "~{ReadZL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C10     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C13     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{LoadYL}1     "~{LoadYL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{LoadZL}1     "~{LoadZL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{LoadXL}1     "~{LoadXL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U2     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     C15     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U8     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C14     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     ~{ReadXH}1     "~{ReadXH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ZH1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C11     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U3     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     R7     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     U6     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     R5     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     ~{ReadYH}1     "~{ReadYH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C12     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{PassXL}1     "~{PassXL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Power1     "Power"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{LeftXL}1     "~{LeftXL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     XH1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     YL1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ZL1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{Clock}1     "~{Clock}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{RightXL}1     "~{RightXL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     XL1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{ReadYL}1     "~{ReadYL}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U7     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{ReadZH}1     "~{ReadZH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     R6     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     ~{LoadYH}1     "~{LoadYH}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C9     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+
+
+.ADD_TER   U6   18     "/ACCUM0"
+.TER       U7   17
+            XL1   19
+
+.ADD_TER   U6   17     "/ACCUM1"
+.TER       U7   16
+            U8   18
+            XL1   18
+
+.ADD_TER   U6   16     "/ACCUM2"
+.TER       U7   15
+            U8   17
+            XL1   17
+
+.ADD_TER   U6   15     "/ACCUM3"
+.TER       U7   14
+            U8   16
+            XL1   16
+
+.ADD_TER   U6   14     "/ACCUM4"
+.TER       U7   13
+            U8   15
+            XL1   15
+
+.ADD_TER   U6   13     "/ACCUM5"
+.TER       U7   12
+            U8   14
+            XL1   14
+
+.ADD_TER   U6   12     "/ACCUM6"
+.TER       U7   11
+            U8   13
+            XL1   13
+
+.ADD_TER   U6   11     "/ACCUM7"
+.TER       U8   12
+            XL1   12
+
+.ADD_TER   U4   14     "/ACSHLEFT"
+.TER       U7   19
+            ~{LeftXL}1   1
+
+.ADD_TER   U4   13     "/ACSHRIGHT"
+.TER       U8   19
+            ~{RightXL}1   1
+
+.ADD_TER   BC1   A51     "/DATA0"
+.TER       U6   2
+            U7   2
+            U8   2
+            XH1   19
+            XH1   2
+            XL1   2
+            YH1   19
+            YH1   2
+            YL1   19
+            YL1   2
+            ZH1   19
+            ZH1   2
+            ZL1   19
+            ZL1   2
+
+.ADD_TER   BC1   A52     "/DATA1"
+.TER       U6   3
+            U7   3
+            U8   3
+            XH1   18
+            XH1   3
+            XL1   3
+            YH1   18
+            YH1   3
+            YL1   18
+            YL1   3
+            ZH1   18
+            ZH1   3
+            ZL1   18
+            ZL1   3
+
+.ADD_TER   BC1   A53     "/DATA2"
+.TER       U6   4
+            U7   4
+            U8   4
+            XH1   17
+            XH1   4
+            XL1   4
+            YH1   17
+            YH1   4
+            YL1   17
+            YL1   4
+            ZH1   17
+            ZH1   4
+            ZL1   17
+            ZL1   4
+
+.ADD_TER   BC1   A54     "/DATA3"
+.TER       U6   5
+            U7   5
+            U8   5
+            XH1   16
+            XH1   5
+            XL1   5
+            YH1   16
+            YH1   5
+            YL1   16
+            YL1   5
+            ZH1   16
+            ZH1   5
+            ZL1   16
+            ZL1   5
+
+.ADD_TER   BC1   A55     "/DATA4"
+.TER       U6   6
+            U7   6
+            U8   6
+            XH1   15
+            XH1   6
+            XL1   6
+            YH1   15
+            YH1   6
+            YL1   15
+            YL1   6
+            ZH1   15
+            ZH1   6
+            ZL1   15
+            ZL1   6
+
+.ADD_TER   BC1   A56     "/DATA5"
+.TER       U6   7
+            U7   7
+            U8   7
+            XH1   14
+            XH1   7
+            XL1   7
+            YH1   14
+            YH1   7
+            YL1   14
+            YL1   7
+            ZH1   14
+            ZH1   7
+            ZL1   14
+            ZL1   7
+
+.ADD_TER   BC1   A57     "/DATA6"
+.TER       U6   8
+            U7   8
+            U8   8
+            XH1   13
+            XH1   8
+            XL1   8
+            YH1   13
+            YH1   8
+            YL1   13
+            YL1   8
+            ZH1   13
+            ZH1   8
+            ZL1   13
+            ZL1   8
+
+.ADD_TER   BC1   A58     "/DATA7"
+.TER       U6   9
+            U7   9
+            U8   9
+            XH1   12
+            XH1   9
+            XL1   9
+            YH1   12
+            YH1   9
+            YL1   12
+            YL1   9
+            ZH1   12
+            ZH1   9
+            ZL1   12
+            ZL1   9
+
+.ADD_TER   BC1   A21     "/LAC"
+.TER       U3   2
+
+.ADD_TER   BC1   B55     "/SHL"
+.TER       U4   1
+
+.ADD_TER   BC1   B56     "/SHR"
+.TER       U4   2
+
+.ADD_TER   BC1   B73     "/~{CLK}"
+.TER       U1   12
+            U1   3
+            U1   6
+            U1   9
+            U2   3
+            U3   3
+            ~{Clock}1   1
+
+.ADD_TER   BC1   B21     "/~{PASS}"
+.TER       U4   3
+
+.ADD_TER   U4   15     "/~{RAC}"
+.TER       U6   19
+            ~{PassXL}1   1
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            C1   1
+            C10   2
+            C11   2
+            C12   2
+            C13   2
+            C14   2
+            C15   2
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C6   2
+            C7   2
+            C9   2
+            U1   7
+            U2   7
+            U3   7
+            U4   4
+            U4   5
+            U4   8
+            U6   1
+            U6   10
+            U7   1
+            U7   10
+            U7   18
+            U8   1
+            U8   10
+            U8   11
+            XH1   10
+            XL1   1
+            XL1   10
+            YH1   10
+            YL1   10
+            ZH1   10
+            ZL1   10
+
+.ADD_TER   BC1   A22     "Net-(BC1-~{LXH})"
+.TER       U1   5
+
+.ADD_TER   BC1   A25     "Net-(BC1-~{LYH})"
+.TER       U1   8
+
+.ADD_TER   BC1   A24     "Net-(BC1-~{LYL})"
+.TER       U1   11
+
+.ADD_TER   BC1   A27     "Net-(BC1-~{LZH})"
+.TER       U1   2
+
+.ADD_TER   BC1   A26     "Net-(BC1-~{LZL})"
+.TER       U2   2
+
+.ADD_TER   BC1   B22     "Net-(BC1-~{RXH})"
+.TER       XH1   1
+            ~{ReadXH}1   1
+
+.ADD_TER   BC1   B25     "Net-(BC1-~{RYH})"
+.TER       YH1   1
+            ~{ReadYH}1   1
+
+.ADD_TER   BC1   B24     "Net-(BC1-~{RYL})"
+.TER       YL1   1
+            ~{ReadYL}1   1
+
+.ADD_TER   BC1   B27     "Net-(BC1-~{RZH})"
+.TER       ZH1   1
+            ~{ReadZH}1   1
+
+.ADD_TER   BC1   B26     "Net-(BC1-~{RZL})"
+.TER       ZL1   1
+            ~{ReadZL}1   1
+
+.ADD_TER   R5   2     "Net-(R5-Pad2)"
+.TER       U2   11
+            U2   12
+            U2   5
+            U2   6
+            U2   8
+            U2   9
+
+.ADD_TER   R6   1     "Net-(R6-Pad1)"
+.TER       U3   11
+            U3   12
+            U3   5
+            U3   6
+            U3   8
+            U3   9
+
+.ADD_TER   R7   2     "Net-(U4-E3)"
+.TER       U4   6
+
+.ADD_TER   U1   4     "Net-(XH1-Cp)"
+.TER       XH1   11
+            ~{LoadXH}1   1
+
+.ADD_TER   U3   1     "Net-(XL1-Cp)"
+.TER       XL1   11
+            ~{LoadXL}1   1
+
+.ADD_TER   U1   10     "Net-(YH1-Cp)"
+.TER       YH1   11
+            ~{LoadYH}1   1
+
+.ADD_TER   U1   13     "Net-(YL1-Cp)"
+.TER       YL1   11
+            ~{LoadYL}1   1
+
+.ADD_TER   U1   1     "Net-(ZH1-Cp)"
+.TER       ZH1   11
+            ~{LoadZH}1   1
+
+.ADD_TER   U2   1     "Net-(ZL1-Cp)"
+.TER       ZL1   11
+            ~{LoadZL}1   1
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            C1   2
+            C10   1
+            C11   1
+            C12   1
+            C13   1
+            C14   1
+            C15   1
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C6   1
+            C7   1
+            C9   1
+            Power1   1
+            R5   1
+            R6   2
+            R7   1
+            U1   14
+            U2   14
+            U3   14
+            U4   16
+            U6   20
+            U7   20
+            U8   20
+            XH1   20
+            XL1   20
+            YH1   20
+            YL1   20
+            ZH1   20
+            ZL1   20
+
+.END

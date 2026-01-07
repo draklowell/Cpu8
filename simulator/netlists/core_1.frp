@@ -1,0 +1,393 @@
+.HEA
+.TIM 2026-01-06T16:24:58+0200
+.APP "Eeschema 9.0.6"
+.TYP FULL
+
+.ADD_COM     U1     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     C9     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C10     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     U4     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{IntE}1     "~{IntE}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     DECODER4     "74LS154"     "Package_DIP:DIP-24_W7.62mm_Socket_LongPads"
+.ADD_COM     U2     "74LS04"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     IntS1     "IntS"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     DECODER2     "74LS154"     "Package_DIP:DIP-24_W7.62mm_Socket_LongPads"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C11     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     DECODER1     "74LS154"     "Package_DIP:DIP-24_W7.62mm_Socket_LongPads"
+.ADD_COM     U3     "74LS109"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     Power1     "Power"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C16     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     ~{Clock}1     "~{Clock}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C12     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     ~{LI}1     "~{LoadInstruction}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     Reset1     "Reset"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     DECODER3     "74LS154"     "Package_DIP:DIP-24_W7.62mm_Socket_LongPads"
+.ADD_COM     INSTRUCTION1     "74LS273"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     R1     "5kOhm"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+
+
+.ADD_TER   BC1   A30     "/AddrHighIn"
+.TER       U2   10
+
+.ADD_TER   BC1   A31     "/AddrLowIn"
+.TER       U2   12
+
+.ADD_TER   BC1   A51     "/BUS0"
+.TER       INSTRUCTION1   3
+
+.ADD_TER   BC1   A52     "/BUS1"
+.TER       INSTRUCTION1   4
+
+.ADD_TER   BC1   A53     "/BUS2"
+.TER       INSTRUCTION1   7
+
+.ADD_TER   BC1   A54     "/BUS3"
+.TER       INSTRUCTION1   8
+
+.ADD_TER   BC1   A55     "/BUS4"
+.TER       INSTRUCTION1   13
+
+.ADD_TER   BC1   A56     "/BUS5"
+.TER       INSTRUCTION1   14
+
+.ADD_TER   BC1   A57     "/BUS6"
+.TER       INSTRUCTION1   17
+
+.ADD_TER   BC1   A58     "/BUS7"
+.TER       INSTRUCTION1   18
+
+.ADD_TER   BC1   A67     "/IRQ"
+.TER       U1   1
+
+.ADD_TER   BC1   B57     "/IntEnable"
+.TER       U3   3
+
+.ADD_TER   BC1   B33     "/L0"
+.TER       DECODER1   23
+            DECODER2   23
+
+.ADD_TER   BC1   B34     "/L1"
+.TER       DECODER1   22
+            DECODER2   22
+
+.ADD_TER   BC1   B35     "/L2"
+.TER       DECODER1   21
+            DECODER2   21
+
+.ADD_TER   BC1   B36     "/L3"
+.TER       DECODER1   20
+            DECODER2   20
+
+.ADD_TER   BC1   B79     "/L4"
+.TER       DECODER2   19
+            U1   4
+            U1   5
+
+.ADD_TER   BC1   A17     "/PCHighReader"
+.TER       U2   6
+
+.ADD_TER   BC1   A18     "/PCLowReader"
+.TER       U2   8
+
+.ADD_TER   BC1   B40     "/R0"
+.TER       DECODER3   23
+            DECODER4   23
+
+.ADD_TER   BC1   B42     "/R1"
+.TER       DECODER3   22
+            DECODER4   22
+
+.ADD_TER   BC1   B43     "/R2"
+.TER       DECODER3   21
+            DECODER4   21
+
+.ADD_TER   BC1   B44     "/R3"
+.TER       DECODER3   20
+            DECODER4   20
+
+.ADD_TER   BC1   B80     "/R4"
+.TER       DECODER4   19
+            U1   10
+            U1   9
+
+.ADD_TER   BC1   A69     "/Reset"
+.TER       Reset1   1
+            U1   12
+            U1   13
+
+.ADD_TER   BC1   A15     "/SPHighReader"
+.TER       U2   2
+
+.ADD_TER   BC1   A16     "/SPLowReader"
+.TER       U2   4
+
+.ADD_TER   BC1   A33     "/STATE0"
+.TER       INSTRUCTION1   2
+
+.ADD_TER   BC1   A34     "/STATE1"
+.TER       INSTRUCTION1   5
+
+.ADD_TER   BC1   A35     "/STATE2"
+.TER       INSTRUCTION1   6
+
+.ADD_TER   BC1   A36     "/STATE3"
+.TER       INSTRUCTION1   9
+
+.ADD_TER   BC1   A37     "/STATE4"
+.TER       INSTRUCTION1   12
+
+.ADD_TER   BC1   A38     "/STATE5"
+.TER       INSTRUCTION1   15
+
+.ADD_TER   BC1   A39     "/STATE6"
+.TER       INSTRUCTION1   16
+
+.ADD_TER   BC1   A40     "/STATE7"
+.TER       INSTRUCTION1   19
+
+.ADD_TER   BC1   B30     "/~{ALUWriter}"
+.TER       DECODER4   1
+
+.ADD_TER   BC1   A21     "/~{AccumReader}"
+.TER       DECODER1   9
+
+.ADD_TER   BC1   B21     "/~{AccumWriter}"
+.TER       DECODER3   9
+
+.ADD_TER   DECODER2   1     "/~{AddressHighReader}"
+.TER       U2   11
+
+.ADD_TER   DECODER2   2     "/~{AddressLowReader}"
+.TER       U2   13
+
+.ADD_TER   BC1   B73     "/~{Clk}"
+.TER       U4   3
+            U4   5
+            U4   6
+            ~{Clock}1   1
+
+.ADD_TER   BC1   B29     "/~{ConstantWriter}"
+.TER       DECODER3   17
+
+.ADD_TER   BC1   A28     "/~{FlagsReader}"
+.TER       DECODER1   16
+
+.ADD_TER   BC1   B28     "/~{FlagsWriter}"
+.TER       DECODER3   16
+
+.ADD_TER   BC1   A29     "/~{InstructionReader}"
+.TER       DECODER1   17
+            U4   2
+
+.ADD_TER   BC1   B31     "/~{IntAck}"
+.TER       DECODER4   2
+
+.ADD_TER   BC1   B58     "/~{IntDisable}"
+.TER       U3   2
+
+.ADD_TER   BC1   A14     "/~{MemoryReader}"
+.TER       DECODER1   2
+
+.ADD_TER   BC1   B14     "/~{MemoryWriter}"
+.TER       DECODER3   2
+
+.ADD_TER   DECODER1   5     "/~{PCHighReader}"
+.TER       U2   5
+
+.ADD_TER   BC1   B17     "/~{PCHighWriter}"
+.TER       DECODER3   5
+
+.ADD_TER   DECODER1   6     "/~{PCLowReader}"
+.TER       U2   9
+
+.ADD_TER   BC1   B18     "/~{PCLowWriter}"
+.TER       DECODER3   6
+
+.ADD_TER   INSTRUCTION1   1     "/~{Reset}"
+.TER       U1   11
+            U3   1
+
+.ADD_TER   DECODER1   3     "/~{SPHighReader}"
+.TER       U2   1
+
+.ADD_TER   BC1   B15     "/~{SPHighWriter}"
+.TER       DECODER3   3
+
+.ADD_TER   DECODER1   4     "/~{SPLowReader}"
+.TER       U2   3
+
+.ADD_TER   BC1   B16     "/~{SPLowWriter}"
+.TER       DECODER3   4
+
+.ADD_TER   BC1   A19     "/~{TemporaryHighReader}"
+.TER       DECODER1   7
+
+.ADD_TER   BC1   B19     "/~{TemporaryHighWriter}"
+.TER       DECODER3   7
+
+.ADD_TER   BC1   A20     "/~{TemporaryLowReader}"
+.TER       DECODER1   8
+
+.ADD_TER   BC1   B20     "/~{TemporaryLowWriter}"
+.TER       DECODER3   8
+
+.ADD_TER   BC1   A22     "/~{XHReader}"
+.TER       DECODER1   10
+
+.ADD_TER   BC1   B22     "/~{XHWriter}"
+.TER       DECODER3   10
+
+.ADD_TER   BC1   A25     "/~{YHReader}"
+.TER       DECODER1   13
+
+.ADD_TER   BC1   B25     "/~{YHWriter}"
+.TER       DECODER3   13
+
+.ADD_TER   BC1   A24     "/~{YLReader}"
+.TER       DECODER1   11
+
+.ADD_TER   BC1   B24     "/~{YLWriter}"
+.TER       DECODER3   11
+
+.ADD_TER   BC1   A27     "/~{ZHReader}"
+.TER       DECODER1   15
+
+.ADD_TER   BC1   B27     "/~{ZHWriter}"
+.TER       DECODER3   15
+
+.ADD_TER   BC1   A26     "/~{ZLReader}"
+.TER       DECODER1   14
+
+.ADD_TER   BC1   B26     "/~{ZLWriter}"
+.TER       DECODER3   14
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            C1   2
+            C10   2
+            C11   2
+            C12   2
+            C16   2
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C9   2
+            DECODER1   12
+            DECODER1   18
+            DECODER2   12
+            DECODER2   18
+            DECODER3   12
+            DECODER3   18
+            DECODER4   12
+            DECODER4   18
+            INSTRUCTION1   10
+            U1   7
+            U2   7
+            U3   15
+            U3   8
+            U4   7
+
+.ADD_TER   BC1   A49     "Net-(BC1-STATE15)"
+.TER       IntS1   1
+            U1   3
+
+.ADD_TER   DECODER1   19     "Net-(DECODER1-E1)"
+.TER       U1   6
+
+.ADD_TER   DECODER3   19     "Net-(DECODER3-E1)"
+.TER       U1   8
+
+.ADD_TER   INSTRUCTION1   11     "Net-(INSTRUCTION1-Cp)"
+.TER       U4   1
+            ~{LI}1   1
+
+.ADD_TER   U3   4     "Net-(U3A-C)"
+.TER       U4   4
+
+.ADD_TER   U1   2     "Net-(U3A-~{Q})"
+.TER       U3   7
+            ~{IntE}1   1
+
+.ADD_TER   R1   2     "Net-(U3A-~{S})"
+.TER       U3   5
+            U4   11
+            U4   12
+            U4   8
+            U4   9
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            C1   1
+            C10   1
+            C11   1
+            C12   1
+            C16   1
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C9   1
+            DECODER1   24
+            DECODER2   24
+            DECODER3   24
+            DECODER4   24
+            INSTRUCTION1   20
+            Power1   1
+            R1   1
+            U1   14
+            U2   14
+            U3   16
+            U4   14
+
+.END

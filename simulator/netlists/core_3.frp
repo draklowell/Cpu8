@@ -1,0 +1,334 @@
+.HEA
+.TIM 2026-01-06T16:26:05+0200
+.APP "Eeschema 9.0.6"
+.TYP FULL
+
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     TABLE5     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     TABLE6     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     TABLE3     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     TABLE4     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     BC2     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     TABLE2     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     TABLE1     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+
+
+.ADD_TER   BC2   B37     "/ALUM"
+.TER       TABLE1   18
+            TABLE2   18
+
+.ADD_TER   BC2   B48     "/ALUS0"
+.TER       TABLE3   16
+            TABLE4   16
+
+.ADD_TER   BC2   B49     "/ALUS1"
+.TER       TABLE3   15
+            TABLE4   15
+
+.ADD_TER   BC2   B51     "/ALUS2"
+.TER       TABLE5   13
+            TABLE6   13
+
+.ADD_TER   BC2   B52     "/ALUS3"
+.TER       TABLE5   12
+            TABLE6   12
+
+.ADD_TER   BC2   B55     "/AccumShiftLeft"
+.TER       TABLE5   18
+            TABLE6   18
+
+.ADD_TER   BC2   B56     "/AccumShiftRight"
+.TER       TABLE5   17
+            TABLE6   17
+
+.ADD_TER   BC2   B33     "/L0"
+.TER       TABLE1   13
+            TABLE2   13
+
+.ADD_TER   BC2   B34     "/L1"
+.TER       TABLE1   12
+            TABLE2   12
+
+.ADD_TER   BC2   B35     "/L2"
+.TER       TABLE1   11
+            TABLE2   11
+
+.ADD_TER   BC2   B36     "/L3"
+.TER       TABLE1   19
+            TABLE2   19
+
+.ADD_TER   BC2   B79     "/L4"
+.TER       TABLE5   16
+            TABLE6   16
+
+.ADD_TER   BC2   B47     "/PCIncrement"
+.TER       TABLE3   17
+            TABLE4   17
+
+.ADD_TER   BC2   B40     "/R0"
+.TER       TABLE1   15
+            TABLE2   15
+
+.ADD_TER   BC2   B42     "/R1"
+.TER       TABLE3   13
+            TABLE4   13
+
+.ADD_TER   BC2   B43     "/R2"
+.TER       TABLE3   12
+            TABLE4   12
+
+.ADD_TER   BC2   B44     "/R3"
+.TER       TABLE3   11
+            TABLE4   11
+
+.ADD_TER   BC2   B80     "/R4"
+.TER       TABLE5   15
+            TABLE6   15
+
+.ADD_TER   BC2   B53     "/SPDecrement"
+.TER       TABLE5   11
+            TABLE6   11
+
+.ADD_TER   BC2   B54     "/SPIncrement"
+.TER       TABLE5   19
+            TABLE6   19
+
+.ADD_TER   BC2   A33     "/STATE0"
+.TER       TABLE1   10
+            TABLE2   10
+            TABLE3   10
+            TABLE4   10
+            TABLE5   10
+            TABLE6   10
+
+.ADD_TER   BC2   A34     "/STATE1"
+.TER       TABLE1   9
+            TABLE2   9
+            TABLE3   9
+            TABLE4   9
+            TABLE5   9
+            TABLE6   9
+
+.ADD_TER   BC2   A44     "/STATE10"
+.TER       TABLE1   21
+            TABLE2   21
+            TABLE3   21
+            TABLE4   21
+            TABLE5   21
+            TABLE6   21
+
+.ADD_TER   BC2   A45     "/STATE11"
+.TER       TABLE1   23
+            TABLE2   23
+            TABLE3   23
+            TABLE4   23
+            TABLE5   23
+            TABLE6   23
+
+.ADD_TER   BC2   A46     "/STATE12"
+.TER       TABLE1   2
+            TABLE2   2
+            TABLE3   2
+            TABLE4   2
+            TABLE5   2
+            TABLE6   2
+
+.ADD_TER   BC2   A47     "/STATE13"
+.TER       TABLE1   26
+            TABLE2   26
+            TABLE3   26
+            TABLE4   26
+            TABLE5   26
+            TABLE6   26
+
+.ADD_TER   BC2   A48     "/STATE14"
+.TER       TABLE1   1
+            TABLE2   1
+            TABLE3   1
+            TABLE4   1
+            TABLE5   1
+            TABLE6   1
+
+.ADD_TER   BC2   A49     "/STATE15"
+.TER       TABLE1   22
+            TABLE3   22
+            TABLE5   22
+
+.ADD_TER   BC2   A79     "/STATE16"
+.TER       TABLE2   22
+            TABLE4   22
+            TABLE6   22
+
+.ADD_TER   BC2   A35     "/STATE2"
+.TER       TABLE1   8
+            TABLE2   8
+            TABLE3   8
+            TABLE4   8
+            TABLE5   8
+            TABLE6   8
+
+.ADD_TER   BC2   A36     "/STATE3"
+.TER       TABLE1   7
+            TABLE2   7
+            TABLE3   7
+            TABLE4   7
+            TABLE5   7
+            TABLE6   7
+
+.ADD_TER   BC2   A37     "/STATE4"
+.TER       TABLE1   6
+            TABLE2   6
+            TABLE3   6
+            TABLE4   6
+            TABLE5   6
+            TABLE6   6
+
+.ADD_TER   BC2   A38     "/STATE5"
+.TER       TABLE1   5
+            TABLE2   5
+            TABLE3   5
+            TABLE4   5
+            TABLE5   5
+            TABLE6   5
+
+.ADD_TER   BC2   A39     "/STATE6"
+.TER       TABLE1   4
+            TABLE2   4
+            TABLE3   4
+            TABLE4   4
+            TABLE5   4
+            TABLE6   4
+
+.ADD_TER   BC2   A40     "/STATE7"
+.TER       TABLE1   3
+            TABLE2   3
+            TABLE3   3
+            TABLE4   3
+            TABLE5   3
+            TABLE6   3
+
+.ADD_TER   BC2   A42     "/STATE8"
+.TER       TABLE1   25
+            TABLE2   25
+            TABLE3   25
+            TABLE4   25
+            TABLE5   25
+            TABLE6   25
+
+.ADD_TER   BC2   A43     "/STATE9"
+.TER       TABLE1   24
+            TABLE2   24
+            TABLE3   24
+            TABLE4   24
+            TABLE5   24
+            TABLE6   24
+
+.ADD_TER   BC2   B38     "/~{ALUCarryIn}"
+.TER       TABLE1   17
+            TABLE2   17
+
+.ADD_TER   BC2   B39     "/~{FlagsUpdate}"
+.TER       TABLE1   16
+            TABLE2   16
+
+.ADD_TER   BC2   B46     "/~{Halt}"
+.TER       TABLE3   18
+            TABLE4   18
+
+.ADD_TER   BC2   B45     "/~{SCClear}"
+.TER       TABLE3   19
+            TABLE4   19
+
+.ADD_TER   BC2   A12     "GND"
+.TER       BC2   A13
+            BC2   A23
+            BC2   A32
+            BC2   A50
+            BC2   A59
+            BC2   A63
+            BC2   A64
+            BC2   A65
+            BC2   A66
+            BC2   A70
+            BC2   A71
+            BC2   A72
+            BC2   A73
+            BC2   A74
+            BC2   A75
+            BC2   A76
+            BC2   B12
+            BC2   B13
+            BC2   B23
+            BC2   B32
+            BC2   B50
+            BC2   B59
+            BC2   B62
+            BC2   B63
+            BC2   B64
+            BC2   B65
+            BC2   B66
+            BC2   B67
+            BC2   B68
+            BC2   B69
+            BC2   B70
+            BC2   B71
+            BC2   B72
+            BC2   B75
+            BC2   B76
+            C1   2
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C6   2
+            C7   2
+            TABLE1   14
+            TABLE1   20
+            TABLE2   14
+            TABLE2   20
+            TABLE3   14
+            TABLE3   20
+            TABLE4   14
+            TABLE4   20
+            TABLE5   14
+            TABLE5   20
+            TABLE6   14
+            TABLE6   20
+
+.ADD_TER   BC2   A1     "VCC"
+.TER       BC2   A2
+            BC2   A3
+            BC2   A4
+            BC2   A5
+            BC2   B1
+            BC2   B2
+            BC2   B3
+            BC2   B4
+            BC2   B5
+            C1   1
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C6   1
+            C7   1
+            TABLE1   27
+            TABLE1   28
+            TABLE2   27
+            TABLE2   28
+            TABLE3   27
+            TABLE3   28
+            TABLE4   27
+            TABLE4   28
+            TABLE5   27
+            TABLE5   28
+            TABLE6   27
+            TABLE6   28
+
+.END

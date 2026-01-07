@@ -1,0 +1,283 @@
+.HEA
+.TIM 2026-01-06T16:23:54+0200
+.APP "Eeschema 9.0.6"
+.TYP FULL
+
+.ADD_COM     U7     "74HC245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U2     "74HC193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     U4     "74HC193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     Pwr1     "Power"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{RL}1     "~{ReadLow}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Rst1     "Reset"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     LH1     "LoadHigh"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U1     "74HC00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     U3     "74HC193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     LL1     "LoadLow"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{Clk}1     "~{Clock}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C8     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     Inc1     "Increment"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     Pls1     "Pulse"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U6     "74HC245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     R1     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     ~{RH}1     "~{ReadHigh}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U5     "74HC193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+
+
+.ADD_TER   Inc1   1     "/CPu"
+.TER       U1   11
+            U4   5
+
+.ADD_TER   BC1   A51     "/DATA0"
+.TER       U2   15
+            U4   15
+            U6   2
+            U7   2
+
+.ADD_TER   BC1   A52     "/DATA1"
+.TER       U2   1
+            U4   1
+            U6   3
+            U7   3
+
+.ADD_TER   BC1   A53     "/DATA2"
+.TER       U2   10
+            U4   10
+            U6   4
+            U7   4
+
+.ADD_TER   BC1   A54     "/DATA3"
+.TER       U2   9
+            U4   9
+            U6   5
+            U7   5
+
+.ADD_TER   BC1   A55     "/DATA4"
+.TER       U3   15
+            U5   15
+            U6   6
+            U7   6
+
+.ADD_TER   BC1   A56     "/DATA5"
+.TER       U3   1
+            U5   1
+            U6   7
+            U7   7
+
+.ADD_TER   BC1   A57     "/DATA6"
+.TER       U3   10
+            U5   10
+            U6   8
+            U7   8
+
+.ADD_TER   BC1   A58     "/DATA7"
+.TER       U3   9
+            U5   9
+            U6   9
+            U7   9
+
+.ADD_TER   U2   3     "/DH0"
+.TER       U7   18
+
+.ADD_TER   U2   2     "/DH1"
+.TER       U7   17
+
+.ADD_TER   U2   6     "/DH2"
+.TER       U7   16
+
+.ADD_TER   U2   7     "/DH3"
+.TER       U7   15
+
+.ADD_TER   U3   3     "/DH4"
+.TER       U7   14
+
+.ADD_TER   U3   2     "/DH5"
+.TER       U7   13
+
+.ADD_TER   U3   6     "/DH6"
+.TER       U7   12
+
+.ADD_TER   U3   7     "/DH7"
+.TER       U7   11
+
+.ADD_TER   U4   3     "/DL0"
+.TER       U6   18
+
+.ADD_TER   U4   2     "/DL1"
+.TER       U6   17
+
+.ADD_TER   U4   6     "/DL2"
+.TER       U6   16
+
+.ADD_TER   U4   7     "/DL3"
+.TER       U6   15
+
+.ADD_TER   U5   3     "/DL4"
+.TER       U6   14
+
+.ADD_TER   U5   2     "/DL5"
+.TER       U6   13
+
+.ADD_TER   U5   6     "/DL6"
+.TER       U6   12
+
+.ADD_TER   U5   7     "/DL7"
+.TER       U6   11
+
+.ADD_TER   BC1   A17     "/LPCH"
+.TER       U1   9
+
+.ADD_TER   BC1   A18     "/LPCL"
+.TER       U1   4
+
+.ADD_TER   BC1   B47     "/PCINC"
+.TER       U1   12
+
+.ADD_TER   BC1   B74     "/PULSE"
+.TER       Pls1   1
+            U1   10
+            U1   5
+
+.ADD_TER   LH1   1     "/Ph"
+.TER       U1   8
+            U2   11
+            U3   11
+
+.ADD_TER   LL1   1     "/Pl"
+.TER       U1   6
+            U4   11
+            U5   11
+
+.ADD_TER   BC1   A69     "/RESET"
+.TER       Rst1   1
+            U2   14
+            U3   14
+            U4   14
+            U5   14
+
+.ADD_TER   BC1   B73     "/~{CLK}"
+.TER       U1   13
+            ~{Clk}1   1
+
+.ADD_TER   BC1   B17     "/~{RPCH}"
+.TER       U7   19
+            ~{RH}1   1
+
+.ADD_TER   BC1   B18     "/~{RPCL}"
+.TER       U6   19
+            ~{RL}1   1
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            C1   2
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C6   1
+            C7   2
+            C8   2
+            U1   7
+            U2   8
+            U3   8
+            U4   8
+            U5   8
+            U6   1
+            U6   10
+            U7   1
+            U7   10
+
+.ADD_TER   R1   2     "Net-(R1-Pad2)"
+.TER       U1   1
+            U1   2
+
+.ADD_TER   U2   4     "Net-(U2-DOWN)"
+.TER       U5   13
+
+.ADD_TER   U2   5     "Net-(U2-UP)"
+.TER       U5   12
+
+.ADD_TER   U2   13     "Net-(U2-~{BO})"
+.TER       U3   4
+
+.ADD_TER   U2   12     "Net-(U2-~{CO})"
+.TER       U3   5
+
+.ADD_TER   U4   13     "Net-(U4-~{BO})"
+.TER       U5   4
+
+.ADD_TER   U4   12     "Net-(U4-~{CO})"
+.TER       U5   5
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            C1   1
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C6   2
+            C7   1
+            C8   1
+            Pwr1   1
+            R1   1
+            U1   14
+            U2   16
+            U3   16
+            U4   16
+            U5   16
+            U6   20
+            U7   20
+
+.END

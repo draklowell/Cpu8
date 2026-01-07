@@ -1,0 +1,399 @@
+.HEA
+.TIM 2026-01-06T16:16:00+0200
+.APP "Eeschema 9.0.6"
+.TYP FULL
+
+.ADD_COM     ~{RLOW}1     "~{ReadLow}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U9     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U3     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{CaIn}1     "~{CaIn}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     R1     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     U10     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U8     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     Zero1     "Zero"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C10     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     Sign1     "Sign"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U7     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     C9     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{LLOW}1     "~{LoadLow}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C11     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     PWR1     "Power"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{Carry}1     "~{Carry}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{RALU}1     "~{ReadALU}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U2     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{RHIGH}1     "~{ReadHigh}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U6     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{LHIGH}1     "~{LoadHigh}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     S0     "S0"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U1     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U5     "74LS181"     "Package_DIP:DIP-24_W15.24mm_Socket_LongPads"
+.ADD_COM     S3     "S3"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U4     "74LS181"     "Package_DIP:DIP-24_W15.24mm_Socket_LongPads"
+.ADD_COM     S1     "S1"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{CLK}1     "~{Clock}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Mode1     "Mode"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C8     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     S2     "S2"     "TestPoint:TestPoint_Pad_D1.0mm"
+
+
+.ADD_TER   BC1   A51     "/DATA0"
+.TER       U1   2
+            U2   2
+            U6   2
+            U7   2
+            U8   2
+
+.ADD_TER   BC1   A52     "/DATA1"
+.TER       U1   3
+            U2   3
+            U6   3
+            U7   3
+            U8   3
+
+.ADD_TER   BC1   A53     "/DATA2"
+.TER       U1   4
+            U2   4
+            U6   4
+            U7   4
+            U8   4
+
+.ADD_TER   BC1   A54     "/DATA3"
+.TER       U1   5
+            U2   5
+            U6   5
+            U7   5
+            U8   5
+
+.ADD_TER   BC1   A55     "/DATA4"
+.TER       U1   6
+            U2   6
+            U6   6
+            U7   6
+            U8   6
+
+.ADD_TER   BC1   A56     "/DATA5"
+.TER       U1   7
+            U2   7
+            U6   7
+            U7   7
+            U8   7
+
+.ADD_TER   BC1   A57     "/DATA6"
+.TER       U1   8
+            U2   8
+            U6   8
+            U7   8
+            U8   8
+
+.ADD_TER   BC1   A58     "/DATA7"
+.TER       U1   9
+            U2   9
+            U6   9
+            U7   9
+            U8   9
+
+.ADD_TER   U1   19     "/HIGH0"
+.TER       U2   18
+            U4   2
+
+.ADD_TER   U1   18     "/HIGH1"
+.TER       U2   17
+            U4   23
+
+.ADD_TER   U1   17     "/HIGH2"
+.TER       U2   16
+            U4   21
+
+.ADD_TER   U1   16     "/HIGH3"
+.TER       U2   15
+            U4   19
+
+.ADD_TER   U1   15     "/HIGH4"
+.TER       U2   14
+            U5   2
+
+.ADD_TER   U1   14     "/HIGH5"
+.TER       U2   13
+            U5   23
+
+.ADD_TER   U1   13     "/HIGH6"
+.TER       U2   12
+            U5   21
+
+.ADD_TER   U1   12     "/HIGH7"
+.TER       U2   11
+            U5   19
+
+.ADD_TER   U4   1     "/LOW0"
+.TER       U6   19
+            U7   18
+
+.ADD_TER   U4   22     "/LOW1"
+.TER       U6   18
+            U7   17
+
+.ADD_TER   U4   20     "/LOW2"
+.TER       U6   17
+            U7   16
+
+.ADD_TER   U4   18     "/LOW3"
+.TER       U6   16
+            U7   15
+
+.ADD_TER   U5   1     "/LOW4"
+.TER       U6   15
+            U7   14
+
+.ADD_TER   U5   22     "/LOW5"
+.TER       U6   14
+            U7   13
+
+.ADD_TER   U5   20     "/LOW6"
+.TER       U6   13
+            U7   12
+
+.ADD_TER   U5   18     "/LOW7"
+.TER       U6   12
+            U7   11
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            C1   1
+            C10   1
+            C11   1
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C6   1
+            C7   1
+            C8   1
+            C9   1
+            U1   1
+            U1   10
+            U10   7
+            U2   1
+            U2   10
+            U3   7
+            U4   12
+            U5   12
+            U6   1
+            U6   10
+            U7   1
+            U7   10
+            U8   1
+            U8   10
+            U9   7
+
+.ADD_TER   BC1   B37     "Net-(BC1-ALUM)"
+.TER       Mode1   1
+            U4   8
+            U5   8
+
+.ADD_TER   BC1   B48     "Net-(BC1-ALUS0)"
+.TER       S0   1
+            U4   6
+            U5   6
+
+.ADD_TER   BC1   B49     "Net-(BC1-ALUS1)"
+.TER       S1   1
+            U4   5
+            U5   5
+
+.ADD_TER   BC1   B51     "Net-(BC1-ALUS2)"
+.TER       S2   1
+            U4   4
+            U5   4
+
+.ADD_TER   BC1   B52     "Net-(BC1-ALUS3)"
+.TER       S3   1
+            U4   3
+            U5   3
+
+.ADD_TER   BC1   A62     "Net-(BC1-ALUSO)"
+.TER       Sign1   1
+            U5   13
+            U8   11
+            U9   6
+
+.ADD_TER   BC1   A60     "Net-(BC1-ALUZO)"
+.TER       U10   13
+            Zero1   1
+
+.ADD_TER   BC1   B38     "Net-(BC1-~{ALUCI})"
+.TER       U4   7
+            ~{CaIn}1   1
+
+.ADD_TER   BC1   A61     "Net-(BC1-~{ALUCO})"
+.TER       U5   16
+            ~{Carry}1   1
+
+.ADD_TER   BC1   B73     "Net-(BC1-~{CLK})"
+.TER       U3   3
+            U3   6
+            ~{CLK}1   1
+
+.ADD_TER   BC1   A19     "Net-(BC1-~{LARGH})"
+.TER       U3   2
+
+.ADD_TER   BC1   A20     "Net-(BC1-~{LARGL})"
+.TER       U3   5
+
+.ADD_TER   BC1   B30     "Net-(BC1-~{RALU})"
+.TER       U8   19
+            ~{RALU}1   1
+
+.ADD_TER   BC1   B19     "Net-(BC1-~{RARGH})"
+.TER       U2   19
+            ~{RHIGH}1   1
+
+.ADD_TER   BC1   B20     "Net-(BC1-~{RARGL})"
+.TER       U7   19
+            ~{RLOW}1   1
+
+.ADD_TER   R1   2     "Net-(R1-Pad2)"
+.TER       U3   11
+            U3   12
+            U3   8
+            U3   9
+
+.ADD_TER   U1   11     "Net-(U1-Cp)"
+.TER       U3   1
+            ~{LHIGH}1   1
+
+.ADD_TER   U10   1     "Net-(U10-Pad1)"
+.TER       U10   8
+
+.ADD_TER   U10   10     "Net-(U10-Pad10)"
+.TER       U9   12
+
+.ADD_TER   U10   11     "Net-(U10-Pad11)"
+.TER       U10   12
+            U9   13
+
+.ADD_TER   U10   4     "Net-(U10-Pad4)"
+.TER       U10   9
+
+.ADD_TER   U4   16     "Net-(U4-Cn+4)"
+.TER       U5   7
+
+.ADD_TER   U10   2     "Net-(U4-F0)"
+.TER       U4   9
+            U8   18
+
+.ADD_TER   U10   3     "Net-(U4-F1)"
+.TER       U4   10
+            U8   17
+
+.ADD_TER   U10   5     "Net-(U4-F2)"
+.TER       U4   11
+            U8   16
+
+.ADD_TER   U10   6     "Net-(U4-F3)"
+.TER       U4   13
+            U8   15
+
+.ADD_TER   U5   9     "Net-(U5-F0)"
+.TER       U8   14
+            U9   2
+
+.ADD_TER   U5   10     "Net-(U5-F1)"
+.TER       U8   13
+            U9   3
+
+.ADD_TER   U5   11     "Net-(U5-F2)"
+.TER       U8   12
+            U9   5
+
+.ADD_TER   U3   4     "Net-(U6-Cp)"
+.TER       U6   11
+            ~{LLOW}1   1
+
+.ADD_TER   U9   1     "Net-(U9-Pad1)"
+.TER       U9   8
+
+.ADD_TER   U9   10     "Net-(U9-Pad10)"
+.TER       U9   11
+
+.ADD_TER   U9   4     "Net-(U9-Pad4)"
+.TER       U9   9
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            C1   2
+            C10   2
+            C11   2
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C6   2
+            C7   2
+            C8   2
+            C9   2
+            PWR1   1
+            R1   1
+            U1   20
+            U10   14
+            U2   20
+            U3   14
+            U4   24
+            U5   24
+            U6   20
+            U7   20
+            U8   20
+            U9   14
+
+.END
