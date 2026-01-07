@@ -1,4 +1,4 @@
-from base import Component
+from simulator.base import Component
 
 
 class IC74193(Component):

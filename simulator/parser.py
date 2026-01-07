@@ -1,8 +1,15 @@
 from simulator.base import Component, Network
 from simulator.busconnector import BusConnector
-from simulator.ic74xx import IC7400
+from simulator.eeprom import EEPROM
+from simulator.ic74xx import IC7400, IC7404, IC74109
+from simulator.ic74138 import IC74138
+from simulator.ic74154 import IC74154
+from simulator.ic74161 import IC74161
+from simulator.ic74181 import IC74181
 from simulator.ic74193 import IC74193
 from simulator.ic74245 import IC74245
+from simulator.ic74273 import IC74273
+from simulator.ic74574 import IC74574
 from simulator.interface import Interface
 
 FOOTPRINTS_FILTERED_OUT = {
@@ -13,8 +20,28 @@ FOOTPRINTS_FILTERED_OUT = {
 
 MAPPING = {
     "74LS00": IC7400,
-    "74LS245": IC74245,
+    "74LS04": IC7404,
+    "74LS109": IC74109,
+    "74LS138": IC74138,
+    "74LS154": IC74154,
+    "74LS161": IC74161,
+    "74LS181": IC74181,
     "74LS193": IC74193,
+    "74LS245": IC74245,
+    "74LS273": IC74273,
+    "74LS574": IC74574,
+    "74HC00": IC7400,
+    "74HC04": IC7404,
+    "74HC109": IC74109,
+    "74HC138": IC74138,
+    "74HC154": IC74154,
+    "74HC161": IC74161,
+    "74HC181": IC74181,
+    "74HC193": IC74193,
+    "74HC245": IC74245,
+    "74HC273": IC74273,
+    "74HC574": IC74574,
+    "28C256": EEPROM,
     "BusConnector": BusConnector,
     "Conn_02x19_Counter_Clockwise": Interface,
 }
