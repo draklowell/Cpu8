@@ -19,8 +19,6 @@ class IC7400(Component):
 
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
-            # IC is not powered, outputs float
-            self.log("Not powered, outputs float")
             return
 
         a1 = self.get(self.B1)
@@ -58,8 +56,6 @@ class IC7402(Component):
 
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
-            # IC is not powered, outputs float
-            self.log("Not powered, outputs float")
             return
 
         a1 = self.get(self.B1)
@@ -96,7 +92,6 @@ class IC7404(Component):
 
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
-            self.log("Not powered")
             return
 
         self.set(self.Y1, not self.get(self.A1))

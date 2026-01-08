@@ -64,7 +64,8 @@ class EEPROM(Component):
             return
 
         if not self.get(self.WE):
-            raise RuntimeError(f"[{self.name}] хуй замість запису")
+            self.error(f"Write operation is not supported")
+            return
 
         if not self.get(self.OE):
             address = 0

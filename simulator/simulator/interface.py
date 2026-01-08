@@ -1,4 +1,3 @@
-import warnings
 from typing import Callable
 
 from simulator.base import Component
@@ -50,7 +49,7 @@ class Interface(Component):
     N_MEMREAD = "13"
     N_MEMWRITE = "12"
     N_WAIT = "15"
-    GND = ["1", "3", "19", "20", "21", "38"]
+    GND = ["1", "3", "19", "20", "21", "38"]  # Not used, driven by backplane
 
     reset: bool
     wait: bool
@@ -69,27 +68,29 @@ class Interface(Component):
         self.write_callback = lambda address, value: None
 
     def set_read_callback(self, callback: Callable[[int], int]):
+        self.log("Setting read callback")
         self.read_callback = callback
 
     def set_write_callback(self, callback: Callable[[int, int], None]):
+        self.log("Setting write callback")
         self.write_callback = callback
 
     def set_clock(self, value: bool):
+        self.log(f"Setting clock to {'HIGH' if value else 'LOW'}")
         self.clock_new = value
 
     def set_wait(self, value: bool):
+        self.log(f"Setting wait to {'ACTIVE' if value else 'INACTIVE'}")
         self.wait = value
 
     def set_reset(self, value: bool):
+        self.log(f"Setting reset to {'ACTIVE' if value else 'INACTIVE'}")
         self.reset = value
 
     def get_halt(self) -> bool:
         return not self.get(self.N_HALT)
 
     def propagate(self):
-        for gnd in self.GND:
-            self.set(gnd, False)  # Ground pins always low
-
         # Falling edge: update memory
         if not self.get(self.clock_new) and self.clock:
             address = 0
@@ -98,7 +99,7 @@ class Interface(Component):
                     address |= 1 << i
 
             if not self.get(self.N_MEMREAD) and not self.get(self.N_MEMWRITE):
-                warnings.warn("Both MEMREAD and MEMWRITE are active, ignoring")
+                self.warn("Both MEMREAD and MEMWRITE are active, ignoring")
 
             if not self.get(self.N_MEMWRITE):
                 # Write
@@ -111,7 +112,7 @@ class Interface(Component):
                 # Read
                 value = self.read_callback(address)
                 if value is None:
-                    raise ValueError(f"Illegal memory read at address {address:04X}")
+                    self.error(f"Illegal memory read at address {address:04X}")
 
                 for i, pin in enumerate(self.DATA):
                     bit = (value >> i) & 1

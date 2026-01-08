@@ -49,8 +49,6 @@ class IC74193(Component):
 
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
-            # IC is not powered, outputs float
-            self.log("Not powered, outputs float")
             return
 
         if self.get(self.MR):  # Clear

@@ -62,17 +62,19 @@ class IC74574(Component):
         self.prev_clk = clk
 
         # OE Low -> output. if High -> High-Z do nothing
-        if not self.get(self.OE):
-            outputs = [
-                self.Q1,
-                self.Q2,
-                self.Q3,
-                self.Q4,
-                self.Q5,
-                self.Q6,
-                self.Q7,
-                self.Q8,
-            ]
-            for i, pin in enumerate(outputs):
-                bit_val = (self.internal_state >> i) & 1
-                self.set(pin, bool(bit_val))
+        if self.get(self.OE):
+            return
+
+        outputs = [
+            self.Q1,
+            self.Q2,
+            self.Q3,
+            self.Q4,
+            self.Q5,
+            self.Q6,
+            self.Q7,
+            self.Q8,
+        ]
+        for i, pin in enumerate(outputs):
+            bit_val = (self.internal_state >> i) & 1
+            self.set(pin, bool(bit_val))

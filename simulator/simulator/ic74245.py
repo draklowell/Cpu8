@@ -3,7 +3,7 @@ from simulator.base import Component
 
 class IC74245(Component):
     VCC = "20"
-    E = "19"
+    OE = "19"
     B = ["18", "17", "16", "15", "14", "13", "12", "11"]
     GND = "10"
     A = ["9", "8", "7", "6", "5", "4", "3", "2"]
@@ -11,8 +11,6 @@ class IC74245(Component):
 
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
-            # IC is not powered, outputs float
-            self.log("Not powered, outputs float")
             return
 
         if self.get(self.OE):

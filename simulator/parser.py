@@ -1,7 +1,7 @@
 from simulator.base import Component, Network
 from simulator.busconnector import BusConnector
 from simulator.eeprom import EEPROM
-from simulator.ic74xx import IC7400, IC7404, IC74109
+from simulator.ic74xx import IC7400, IC7402, IC7404, IC74109
 from simulator.ic74138 import IC74138
 from simulator.ic74154 import IC74154
 from simulator.ic74161 import IC74161
@@ -14,12 +14,14 @@ from simulator.interface import Interface
 
 FOOTPRINTS_FILTERED_OUT = {
     "TestPoint:TestPoint_Pad_D1.0mm",
-    "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm",
-    "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
 }
+
+NAMES_FILTERED_OUT = {"C"}
+NAMES_RESISTOR = {"R", "5kOhm"}
 
 MAPPING = {
     "74LS00": IC7400,
+    "74LS02": IC7402,
     "74LS04": IC7404,
     "74LS109": IC74109,
     "74LS138": IC74138,
@@ -31,6 +33,7 @@ MAPPING = {
     "74LS273": IC74273,
     "74LS574": IC74574,
     "74HC00": IC7400,
+    "74HC02": IC7402,
     "74HC04": IC7404,
     "74HC109": IC74109,
     "74HC138": IC74138,
@@ -99,8 +102,46 @@ def _parse(
     return components, networks
 
 
+def _replace_resistors(
+    components_data: dict[str, tuple[str, str]],
+    networks_data: dict[str, list[tuple[str, str]]],
+) -> dict[str, tuple[str, str]]:
+    to_remove = []
+    for uuid, (type_name, _) in components_data.items():
+        if type_name not in NAMES_RESISTOR:
+            continue
+
+        to_remove.append(uuid)
+        connected_nets = []
+        new_net = []
+        for net_name, terminals in networks_data.items():
+            for component_uuid, pin in terminals:
+                if component_uuid == uuid:
+                    connected_nets.append(net_name)
+                    break
+            else:
+                continue
+
+            for component_uuid, pin in terminals:
+                if component_uuid != uuid:
+                    new_net.append((component_uuid, pin))
+
+        if len(connected_nets) != 2:
+            raise ValueError(f"Resistor {uuid} does not have exactly two connections")
+
+        net1, net2 = connected_nets
+        del networks_data[net2]
+        networks_data[net1] = new_net
+
+    for uuid in to_remove:
+        del components_data[uuid]
+
+    return components_data, networks_data
+
+
 def parse(data: str) -> tuple[list[Component], list[Network]]:
     components_data, networks_data = _parse(data)
+    components_data, networks_data = _replace_resistors(components_data, networks_data)
 
     pinouts: dict[str, dict[str, str]] = {}
 
@@ -118,6 +159,9 @@ def parse(data: str) -> tuple[list[Component], list[Network]]:
 
     for uuid, (type_name, footprint) in components_data.items():
         if footprint in FOOTPRINTS_FILTERED_OUT:
+            continue
+
+        if type_name in NAMES_FILTERED_OUT:
             continue
 
         if type_name not in MAPPING:

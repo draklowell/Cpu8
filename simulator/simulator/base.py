@@ -1,5 +1,6 @@
-import warnings
 from abc import ABC, abstractmethod
+from collections import deque
+from enum import StrEnum
 
 
 class Propagatable(ABC):
@@ -8,80 +9,102 @@ class Propagatable(ABC):
         pass
 
 
-class Network(Propagatable):
+class Messaging:
     name: str
-    value: bool | None
-    new_value: bool | None
 
-    def __init__(self, name: str):
-        self.name = name
-        self.value = None
-        self.new_value = None
+    def log(self, message: str):
+        print(f"[{self.name}] {message}")
+
+    def warn(self, message: str):
+        print(f"\033[33m[{self.name}] {message}\033[0m")
+
+    def error(self, message: str):
+        print(f"\033[31m[{self.name}] {message}\033[0m")
+
+
+class NetworkState(StrEnum):
+    FLOATING = "FLOATING"
+    DRIVEN_HIGH = "DRIVEN_HIGH"
+    DRIVEN_LOW = "DRIVEN_LOW"
+    CONFLICT = "CONFLICT"
+
+
+class Network(Propagatable, Messaging):
+    name: str
+
+    states: deque[tuple[NetworkState, list[str]]]
+    state: NetworkState
+    new_state: NetworkState
+    drivers: deque[str]
+
+    def __init__(self, name: str, history_size: int = 8):
+        self.name = name + "!"
+
+        self.states = deque(maxlen=history_size)
+        self.state = NetworkState.FLOATING
+        self.new_state = NetworkState.FLOATING
+        self.drivers = deque()
+
+    def get_history(self) -> list[tuple[NetworkState, list[str]]]:
+        return list(self.states)
 
     def propagate(self):
-        self.value = self.new_value
-        self.new_value = None
+        self.states.append((self.new_state, list(self.drivers)))
+        self.state = self.new_state
+        self.new_state = NetworkState.FLOATING
+        self.drivers.clear()
 
     def is_floating(self) -> bool:
-        return self.value is None
+        return self.state == NetworkState.FLOATING
 
-    def set(self, value: bool):
-        if self.new_value is not None and self.new_value != value:
-            raise ValueError(
-                f"Network conflict ({self.name}): trying to drive different values"
-            )
+    def set(self, component: str, value: bool):
+        if component in self.drivers:
+            return
 
-        self.new_value = value
+        if self.new_state != NetworkState.FLOATING:
+            self.new_state = NetworkState.CONFLICT
+            self.drivers.append(component)
+            return
+
+        self.new_state = NetworkState.DRIVEN_HIGH if value else NetworkState.DRIVEN_LOW
+        self.drivers.append(component)
 
     def get(self):
-        if self.value is None:
-            warnings.warn(
-                f"Reading from undriven network ({self.name}), returning False"
-            )
-            return False
-
-        return self.value
+        # Return True if last state was DRIVEN_HIGH
+        # False if DRIVEN_LOW, CONFLICT or FLOATING
+        return self.state == NetworkState.DRIVEN_HIGH
 
     def __repr__(self):
-        return f"<Network {self.name}: {self.value}>"
+        return f"<Network {self.name}>"
 
 
-class Component(Propagatable):
+class Component(Propagatable, Messaging):
     name: str
     pins: dict[str, Network]
 
     def __init__(self, name: str, pins: dict[str, Network]):
         self.name = name
         self.pins = pins
+
         self._init()
 
     def _init(self):
         pass
 
-    def log(self, message: str):
-        print(f"[{self.name}] {message}")
-
     def is_floating(self, pin: str) -> bool:
         if pin not in self.pins:
-            warnings.warn(
-                f"[{self.name}] Checking floating state of non-existent pin {pin}, returning True"
-            )
             return True
 
         return self.pins[pin].is_floating()
 
     def set(self, pin: str, value: bool):
         if pin not in self.pins:
-            warnings.warn(f"[{self.name}] Writing to non-existent pin {pin}, ignoring")
             return
 
-        self.pins[pin].set(value)
+        self.pins[pin].set(self.name, value)
 
     def get(self, pin: str) -> bool:
         if pin not in self.pins:
-            warnings.warn(
-                f"[{self.name}] Reading from non-existent pin {pin}, returning False"
-            )
             return False
 
         return self.pins[pin].get()
