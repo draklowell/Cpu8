@@ -1,16 +1,16 @@
-from simulator.base import Component, Network
-from simulator.busconnector import BusConnector
-from simulator.eeprom import EEPROM
-from simulator.ic74xx import IC7400, IC7402, IC7404, IC74109
-from simulator.ic74138 import IC74138
-from simulator.ic74154 import IC74154
-from simulator.ic74161 import IC74161
-from simulator.ic74181 import IC74181
-from simulator.ic74193 import IC74193
-from simulator.ic74245 import IC74245
-from simulator.ic74273 import IC74273
-from simulator.ic74574 import IC74574
-from simulator.interface import Interface
+from simulator.entities.base import Component, Network
+from simulator.entities.busconnector import BusConnector
+from simulator.entities.eeprom import EEPROM
+from simulator.entities.ics.ic74xx import IC7400, IC7402, IC7404, IC74109
+from simulator.entities.ics.ic74138 import IC74138
+from simulator.entities.ics.ic74154 import IC74154
+from simulator.entities.ics.ic74161 import IC74161
+from simulator.entities.ics.ic74181 import IC74181
+from simulator.entities.ics.ic74193 import IC74193
+from simulator.entities.ics.ic74245 import IC74245
+from simulator.entities.ics.ic74273 import IC74273
+from simulator.entities.ics.ic74574 import IC74574
+from simulator.entities.interface import Interface
 
 FOOTPRINTS_FILTERED_OUT = {
     "TestPoint:TestPoint_Pad_D1.0mm",

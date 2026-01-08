@@ -1,23 +1,9 @@
-from parser import parse
-
-from simulator.base import Component, Network
-from simulator.busconnector import Backplane, BusConnector
-from simulator.cpu import CPU
-from simulator.eeprom import EEPROM
-from simulator.interface import Interface
-
-MODULES = [
-    ("netlists/alu_hub.frp", "ALU"),
-    ("netlists/core_1.frp", "C1"),
-    ("netlists/core_2.frp", "C2"),
-    ("netlists/core_3.frp", "C3"),
-    ("netlists/interface.frp", "I"),
-    ("netlists/program_counter.frp", "PC"),
-    ("netlists/register_file_accum.frp", "REG"),
-    ("netlists/stack_pointer.frp", "SP"),
-]
-
-TABLES_PATH = "../microcode/bin"
+from simulator.entities.base import Component, Network
+from simulator.entities.busconnector import Backplane, BusConnector
+from simulator.entities.cpu import CPU
+from simulator.entities.eeprom import EEPROM
+from simulator.entities.interface import Interface
+from simulator.parser import parse
 
 
 def load_components(
@@ -98,9 +84,9 @@ def setup_tables(components: dict[str, Component], data: list[bytes]):
         raise ValueError(f"Missing EEPROM tables: {missing}")
 
 
-def load() -> CPU:
-    components, networks, interface, backplane = load_components(MODULES)
-    tables_data = load_data(TABLES_PATH)
+def load(modules: list[tuple[str, str]], tables_path: str) -> CPU:
+    components, networks, interface, backplane = load_components(modules)
+    tables_data = load_data(tables_path)
     setup_tables(components, tables_data)
 
     return CPU(components, networks, interface, backplane)

@@ -1,5 +1,5 @@
-from simulator.base import Messaging
-from simulator.cpu import CPU
+from simulator.entities.base import Messaging
+from simulator.entities.cpu import CPU
 
 
 class Motherboard(Messaging):

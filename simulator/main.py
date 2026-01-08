@@ -1,11 +1,24 @@
-from loader import load
-from motherboard import Motherboard
-from simulator.base import NetworkState
+from simulator.entities.base import NetworkState
+from simulator.loader import load
+from simulator.motherboard import Motherboard
 
 CYCLES = 20
 PERIOD = 10
 INIT_TICKS = 20
 TICKS = CYCLES * PERIOD * 2
+
+MODULES = [
+    ("netlists/alu_hub.frp", "ALU"),
+    ("netlists/core_1.frp", "C1"),
+    ("netlists/core_2.frp", "C2"),
+    ("netlists/core_3.frp", "C3"),
+    ("netlists/interface.frp", "I"),
+    ("netlists/program_counter.frp", "PC"),
+    ("netlists/register_file_accum.frp", "REG"),
+    ("netlists/stack_pointer.frp", "SP"),
+]
+
+TABLES_PATH = "../microcode/bin"
 
 
 def check_conflicts(motherboard: Motherboard):
@@ -54,7 +67,7 @@ def print_internal_io(motherboard: Motherboard):
 
 
 def main():
-    cpu = load()
+    cpu = load(MODULES, TABLES_PATH)
     motherboard = Motherboard(cpu)
 
     with open("main.bin", "rb") as f:

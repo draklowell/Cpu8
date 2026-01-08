@@ -1,6 +1,6 @@
 from typing import Callable
 
-from simulator.base import Component
+from simulator.entities.base import Component
 
 INTREQ = 0x1
 RESET = 0x2

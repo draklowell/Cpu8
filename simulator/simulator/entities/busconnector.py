@@ -1,6 +1,6 @@
 from collections import deque
 
-from simulator.base import Component, Network, NetworkState, Propagatable
+from simulator.entities.base import Component, Network, NetworkState, Propagatable
 
 
 class Backplane(Propagatable):

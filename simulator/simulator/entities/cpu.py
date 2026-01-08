@@ -1,6 +1,6 @@
-from simulator.base import Component, Network, Propagatable
-from simulator.busconnector import Backplane
-from simulator.interface import Interface
+from simulator.entities.base import Component, Network, Propagatable
+from simulator.entities.busconnector import Backplane
+from simulator.entities.interface import Interface
 
 
 class CPU(Propagatable):
