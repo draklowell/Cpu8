@@ -15,6 +15,9 @@ class Messaging:
     def log(self, message: str):
         print(f"[{self.name}] {message}")
 
+    def ok(self, message: str):
+        print(f"\033[32m[{self.name}] {message}\033[0m")
+
     def warn(self, message: str):
         print(f"\033[33m[{self.name}] {message}\033[0m")
 
@@ -32,42 +35,39 @@ class NetworkState(StrEnum):
 class Network(Propagatable, Messaging):
     name: str
 
-    states: deque[tuple[NetworkState, list[str]]]
     state: NetworkState
-    new_state: NetworkState
     drivers: deque[str]
+    new_state: NetworkState
+    new_drivers: deque[str]
 
-    def __init__(self, name: str, history_size: int = 8):
+    def __init__(self, name: str):
         self.name = name + "!"
 
-        self.states = deque(maxlen=history_size)
         self.state = NetworkState.FLOATING
-        self.new_state = NetworkState.FLOATING
         self.drivers = deque()
-
-    def get_history(self) -> list[tuple[NetworkState, list[str]]]:
-        return list(self.states)
+        self.new_state = NetworkState.FLOATING
+        self.new_drivers = deque()
 
     def propagate(self):
-        self.states.append((self.new_state, list(self.drivers)))
+        self.drivers = self.new_drivers.copy()
         self.state = self.new_state
         self.new_state = NetworkState.FLOATING
-        self.drivers.clear()
+        self.new_drivers.clear()
 
     def is_floating(self) -> bool:
         return self.state == NetworkState.FLOATING
 
     def set(self, component: str, value: bool):
-        if component in self.drivers:
+        if component in self.new_drivers:
             return
 
         if self.new_state != NetworkState.FLOATING:
             self.new_state = NetworkState.CONFLICT
-            self.drivers.append(component)
+            self.new_drivers.append(component)
             return
 
         self.new_state = NetworkState.DRIVEN_HIGH if value else NetworkState.DRIVEN_LOW
-        self.drivers.append(component)
+        self.new_drivers.append(component)
 
     def get(self):
         # Return True if last state was DRIVEN_HIGH
@@ -75,7 +75,7 @@ class Network(Propagatable, Messaging):
         return self.state == NetworkState.DRIVEN_HIGH
 
     def __repr__(self):
-        return f"<Network {self.name}>"
+        return f"<Network {self.name}: {self.state} driven by {list(self.drivers)}>"
 
 
 class Component(Propagatable, Messaging):

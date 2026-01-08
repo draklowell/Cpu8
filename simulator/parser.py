@@ -129,9 +129,14 @@ def _replace_resistors(
         if len(connected_nets) != 2:
             raise ValueError(f"Resistor {uuid} does not have exactly two connections")
 
-        net1, net2 = connected_nets
-        del networks_data[net2]
-        networks_data[net1] = new_net
+        if connected_nets[0] == "VCC":
+            networks_data["VCC"] = new_net
+            del networks_data[connected_nets[1]]
+        elif connected_nets[1] == "VCC":
+            networks_data["VCC"] = new_net
+            del networks_data[connected_nets[0]]
+        else:
+            raise ValueError(f"Resistor {uuid} is not connected to VCC")
 
     for uuid in to_remove:
         del components_data[uuid]

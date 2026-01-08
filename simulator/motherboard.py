@@ -1,8 +1,4 @@
-import hashlib
-
-from graphviz import Digraph
-
-from simulator.base import Messaging, Network, NetworkState
+from simulator.base import Messaging
 from simulator.cpu import CPU
 
 

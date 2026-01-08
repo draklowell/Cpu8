@@ -63,8 +63,8 @@ class IC74273(Component):
             if self.get(self.D8):
                 new_val |= 128
             self.state = new_val
-            self._update_outputs()
 
+        self._update_outputs()
         self.prev_clk = clk
 
     def _update_outputs(self):

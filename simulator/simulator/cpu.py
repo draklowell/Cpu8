@@ -20,5 +20,7 @@ class CPU(Propagatable):
         for component in self.components.values():
             component.propagate()
 
+        self.backplane.propagate()
+
         for network in self.networks.values():
             network.propagate()

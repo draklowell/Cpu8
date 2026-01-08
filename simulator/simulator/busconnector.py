@@ -1,6 +1,6 @@
-from typing import Iterator
+from collections import deque
 
-from simulator.base import Component, Network, Propagatable
+from simulator.base import Component, Network, NetworkState, Propagatable
 
 
 class Backplane(Propagatable):
@@ -47,35 +47,59 @@ class Backplane(Propagatable):
     ]
 
     name: str
-    pins: dict[str, Network]
+    networks: dict[str, list[Network]]
     power: bool = False
 
     def __init__(self, name: str):
         self.name = name
-        self.pins = {}
+        self.networks = {}
         self.power = False
 
         for i in range(1, 83):
-            self.pins[f"B{i}"] = Network(f"B{i}")
-            self.pins[f"A{i}"] = Network(f"A{i}")
+            self.networks[f"B{i}"] = []
+            self.networks[f"A{i}"] = []
 
     def propagate(self):
         for pin in self.VCC:
-            network = self.pins[pin]
-            network.set(self.name, self.power)
+            networks = self.networks[pin]
+            for network in networks:
+                network.set(self.name, self.power)
 
         for pin in self.GND:
-            network = self.pins[pin]
-            network.set(self.name, not self.power)
+            networks = self.networks[pin]
+            for network in networks:
+                network.set(self.name, not self.power)
+
+        # Naive synchronization
+        for pin, networks in self.networks.items():
+            state = NetworkState.FLOATING
+            drivers = set()
+            for network in networks:
+                drivers |= set(network.new_drivers)
+                if state == NetworkState.CONFLICT:
+                    continue
+
+                if network.new_state == NetworkState.CONFLICT:
+                    state = NetworkState.CONFLICT
+                elif (
+                    network.new_state != NetworkState.FLOATING
+                    and state == NetworkState.FLOATING
+                ):
+                    state = network.new_state
+                elif network.new_state == state and len(drivers) == 1:
+                    continue
+                elif network.new_state != NetworkState.FLOATING:
+                    state = NetworkState.CONFLICT
+
+            for network in networks:
+                network.new_state = state
+                network.new_drivers = deque(drivers)
 
     def power_on(self):
         self.power = True
 
     def power_off(self):
         self.power = False
-
-    def get_networks(self) -> Iterator[tuple[str, Network]]:
-        return self.pins.items()
 
 
 class BusConnector(Component):
@@ -85,19 +109,13 @@ class BusConnector(Component):
         self.backplane = None
 
     def set_backplane(self, backplane: Backplane):
+        if self.backplane is not None:
+            for pin, network in self.pins.items():
+                self.backplane.networks[pin].remove(network)
+
         self.backplane = backplane
+        for pin, network in self.pins.items():
+            backplane.networks[pin].append(network)
 
     def propagate(self):
-        if self.backplane is None:
-            return
-
-        for pin, network in self.backplane.get_networks():
-            if pin not in self.pins:
-                continue
-
-            if not self.is_floating(pin):
-                value = network.get()
-                self.set(pin, value)
-            if not network.is_floating():
-                value = self.pins[pin].get()
-                network.set(self.name, value)
+        pass

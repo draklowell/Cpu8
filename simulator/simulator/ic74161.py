@@ -54,7 +54,7 @@ class IC74161(Component):
             elif self.get(self.ENP) and self.get(self.ENT):
                 self.count = (self.count + 1) & 0xF
 
-            self._update_outputs()
+        self._update_outputs()
 
         # High when Count=15 AND ENT=High
         rco = (self.count == 15) and self.get(self.ENT)

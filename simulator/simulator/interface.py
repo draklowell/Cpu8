@@ -100,6 +100,7 @@ class Interface(Component):
 
             if not self.get(self.N_MEMREAD) and not self.get(self.N_MEMWRITE):
                 self.warn("Both MEMREAD and MEMWRITE are active, ignoring")
+                return
 
             if not self.get(self.N_MEMWRITE):
                 # Write

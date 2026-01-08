@@ -24,13 +24,9 @@ def load_components(
     modules: list[tuple[str, str]]
 ) -> tuple[dict[str, Component], dict[str, Network], Interface, Backplane]:
     backplane = Backplane("BP")
-    all_components = {"BP": backplane}
+    all_components = {}
     all_networks = {}
     interface = None
-
-    for _, network in backplane.get_networks():
-        network.name = f"BP:{network.name}"
-        all_networks[network.name] = network
 
     for filename, module in modules:
         if module == "BP":
