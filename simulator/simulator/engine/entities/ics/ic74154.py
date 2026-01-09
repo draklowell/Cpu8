@@ -1,9 +1,10 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
 class IC74154(Component):
     VCC = "24"
     GND = "12"
+
     A0 = "23"
     A1 = "22"
     A2 = "21"

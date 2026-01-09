@@ -1,16 +1,16 @@
-from simulator.entities.base import Component, Network
-from simulator.entities.busconnector import BusConnector
-from simulator.entities.eeprom import EEPROM
-from simulator.entities.ics.ic74xx import IC7400, IC7402, IC7404, IC74109
-from simulator.entities.ics.ic74138 import IC74138
-from simulator.entities.ics.ic74154 import IC74154
-from simulator.entities.ics.ic74161 import IC74161
-from simulator.entities.ics.ic74181 import IC74181
-from simulator.entities.ics.ic74193 import IC74193
-from simulator.entities.ics.ic74245 import IC74245
-from simulator.entities.ics.ic74273 import IC74273
-from simulator.entities.ics.ic74574 import IC74574
-from simulator.entities.interface import Interface
+from simulator.engine.entities.base import Component, Network
+from simulator.engine.entities.busconnector import BusConnector
+from simulator.engine.entities.ics.ic28c256 import IC28C256
+from simulator.engine.entities.ics.ic74xx import IC7400, IC7402, IC7404, IC74109
+from simulator.engine.entities.ics.ic74138 import IC74138
+from simulator.engine.entities.ics.ic74154 import IC74154
+from simulator.engine.entities.ics.ic74161 import IC74161
+from simulator.engine.entities.ics.ic74181 import IC74181
+from simulator.engine.entities.ics.ic74193 import IC74193
+from simulator.engine.entities.ics.ic74245 import IC74245
+from simulator.engine.entities.ics.ic74273 import IC74273
+from simulator.engine.entities.ics.ic74574 import IC74574
+from simulator.engine.entities.interface import Interface
 
 FOOTPRINTS_FILTERED_OUT = {
     "TestPoint:TestPoint_Pad_D1.0mm",
@@ -44,7 +44,7 @@ MAPPING = {
     "74HC245": IC74245,
     "74HC273": IC74273,
     "74HC574": IC74574,
-    "28C256": EEPROM,
+    "28C256": IC28C256,
     "BusConnector": BusConnector,
     "Conn_02x19_Counter_Clockwise": Interface,
 }

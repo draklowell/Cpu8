@@ -1,9 +1,9 @@
-from simulator.entities.base import Component, Network
-from simulator.entities.busconnector import Backplane, BusConnector
-from simulator.entities.cpu import CPU
-from simulator.entities.eeprom import EEPROM
-from simulator.entities.interface import Interface
-from simulator.parser import parse
+from simulator.engine.entities.base import Component, Network
+from simulator.engine.entities.busconnector import Backplane, BusConnector
+from simulator.engine.entities.cpu import CPU
+from simulator.engine.entities.ics.ic28c256 import IC28C256
+from simulator.engine.entities.interface import Interface
+from simulator.engine.parser import parse
 
 
 def load_components(
@@ -68,7 +68,7 @@ def load_data(path: str) -> list[bytes]:
 def setup_tables(components: dict[str, Component], data: list[bytes]):
     set_ = set()
     for component in components.values():
-        if not isinstance(component, EEPROM):
+        if not isinstance(component, IC28C256):
             continue
 
         _, name = component.name.split(":", 1)

@@ -9,20 +9,38 @@ class Propagatable(ABC):
         pass
 
 
+class MessagingProvider:
+    def log(self, source: str, message: str):
+        pass
+
+    def ok(self, source: str, message: str):
+        pass
+
+    def warn(self, source: str, message: str):
+        pass
+
+    def error(self, source: str, message: str):
+        pass
+
+
 class Messaging:
     name: str
+    _provider: MessagingProvider = MessagingProvider()
+
+    def set_messaging_provider(self, provider: MessagingProvider):
+        self._provider = provider
 
     def log(self, message: str):
-        print(f"[{self.name}] {message}")
+        self._provider.log(self.name, message)
 
     def ok(self, message: str):
-        print(f"\033[32m[{self.name}] {message}\033[0m")
+        self._provider.ok(self.name, message)
 
     def warn(self, message: str):
-        print(f"\033[33m[{self.name}] {message}\033[0m")
+        self._provider.warn(self.name, message)
 
     def error(self, message: str):
-        print(f"\033[31m[{self.name}] {message}\033[0m")
+        self._provider.error(self.name, message)
 
 
 class NetworkState(StrEnum):
@@ -90,6 +108,29 @@ class Component(Propagatable, Messaging):
 
     def _init(self):
         pass
+
+    def get_pin_aliases(self) -> list[tuple[str, str]]:
+        result = []
+        for name in dir(self):
+            if not name.isupper():
+                continue
+
+            if name.startswith("_"):
+                continue
+
+            value = getattr(self, name)
+            if isinstance(value, str):
+                result.append((value, name))
+            elif isinstance(value, list):
+                for i, v in enumerate(value):
+                    result.append((v, f"{name}{i}"))
+            elif isinstance(value, set):
+                for v in value:
+                    result.append((v, name))
+            else:
+                raise AttributeError(f"Invalid constant type: {name}")
+
+        return result
 
     def is_floating(self, pin: str) -> bool:
         if pin not in self.pins:

@@ -1,9 +1,10 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
 class IC74574(Component):
     VCC = "20"
     GND = "10"
+
     OE = "1"  # Active LOW
     CLK = "11"  # Rising Edge
 

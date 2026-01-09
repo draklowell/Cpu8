@@ -1,7 +1,7 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
-class EEPROM(Component):
+class IC28C256(Component):
     VCC = "28"
     GND = "14"
 
@@ -36,17 +36,17 @@ class EEPROM(Component):
     WE = "27"
 
     memory: bytearray
-    SIZE = 32768
+    _SIZE = 32768
 
     def _init(self):
-        self.memory = bytearray([0] * self.SIZE)
+        self.memory = bytearray([0] * self._SIZE)
 
     def load_data(self, data: bytes | list[int], offset: int = 0):
-        if offset < 0 or offset >= self.SIZE:
+        if offset < 0 or offset >= self._SIZE:
             raise ValueError(f"Offset {offset} is out of bounds")
 
         length = len(data)
-        if offset + length > self.SIZE:
+        if offset + length > self._SIZE:
             raise ValueError(
                 f"Data too long: {length} bytes at offset {offset} exceeds memory size"
             )
@@ -64,7 +64,7 @@ class EEPROM(Component):
             return
 
         if not self.get(self.WE):
-            self.error(f"Write operation is not supported")
+            self.error("Write operation is not supported")
             return
 
         if not self.get(self.OE):

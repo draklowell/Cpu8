@@ -1,15 +1,16 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
 class IC7400(Component):
     VCC = "14"
+    GND = "7"
+
     B3 = "13"
     A3 = "12"
     Y3 = "11"
     B2 = "10"
     A2 = "9"
     Y2 = "8"
-    GND = "7"
     Y1 = "6"
     A1 = "5"
     B1 = "4"
@@ -40,13 +41,14 @@ class IC7400(Component):
 
 class IC7402(Component):
     VCC = "14"
+    GND = "7"
+
     B3 = "11"
     A3 = "12"
     Y3 = "13"
     B2 = "8"
     A2 = "9"
     Y2 = "10"
-    GND = "7"
     Y1 = "4"
     A1 = "5"
     B1 = "6"
@@ -76,13 +78,14 @@ class IC7402(Component):
 
 class IC7404(Component):
     VCC = "14"
+    GND = "7"
+
     A6 = "13"
     Y6 = "12"
     A5 = "11"
     Y5 = "10"
     A4 = "9"
     Y4 = "8"
-    GND = "7"
     Y3 = "6"
     A3 = "5"
     Y2 = "4"

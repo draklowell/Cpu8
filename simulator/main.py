@@ -1,6 +1,4 @@
-from simulator.entities.base import NetworkState
-from simulator.loader import load
-from simulator.motherboard import Motherboard
+from simulator.simulation import SimulationEngine, State, WaveformChunk
 
 CYCLES = 20
 PERIOD = 10
@@ -21,89 +19,107 @@ MODULES = [
 TABLES_PATH = "../microcode/bin"
 
 
-def check_conflicts(motherboard: Motherboard):
-    for network in motherboard.cpu.networks.values():
-        if network.state == NetworkState.CONFLICT:
-            network.error(f"Conflict: {network.drivers}")
+def check_conflicts(chunk: WaveformChunk):
+    for network, state in chunk.network_states.items():
+        if state == State.CONFLICT:
+            print(
+                f"\033[33m[{network}] Conflict: {chunk.network_drivers[network]}\033[0m"
+            )
 
 
-def print_state(motherboard: Motherboard):
+def print_state(chunk: WaveformChunk):
     state = ""
     for i in range(17):
         name = f"C3:/STATE{i}!"
-        network = motherboard.cpu.networks[name]
-        if network.state == NetworkState.DRIVEN_HIGH:
+        state_val = chunk.network_states[name]
+        if state_val == State.HIGH:
             state += "1"
-        elif network.state == NetworkState.DRIVEN_LOW:
+        elif state_val == State.LOW:
             state += "0"
-        elif network.state == NetworkState.FLOATING:
+        elif state_val == State.FLOATING:
             state += "Z"
-        elif network.state == NetworkState.CONFLICT:
+        elif state_val == State.CONFLICT:
             state += "X"
 
     print("IISSSSFFFRRRRRRRR")
     print(state[::-1])  # Reverse for display
 
 
-def print_internal_io(motherboard: Motherboard):
+def print_internal_io(chunk: WaveformChunk):
     read = 0
     load = 0
     for i in range(5):
         name = f"C1:/L{i}!"
-        network = motherboard.cpu.networks[name]
-        if network.state == NetworkState.DRIVEN_HIGH:
+        state_val = chunk.network_states[name]
+        if state_val == State.HIGH:
             load |= 1 << i
-        elif network.state != NetworkState.DRIVEN_LOW:
-            network.warn("Unexpected floating state")
+        elif state_val != State.LOW:
+            print(f"\033[33m[{name}] Unexpected floating state\033[0m")
 
         name = f"C1:/R{i}!"
-        network = motherboard.cpu.networks[name]
-        if network.state == NetworkState.DRIVEN_HIGH:
+        state_val = chunk.network_states[name]
+        if state_val == State.HIGH:
             read |= 1 << i
-        elif network.state != NetworkState.DRIVEN_LOW:
-            network.warn("Unexpected floating state")
-
+        elif state_val != State.LOW:
+            print(f"\033[33m[{name}] Unexpected floating state\033[0m")
     print(f"{load:02x} <- {read:02x}")
 
 
 def main():
-    cpu = load(MODULES, TABLES_PATH)
-    motherboard = Motherboard(cpu)
-
     with open("main.bin", "rb") as f:
         rom_data = f.read()
 
-    motherboard.set_rom(rom_data)
-    motherboard.cpu.backplane.power_on()
-    motherboard.cpu.interface.set_reset(False)
-    motherboard.cpu.interface.set_wait(False)
+    engine = SimulationEngine.load(MODULES, TABLES_PATH, rom_data)
+
+    pin_aliases = engine.get_component_pin_aliases()
+    pin_networks = engine.get_component_pin_networks()
+
+    engine.set_power(True)
+    engine.set_reset(True)
+    engine.set_wait(False)
 
     for cycle in range(INIT_TICKS):
-        motherboard.propagate()
+        chunk = engine.tick()
 
-    for component in motherboard.cpu.components.values():
-        if hasattr(component, "VCC"):
-            if not component.get(component.VCC):
-                component.error(f"Power not connected")
+    engine.set_reset(False)
+
+    for component, aliases in pin_aliases.items():
+        for pin, alias in aliases:
+            if alias != "VCC":
+                continue
+
+            network = pin_networks[component][pin]
+            network_state = chunk.network_states[network]
+            if network_state != State.HIGH:
+                print(f"\033[31m[{component}] Power not connected on pin {pin}\033[0m")
             else:
-                component.ok("Power connected")
+                print(f"\033[32m[{component}] Power connected on pin {pin}\033[0m")
+            break
         else:
-            component.log("No VCC pin to check")
+            print(f"[{component}] No VCC pin to check")
 
-    motherboard.log(f"Starting simulation for {TICKS // PERIOD // 2} cycles")
     clock = False
     for cycle in range(TICKS):
+        chunk = engine.tick()
+
+        check_conflicts(chunk)
         if cycle % PERIOD == 0:
-            print_internal_io(motherboard)
-            print_state(motherboard)
-            # print(motherboard.cpu.networks["C1:/~{MemoryWriter}!"])
-            # print(motherboard.cpu.networks["C1:/~{MemoryReader}!"])
+            print_internal_io(chunk)
+            print_state(chunk)
             for i in range(4):
-                decoder = motherboard.cpu.components[f"C1:DECODER{i+1}"]
                 result = 0
                 for j in range(16):
-                    val = decoder.get(getattr(decoder, f"Y{j}"))
-                    if val:
+                    for pin, name in pin_aliases[f"C1:DECODER{i+1}"]:
+                        if name == f"Y{j}":
+                            network = pin_networks[f"C1:DECODER{i+1}"].get(pin)
+                            break
+                    else:
+                        raise ValueError(f"Pin Y{j} not found on DECODER{i+1}")
+
+                    if network is None:
+                        continue
+
+                    if chunk.network_states[network] == State.HIGH:
                         result |= 1 << j
 
                 print(f"DECODER{i+1}: {result:016b}")
@@ -111,13 +127,7 @@ def main():
             if clock:
                 print(f"--- Cycle {cycle // PERIOD // 2}")
             clock = not clock
-            motherboard.cpu.interface.set_clock(clock)
-
-        motherboard.propagate()
-        check_conflicts(motherboard)
-        # print(motherboard.cpu.networks["C3:/STATE0!"].state)
-
-    motherboard.log("Simulation finished")
+            engine.set_clock(clock)
 
 
 if __name__ == "__main__":

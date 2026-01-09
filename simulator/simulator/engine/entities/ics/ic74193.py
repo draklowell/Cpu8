@@ -1,8 +1,10 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
 class IC74193(Component):
     VCC = "16"
+    GND = "8"
+
     P0 = "15"
     MR = "14"
     N_TCD = "13"
@@ -10,7 +12,6 @@ class IC74193(Component):
     N_PL = "11"
     P2 = "10"
     P3 = "9"
-    GND = "8"
     Q3 = "7"
     Q2 = "6"
     CPU = "5"

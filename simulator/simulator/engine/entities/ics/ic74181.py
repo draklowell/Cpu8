@@ -1,4 +1,4 @@
-from simulator.entities.base import Component
+from simulator.engine.entities.base import Component
 
 
 class IC74181(Component):

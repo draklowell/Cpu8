@@ -1,15 +1,6 @@
 from typing import Callable
 
-from simulator.entities.base import Component
-
-INTREQ = 0x1
-RESET = 0x2
-WAIT = 0x4
-
-HALT = 0x1
-INTACK = 0x2
-MEMREAD = 0x4
-MEMWRITE = 0x8
+from simulator.engine.entities.base import Component
 
 
 class Interface(Component):
@@ -49,7 +40,7 @@ class Interface(Component):
     N_MEMREAD = "13"
     N_MEMWRITE = "12"
     N_WAIT = "15"
-    GND = ["1", "3", "19", "20", "21", "38"]  # Not used, driven by backplane
+    GND = {"1", "3", "19", "20", "21", "38"}  # Not used, driven by backplane
 
     reset: bool
     wait: bool
@@ -79,20 +70,29 @@ class Interface(Component):
         self.log(f"Setting clock to {'HIGH' if value else 'LOW'}")
         self.clock_new = value
 
+    def get_clock(self) -> bool:
+        return self.clock_new
+
     def set_wait(self, value: bool):
         self.log(f"Setting wait to {'ACTIVE' if value else 'INACTIVE'}")
         self.wait = value
 
+    def get_wait(self) -> bool:
+        return self.wait
+
     def set_reset(self, value: bool):
         self.log(f"Setting reset to {'ACTIVE' if value else 'INACTIVE'}")
         self.reset = value
+
+    def get_reset(self) -> bool:
+        return self.reset
 
     def get_halt(self) -> bool:
         return not self.get(self.N_HALT)
 
     def propagate(self):
         # Falling edge: update memory
-        if not self.get(self.clock_new) and self.clock:
+        if not self.clock_new and self.clock:
             address = 0
             for i, pin in enumerate(self.ADDRESS):
                 if self.get(pin):
