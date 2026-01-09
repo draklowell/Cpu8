@@ -66,19 +66,30 @@ class SimulationEngine:
         cpu = load(modules_path, tables_path)
         return cls(cpu, rom)
 
-    def get_component_pin_networks(self) -> dict[str, dict[str, str]]:
+    def get_component_pins(self) -> dict[str, dict[str, str]]:
         result = {}
         for component in self.cpu.components.values():
-            pin_map = {}
-            for pin_name, network in component.pins.items():
-                pin_map[pin_name] = network.name
-            result[component.name] = pin_map
-        return result
+            aliases = component.get_pin_aliases()
+            aliases_map = {}
+            for pin, alias in aliases:
+                if pin in aliases_map:
+                    raise ValueError(
+                        f"Multiple aliases for pin {pin} of component {component.name}"
+                    )
+                aliases_map[pin] = alias
 
-    def get_component_pin_aliases(self) -> dict[str, list[tuple[str, str]]]:
-        result = {}
-        for component in self.cpu.components.values():
-            result[component.name] = component.get_pin_aliases()
+            pin_map = {}
+            for pin, network in component.pins.items():
+                alias = aliases_map.get(pin, pin)
+                if alias in pin_map and pin_map[alias] != network.name:
+                    raise ValueError(
+                        f"Alias {alias} of component {component.name} maps to multiple networks"
+                    )
+
+                pin_map[alias] = network.name
+
+            result[component.name] = pin_map
+
         return result
 
     def set_clock(self, state: bool):

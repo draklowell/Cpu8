@@ -87,8 +87,7 @@ def main():
 
     engine = SimulationEngine.load(MODULES, TABLES_PATH, rom_data)
 
-    pin_aliases = engine.get_component_pin_aliases()
-    pin_networks = engine.get_component_pin_networks()
+    component_pins = engine.get_component_pins()
 
     engine.set_power(True)
     engine.set_reset(True)
@@ -99,20 +98,16 @@ def main():
 
     engine.set_reset(False)
 
-    for component, aliases in pin_aliases.items():
-        for pin, alias in aliases:
-            if alias != "VCC":
-                continue
-
-            network = pin_networks[component][pin]
-            network_state = chunk.network_states[network]
-            if network_state != State.HIGH:
-                print(f"\033[31m[{component}] Power not connected on pin {pin}\033[0m")
-            else:
-                print(f"\033[32m[{component}] Power connected on pin {pin}\033[0m")
-            break
-        else:
+    for component, pins in component_pins.items():
+        if "VCC" not in pins:
             print(f"[{component}] No VCC pin to check")
+            continue
+
+        network_state = chunk.network_states[pins["VCC"]]
+        if network_state != State.HIGH:
+            print(f"\033[31m[{component}] Power not connected on pin VCC\033[0m")
+        else:
+            print(f"\033[32m[{component}] Power connected on pin VCC\033[0m")
 
     clock = False
     for cycle in range(TICKS):
@@ -123,19 +118,13 @@ def main():
         if cycle % PERIOD == 0:
             print_internal_io(chunk)
             print_state(chunk)
+
             for i in range(4):
                 result = 0
                 for j in range(16):
-                    for pin, name in pin_aliases[f"C1:DECODER{i+1}"]:
-                        if name == f"Y{j}":
-                            network = pin_networks[f"C1:DECODER{i+1}"].get(pin)
-                            break
-                    else:
-                        raise ValueError(f"Pin Y{j} not found on DECODER{i+1}")
-
+                    network = component_pins[f"C1:DECODER{i+1}"].get(f"Y{j}")
                     if network is None:
                         continue
-
                     if chunk.network_states[network] == State.HIGH:
                         result |= 1 << j
 
