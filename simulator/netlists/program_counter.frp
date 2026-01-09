@@ -1,6 +1,6 @@
 .HEA
-.TIM 2026-01-06T16:23:54+0200
-.APP "Eeschema 9.0.6"
+.TIM 2026-01-09T14:49:29+0200
+.APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
 .TYP FULL
 
 .ADD_COM     U7     "74HC245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
