@@ -1,4 +1,4 @@
-from simulator.simulation import SimulationEngine, State, WaveformChunk
+from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
 CYCLES = 20
 PERIOD = 10
@@ -25,6 +25,22 @@ def check_conflicts(chunk: WaveformChunk):
             print(
                 f"\033[33m[{network}] Conflict: {chunk.network_drivers[network]}\033[0m"
             )
+
+
+def print_logs(chunk: WaveformChunk):
+    for level, source, message in chunk.logs:
+        if level == LogLevel.INFO:
+            color = "\033[34m"
+        elif level == LogLevel.OK:
+            color = "\033[32m"
+        elif level == LogLevel.WARNING:
+            color = "\033[33m"
+        elif level == LogLevel.ERROR:
+            color = "\033[31m"
+        else:
+            color = "\033[0m"
+
+        print(f"{color}[{source}] {message}\033[0m")
 
 
 def print_state(chunk: WaveformChunk):
@@ -102,6 +118,7 @@ def main():
     for cycle in range(TICKS):
         chunk = engine.tick()
 
+        print_logs(chunk)
         check_conflicts(chunk)
         if cycle % PERIOD == 0:
             print_internal_io(chunk)
