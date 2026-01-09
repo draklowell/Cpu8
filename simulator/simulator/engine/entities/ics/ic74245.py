@@ -5,7 +5,7 @@ class IC74245(Component):
     VCC = "20"
     GND = "10"
 
-    OE = "19"
+    N_CE = "19"
     B = ["18", "17", "16", "15", "14", "13", "12", "11"]
     A = ["9", "8", "7", "6", "5", "4", "3", "2"]
     DIR = "1"
@@ -14,7 +14,7 @@ class IC74245(Component):
         if not self.get(self.VCC) or self.get(self.GND):
             return
 
-        if self.get(self.OE):
+        if self.get(self.N_CE):
             return
 
         direction = self.get(self.DIR)

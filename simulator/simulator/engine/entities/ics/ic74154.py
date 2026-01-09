@@ -11,8 +11,8 @@ class IC74154(Component):
     A3 = "20"
 
     # both Active LOW
-    E1 = "18"
-    E2 = "19"
+    N_E0 = "18"
+    N_E1 = "19"
 
     # Active LOW
     Y0 = "1"
@@ -37,7 +37,7 @@ class IC74154(Component):
             return
 
         # Enable Logic: G1=Low AND G2=Low
-        enabled = (not self.get(self.E1)) and (not self.get(self.E2))
+        enabled = (not self.get(self.N_E0)) and (not self.get(self.N_E1))
 
         outputs = [
             self.Y0,

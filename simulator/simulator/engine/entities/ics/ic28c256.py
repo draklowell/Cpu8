@@ -21,19 +21,19 @@ class IC28C256(Component):
     A8 = "25"
     A13 = "26"
 
-    IO0 = "11"
-    IO1 = "12"
-    IO2 = "13"
-    IO3 = "15"
-    IO4 = "16"
-    IO5 = "17"
-    IO6 = "18"
-    IO7 = "19"
+    D0 = "11"
+    D1 = "12"
+    D2 = "13"
+    D3 = "15"
+    D4 = "16"
+    D5 = "17"
+    D6 = "18"
+    D7 = "19"
 
     # Active LOW
-    CE = "20"
-    OE = "22"
-    WE = "27"
+    N_CS = "20"
+    N_OE = "22"
+    N_WE = "27"
 
     memory: bytearray
     _SIZE = 32768
@@ -60,14 +60,14 @@ class IC28C256(Component):
         if not self.get(self.VCC) or self.get(self.GND):
             return
 
-        if self.get(self.CE):
+        if self.get(self.N_CS):
             return
 
-        if not self.get(self.WE):
+        if not self.get(self.N_WE):
             self.error("Write operation is not supported")
             return
 
-        if not self.get(self.OE):
+        if not self.get(self.N_OE):
             address = 0
             if self.get(self.A0):
                 address |= 1 << 0
@@ -102,11 +102,11 @@ class IC28C256(Component):
 
             data = self.memory[address]
 
-            self.set(self.IO0, bool((data >> 0) & 1))
-            self.set(self.IO1, bool((data >> 1) & 1))
-            self.set(self.IO2, bool((data >> 2) & 1))
-            self.set(self.IO3, bool((data >> 3) & 1))
-            self.set(self.IO4, bool((data >> 4) & 1))
-            self.set(self.IO5, bool((data >> 5) & 1))
-            self.set(self.IO6, bool((data >> 6) & 1))
-            self.set(self.IO7, bool((data >> 7) & 1))
+            self.set(self.D0, bool((data >> 0) & 1))
+            self.set(self.D1, bool((data >> 1) & 1))
+            self.set(self.D2, bool((data >> 2) & 1))
+            self.set(self.D3, bool((data >> 3) & 1))
+            self.set(self.D4, bool((data >> 4) & 1))
+            self.set(self.D5, bool((data >> 5) & 1))
+            self.set(self.D6, bool((data >> 6) & 1))
+            self.set(self.D7, bool((data >> 7) & 1))

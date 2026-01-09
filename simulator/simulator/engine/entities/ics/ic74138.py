@@ -5,12 +5,12 @@ class IC74138(Component):
     VCC = "16"
     GND = "8"
 
-    A = "1"
-    B = "2"
-    C = "3"
-    G2A = "4"  # active LOW
-    G2B = "5"  # active LOW
-    G1 = "6"  # active HIGH
+    A0 = "1"
+    A1 = "2"
+    A2 = "3"
+    N_E0 = "4"
+    N_E1 = "5"
+    E2 = "6"
     Y0 = "15"
     Y1 = "14"
     Y2 = "13"
@@ -25,7 +25,9 @@ class IC74138(Component):
             return
 
         enabled = (
-            self.get(self.G1) and (not self.get(self.G2A)) and (not self.get(self.G2B))
+            self.get(self.E2)
+            and (not self.get(self.N_E0))
+            and (not self.get(self.N_E1))
         )
 
         outputs = [
@@ -47,15 +49,15 @@ class IC74138(Component):
 
         # Determine which output to enable
         idx = 0
-        if self.get(self.C):
+        if self.get(self.A2):
             idx += 4
-        if self.get(self.B):
+        if self.get(self.A1):
             idx += 2
-        if self.get(self.A):
+        if self.get(self.A0):
             idx += 1
 
         for i, pin in enumerate(outputs):
             if i == idx:
-                self.set(pin, False)  # Active LOW
+                self.set(pin, False)
             else:
                 self.set(pin, True)

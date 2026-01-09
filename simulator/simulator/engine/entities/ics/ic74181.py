@@ -10,12 +10,12 @@ class IC74181(Component):
     S = ["6", "5", "4", "3"]
     F = ["9", "10", "11", "13"]
     M = "8"  # Mode: H=Logic, L=Arithmetic
-    CN = "7"  # Carry In (Active LOW)
+    N_CN = "7"  # Carry In (Active LOW)
 
     AEQB = "14"  # A=B not used
     P = "15"  # Carry Propagate not used
     G = "17"  # Carry Generate not used
-    CN4 = "16"  # Carry Out (Active LOW)
+    N_CN4 = "16"  # Carry Out (Active LOW)
 
     def _get(self, pin_list: list[str]) -> int:
         val = 0
@@ -47,7 +47,7 @@ class IC74181(Component):
         s = self._get_select()
         m = self.get(self.M)
 
-        carry_in = 1 if not self.get(self.CN) else 0
+        carry_in = 1 if not self.get(self.N_CN) else 0
 
         result = 0
         carry_out = 0
@@ -109,4 +109,4 @@ class IC74181(Component):
             result = val & 0xF
 
         self._set_output(result)
-        self.set(self.CN4, not carry_out)
+        self.set(self.N_CN4, not carry_out)
