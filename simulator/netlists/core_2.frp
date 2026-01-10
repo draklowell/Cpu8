@@ -1,5 +1,5 @@
 .HEA
-.TIM 2026-01-10T22:35:42+0200
+.TIM 2026-01-10T23:12:56+0200
 .APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
 .TYP FULL
 
@@ -8,6 +8,7 @@
 .ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 .ADD_COM     U5     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     ~{SignIn}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U3     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     ZerroO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
 .ADD_COM     TABLE7     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
 .ADD_COM     PWR1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
@@ -17,10 +18,10 @@
 .ADD_COM     C12     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 .ADD_COM     CarryO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
 .ADD_COM     ~{UPD_FR}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
-.ADD_COM     U3     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     SignO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
 .ADD_COM     U2     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
 .ADD_COM     C4     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     U4     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     B_IN0     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
 .ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 .ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
@@ -183,8 +184,8 @@
 
 .ADD_TER   BC1   B73     "/~CLK"
 .TER       U1   11
+            U3   12
             U3   8
-            U5   13
             ~{CLK}1   1
 
 .ADD_TER   BC1   A61     "/~{CarryIn}"
@@ -346,6 +347,8 @@
 .ADD_TER   R2   2     "Net-(R2-Pad2)"
 .TER       U3   2
             U3   3
+            U4   12
+            U4   13
 
 .ADD_TER   STEP1   10     "Net-(STEP1-CEP)"
 .TER       STEP1   7
@@ -364,15 +367,11 @@
 .TER       U3   5
 
 .ADD_TER   U1   8     "Net-(U1-Pad8)"
-.TER       U5   12
+.TER       U3   11
 
 .ADD_TER   U2   11     "Net-(U2-Cp)"
 .TER       U3   10
             ~{ENBL}1   1
-
-.ADD_TER   U3   11     "Net-(U3-Pad11)"
-.TER       U3   12
-            U5   11
 
 .ADD_TER   U3   4     "Net-(U3-Pad4)"
 .TER       U3   9
