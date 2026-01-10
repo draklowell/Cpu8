@@ -53,7 +53,18 @@ class IC74193(Component):
         return (d3 << 3) | (d2 << 2) | (d1 << 1) | d0
 
     def set_value(self, value: int):
+        if value > 15:
+            self.set(self.N_CO, False)
+        else:
+            self.set(self.N_CO, True)
+
+        if value < 0:
+            self.set(self.N_BO, False)
+        else:
+            self.set(self.N_BO, True)
+
         self.value = value & 0x0F  # 4 bits
+
         d0 = (self.value >> 0) & 1
         d1 = (self.value >> 1) & 1
         d2 = (self.value >> 2) & 1
@@ -85,16 +96,6 @@ class IC74193(Component):
         if down and not self.prev_down:
             # Rising edge on DOWN
             value -= 1
-
-        if value > 15:
-            self.set(self.N_CO, False)
-        else:
-            self.set(self.N_CO, True)
-
-        if value < 0:
-            self.set(self.N_BO, False)
-        else:
-            self.set(self.N_BO, True)
 
         self.set_value(value)
         self.prev_up = up
