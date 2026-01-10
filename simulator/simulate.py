@@ -114,51 +114,38 @@ class Simulator:
         return chunk
 
 
-def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
-    print(f"\033[53m>>>>>>>> Cycle {cycle} <<<<<<<<\033[0m")
-    state = 0
-    for i in range(17):
-        network = f"C3:/STATE{i}!"
+def print_bus(
+    simulator: Simulator, chunk: WaveformChunk, name: str, network_name: str, size: int
+):
+    value = 0
+    for i in range(size):
+        network = f"{network_name}{i}!"
         if chunk.network_states[network] == State.HIGH:
-            state |= 1 << i
+            value |= 1 << i
         elif chunk.network_states[network] != State.LOW:
             simulator.log(LogLevel.WARNING, network, "Unexpected floating state")
-    print(f"STATE: {state:017b} ({state&0xffff:#06x})")
 
-    data = 0
-    for i in range(8):
-        network = f"I:/DATA{i}!"
-        # network = f"PC:/DATA{i}!"
-        if chunk.network_states[network] == State.HIGH:
-            data |= 1 << i
-        elif chunk.network_states[network] != State.LOW:
-            simulator.log(LogLevel.WARNING, network, "Unexpected floating state")
-    print(f"DATA: {data:08b} ({data:#04x})")
+    print(f"{name}: {value:0{size}b} ({value:#0{size//4+2}x})")
 
-    result = 0
-    for i, comp in enumerate(
-        [
-            "PC:U4",
-            "PC:U5",
-            "PC:U2",
-            "PC:U3",
-        ]
-    ):
-        result |= (chunk.variables[comp]["Q"]) << (i * 4)
-    print(f"PC: {result} ({result:#06x})")
+
+def print_register(
+    simulator: Simulator,
+    chunk: WaveformChunk,
+    name: str,
+    registers: list[str],
+    size: int,
+):
+    if size % len(registers) != 0:
+        raise ValueError("Size must be divisible by number of registers")
 
     result = 0
-    for i, comp in enumerate(
-        [
-            "I:U8",
-            "I:U7",
-            "I:U6",
-            "I:U5",
-        ]
-    ):
-        result |= (chunk.variables[comp]["Q"]) << (i * 4)
-    print(f"ADDR: {result} ({result:#06x})")
+    size_per_register = size // len(registers)
+    for i, comp in enumerate(registers):
+        result |= (chunk.variables[comp]["Q"]) << (i * size_per_register)
+    print(f"{name}: {result} ({result:#0{size//4+2}x})")
 
+
+def print_load_read(simulator: Simulator, chunk: WaveformChunk):
     load = 0
     read = 0
     for i in range(5):
@@ -181,6 +168,101 @@ def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
             read |= 1 << i  # R4 is active low
 
     print(f"LOAD: {load:05b} ({load:#04x}) <- READ: {read:05b} ({read:#04x})")
+
+
+def print_interface_pins(simulator: Simulator, chunk: WaveformChunk):
+    print("INTERFACE:")
+    for pin, network in simulator.component_pins["I:PAD2"].items():
+        if pin.startswith("ADDRESS") or pin.startswith("DATA"):
+            continue
+
+        if chunk.network_states[network] == State.FLOATING:
+            state_str = "FLOATING"
+        elif chunk.network_states[network] == State.CONFLICT:
+            state_str = "CONFLICT"
+        elif chunk.network_states[network] == State.HIGH:
+            state_str = "HIGH"
+        else:
+            state_str = "LOW"
+        print(f"  - {pin} ({network}): {state_str}")
+
+
+def print_control_bus(simulator: Simulator, chunk: WaveformChunk):
+    print("CONTROL BUS:")
+    for idx in range(4):
+        if idx == 3:
+            table = "C2:TABLE7"
+        else:
+            table = f"C3:TABLE{idx*2 + 1}"
+
+        for bit in range(8):
+            network = simulator.component_pins[table].get(f"D{bit}")
+            if network is None:
+                continue
+
+            if chunk.network_states[network] == State.HIGH:
+                state_str = "HIGH"
+            elif chunk.network_states[network] == State.LOW:
+                state_str = "LOW"
+            elif chunk.network_states[network] == State.FLOATING:
+                state_str = "FLOATING"
+            else:
+                state_str = "CONFLICT"
+
+            print(f"  - CTL{idx * 8 + bit:02} ({network}): {state_str}")
+
+
+def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
+    print(f"\033[53m>>>>>>>> Cycle {cycle} <<<<<<<<\033[0m")
+    print_bus(simulator, chunk, "STATE", "C3:/STATE", 17)
+    print_bus(simulator, chunk, "INTERFACE DATA", "I:/DATA", 8)
+    print_bus(simulator, chunk, "DATA", "PC:/DATA", 8)
+    print_register(
+        simulator,
+        chunk,
+        "PROGRAM COUNTER",
+        [
+            "PC:U4",
+            "PC:U5",
+            "PC:U2",
+            "PC:U3",
+        ],
+        16,
+    )
+    print_register(
+        simulator,
+        chunk,
+        "ADDRESS",
+        [
+            "I:U8",
+            "I:U7",
+            "I:U6",
+            "I:U5",
+        ],
+        16,
+    )
+    print_register(
+        simulator,
+        chunk,
+        "STACK POINTER",
+        [
+            "SP:U4",
+            "SP:U5",
+            "SP:U2",
+            "SP:U3",
+        ],
+        16,
+    )
+    print_register(
+        simulator,
+        chunk,
+        "INSTRUCTION REGISTER",
+        ["C1:INSTRUCTION1"],
+        8,
+    )
+    print_load_read(simulator, chunk)
+    print_interface_pins(simulator, chunk)
+    print_control_bus(simulator, chunk)
 
     # for i in range(4):
     #     print(f"  DECODER{i+1}:")
@@ -227,10 +309,10 @@ def main():
     engine = SimulationEngine.load(MODULES, TABLES_PATH, rom_data)
 
     simulator = Simulator(engine, PERIOD)
-    process(0, simulator, simulator.start(INIT_TICKS, STARTUP_TICKS))
+    simulator.start(INIT_TICKS, STARTUP_TICKS)
 
     for cycle in range(CYCLES):
-        process(cycle + 1, simulator, simulator.step())
+        process(cycle, simulator, simulator.step())
 
 
 if __name__ == "__main__":
