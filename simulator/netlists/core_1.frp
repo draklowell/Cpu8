@@ -1,10 +1,11 @@
 .HEA
-.TIM 2026-01-09T14:49:27+0200
+.TIM 2026-01-11T00:45:45+0200
 .APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
 .TYP FULL
 
 .ADD_COM     U1     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     C9     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+.ADD_COM     U5     "74LS573"     "$noname"
 .ADD_COM     C10     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 .ADD_COM     U4     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
 .ADD_COM     ~{IntE}1     "~{IntE}"     "TestPoint:TestPoint_Pad_D1.0mm"
@@ -170,6 +171,7 @@
 .TER       U4   3
             U4   5
             U4   6
+            U5   11
             ~{Clock}1   1
 
 .ADD_TER   BC1   B29     "/~{ConstantWriter}"
@@ -183,7 +185,7 @@
 
 .ADD_TER   BC1   A29     "/~{InstructionReader}"
 .TER       DECODER1   17
-            U4   2
+            U5   2
 
 .ADD_TER   BC1   B31     "/~{IntAck}"
 .TER       DECODER4   2
@@ -329,6 +331,15 @@
             U3   15
             U3   8
             U4   7
+            U5   1
+            U5   10
+            U5   3
+            U5   4
+            U5   5
+            U5   6
+            U5   7
+            U5   8
+            U5   9
 
 .ADD_TER   BC1   A49     "Net-(BC1-STATE15)"
 .TER       IntS1   1
@@ -357,6 +368,9 @@
             U4   12
             U4   8
             U4   9
+
+.ADD_TER   U4   2     "Net-(U5-Q0)"
+.TER       U5   19
 
 .ADD_TER   BC1   A1     "VCC"
 .TER       BC1   A2
@@ -389,5 +403,6 @@
             U2   14
             U3   16
             U4   14
+            U5   20
 
 .END
