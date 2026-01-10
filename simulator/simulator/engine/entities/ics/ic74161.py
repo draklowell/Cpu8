@@ -51,6 +51,7 @@ class IC74161(Component):
         if not self.get(self.N_MR):
             self.count = 0
             self._update_outputs()
+            self.set(self.TC, False)
             return
 
         clk = self.get(self.CLK)
