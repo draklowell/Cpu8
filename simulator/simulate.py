@@ -40,7 +40,7 @@ COMPONENTS = [
 READERS = {comp.reader: comp for comp in COMPONENTS if comp.reader is not None}
 WRITERS = {comp.writer: comp for comp in COMPONENTS if comp.writer is not None}
 
-CYCLES = 10
+CYCLES = 500
 PERIOD = 800
 INIT_TICKS = 200
 STARTUP_TICKS = 200
@@ -337,9 +337,17 @@ def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
         ["C1:INSTRUCTION1"],
         8,
     )
+    for reg in ["ZH", "ZL", "YH", "YL", "XH", "XL"]:
+        print_register(
+            simulator,
+            chunk,
+            f"REGISTER {reg}",
+            [f"REG:{reg}1"],
+            8,
+        )
     print_load_read(simulator, chunk)
-    print_interface_pins(simulator, chunk)
-    print_control_bus(simulator, chunk)
+    # print_interface_pins(simulator, chunk)
+    # print_control_bus(simulator, chunk)
     # print_decoders(simulator, chunk)
 
 
@@ -353,7 +361,15 @@ def main():
     simulator.start(INIT_TICKS, STARTUP_TICKS)
 
     for cycle in range(CYCLES):
-        process(cycle, simulator, simulator.step())
+        chunk = simulator.step()
+        process(cycle, simulator, chunk)
+
+        network = simulator.component_pins["I:PAD2"].get("N_HALT")
+        if network is None:
+            raise RuntimeError("No N_HALT pin on I:PAD2")
+        if chunk.network_states[network] == State.LOW:
+            print("\033[33mCPU HALTED\033[0m")
+            break
 
 
 if __name__ == "__main__":

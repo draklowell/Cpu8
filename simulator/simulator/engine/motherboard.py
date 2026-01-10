@@ -38,8 +38,8 @@ class Motherboard(Messaging):
         if 0x4000 <= address <= 0x5800:
             return self._rw[address - 0x4000]
 
-        if 0xFBFF <= address <= 0xFFFF:
-            return self._stack[address - 0xFBFF]
+        if 0xFC00 <= address <= 0xFFFF:
+            return self._stack[address - 0xFC00]
 
         raise RuntimeError(f"Invalid read address: 0x{address:04X}")
 
@@ -53,8 +53,8 @@ class Motherboard(Messaging):
             self._rw[address - 0x4000] = value
             return
 
-        if 0xFBFF <= address <= 0xFFFF:
-            self._stack[address - 0xFBFF] = value
+        if 0xFC00 <= address <= 0xFFFF:
+            self._stack[address - 0xFC00] = value
             return
 
         raise RuntimeError(f"Invalid write address: 0x{address:04X}")

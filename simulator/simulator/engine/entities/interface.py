@@ -81,7 +81,6 @@ class Interface(Component):
             "RESET": int(self.reset),
             "WAIT": int(self.wait),
             "CLOCK": int(self.clock_new),
-            "HALT": int(not self.get(self.N_HALT)),
         }
 
     def set_read_callback(self, callback: Callable[[int], int]):
