@@ -109,6 +109,12 @@ class Component(Propagatable, Messaging):
     def _init(self):
         pass
 
+    def get_variables(self) -> dict[str, int]:
+        return {}
+
+    def set_variable(self, var: str, value: int) -> bool:
+        return False
+
     def get_pin_aliases(self) -> list[tuple[str, str]]:
         result = []
         for name in dir(self):

@@ -22,7 +22,4 @@ class WaveformChunk:
     network_states: dict[str, State]
     logs: list[tuple[LogLevel, str, str]]
     tick: int
-    clock: bool
-    wait: bool
-    reset: bool
-    halt: bool
+    variables: dict[str, dict[str, int]]

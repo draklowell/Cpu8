@@ -30,6 +30,21 @@ class IC74193(Component):
         self.prev_up = False
         self.prev_down = False
 
+    def get_variables(self) -> dict[str, int]:
+        return {
+            "Q": self.value,
+        }
+
+    def set_variable(self, var: str, value: int) -> bool:
+        if var == "Q":
+            value &= 0x0F
+            self.log(f"Setting Q to {value} ({value:01X})")
+            self.value = value
+        else:
+            return False
+
+        return True
+
     def get_value(self) -> int:
         d0 = self.get(self.D0)
         d1 = self.get(self.D1)

@@ -92,14 +92,12 @@ class SimulationEngine:
 
         return result
 
-    def set_clock(self, state: bool):
-        self.interface.set_clock(state)
+    def set_component_variable(self, component_name: str, var: str, value: int) -> bool:
+        component = self.cpu.components.get(component_name)
+        if component is None:
+            return False
 
-    def set_wait(self, state: bool):
-        self.interface.set_wait(state)
-
-    def set_reset(self, state: bool):
-        self.interface.set_reset(state)
+        return component.set_variable(var, value)
 
     def set_power(self, state: bool):
         if state:
@@ -116,15 +114,18 @@ class SimulationEngine:
             network_drivers[network.name] = list(network.drivers)
             network_states[network.name] = STATE_MAPPING[network.state]
 
+        variables = {}
+        for component in self.cpu.components.values():
+            variables[component.name] = {}
+            for name, value in component.get_variables().items():
+                variables[component.name][name] = value
+
         chunk = WaveformChunk(
             network_drivers=network_drivers,
             network_states=network_states,
             logs=self.provider.collect_logs(),
             tick=self._tick,
-            clock=self.interface.get_clock(),
-            wait=self.interface.get_wait(),
-            reset=self.interface.get_reset(),
-            halt=self.interface.get_halt(),
+            variables=variables,
         )
         self._tick += 1
         return chunk

@@ -58,6 +58,29 @@ class Interface(Component):
         self.read_callback = lambda address: None
         self.write_callback = lambda address, value: None
 
+    def set_variable(self, var: str, value: int) -> bool:
+        if var == "RESET":
+            self.log(f"Setting reset to {'ACTIVE' if value else 'INACTIVE'}")
+            self.reset = bool(value)
+        elif var == "WAIT":
+            self.log(f"Setting wait to {'ACTIVE' if value else 'INACTIVE'}")
+            self.wait = bool(value)
+        elif var == "CLOCK":
+            self.log(f"Setting clock to {'HIGH' if value else 'LOW'}")
+            self.clock_new = bool(value)
+        else:
+            return False
+
+        return True
+
+    def get_variables(self) -> dict[str, int]:
+        return {
+            "RESET": int(self.reset),
+            "WAIT": int(self.wait),
+            "CLOCK": int(self.clock_new),
+            "HALT": int(not self.get(self.N_HALT)),
+        }
+
     def set_read_callback(self, callback: Callable[[int], int]):
         self.log("Setting read callback")
         self.read_callback = callback
@@ -66,58 +89,33 @@ class Interface(Component):
         self.log("Setting write callback")
         self.write_callback = callback
 
-    def set_clock(self, value: bool):
-        self.log(f"Setting clock to {'HIGH' if value else 'LOW'}")
-        self.clock_new = value
-
-    def get_clock(self) -> bool:
-        return self.clock_new
-
-    def set_wait(self, value: bool):
-        self.log(f"Setting wait to {'ACTIVE' if value else 'INACTIVE'}")
-        self.wait = value
-
-    def get_wait(self) -> bool:
-        return self.wait
-
-    def set_reset(self, value: bool):
-        self.log(f"Setting reset to {'ACTIVE' if value else 'INACTIVE'}")
-        self.reset = value
-
-    def get_reset(self) -> bool:
-        return self.reset
-
-    def get_halt(self) -> bool:
-        return not self.get(self.N_HALT)
-
     def propagate(self):
+        address = 0
+        for i, pin in enumerate(self.ADDRESS):
+            if self.get(pin):
+                address |= 1 << i
+
+        if not self.get(self.N_MEMREAD) and not self.get(self.N_MEMWRITE):
+            self.warn("Both MEMREAD and MEMWRITE are active, ignoring")
+            return
+
         # Falling edge: update memory
-        if not self.clock_new and self.clock:
-            address = 0
-            for i, pin in enumerate(self.ADDRESS):
+        if not self.get(self.N_MEMWRITE) and not self.clock_new and self.clock:
+            # Write
+            value = 0
+            for i, pin in enumerate(self.DATA):
                 if self.get(pin):
-                    address |= 1 << i
+                    value |= 1 << i
+            self.write_callback(address, value)
+        elif not self.get(self.N_MEMREAD):
+            # Read
+            value = self.read_callback(address)
+            if value is None:
+                self.error(f"Illegal memory read at address {address:04X}")
 
-            if not self.get(self.N_MEMREAD) and not self.get(self.N_MEMWRITE):
-                self.warn("Both MEMREAD and MEMWRITE are active, ignoring")
-                return
-
-            if not self.get(self.N_MEMWRITE):
-                # Write
-                value = 0
-                for i, pin in enumerate(self.DATA):
-                    if self.get(pin):
-                        value |= 1 << i
-                self.write_callback(address, value)
-            elif not self.get(self.N_MEMREAD):
-                # Read
-                value = self.read_callback(address)
-                if value is None:
-                    self.error(f"Illegal memory read at address {address:04X}")
-
-                for i, pin in enumerate(self.DATA):
-                    bit = (value >> i) & 1
-                    self.set(pin, bool(bit))
+            for i, pin in enumerate(self.DATA):
+                bit = (value >> i) & 1
+                self.set(pin, bool(bit))
 
         # Temporary
         self.set(self.INTREQ, False)

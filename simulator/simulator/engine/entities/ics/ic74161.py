@@ -29,6 +29,21 @@ class IC74161(Component):
         self.count = 0
         self.prev_clk = False
 
+    def get_variables(self) -> dict[str, int]:
+        return {
+            "Q": self.count,
+        }
+
+    def set_variable(self, var: str, value: int) -> bool:
+        if var == "Q":
+            value &= 0x0F
+            self.log(f"Setting Q to {value} ({value:01X})")
+            self.count = value
+        else:
+            return False
+
+        return True
+
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
             return

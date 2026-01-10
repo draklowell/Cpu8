@@ -136,6 +136,24 @@ class IC74109(Component):
         self.prev_clk1 = False
         self.prev_clk2 = False
 
+    def get_variables(self) -> dict[str, int]:
+        return {
+            "Q1": int(self.state1),
+            "Q2": int(self.state2),
+        }
+
+    def set_variable(self, var: str, value: int) -> bool:
+        if var == "Q1":
+            self.log(f"Setting Q1 to {int(bool(value))}")
+            self.state1 = bool(value)
+        elif var == "Q2":
+            self.log(f"Setting Q2 to {int(bool(value))}")
+            self.state2 = bool(value)
+        else:
+            return False
+
+        return True
+
     def propagate(self):
         if not self.get(self.VCC) or self.get(self.GND):
             return
