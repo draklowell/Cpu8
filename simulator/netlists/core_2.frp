@@ -1,5 +1,5 @@
 .HEA
-.TIM 2026-01-09T14:49:27+0200
+.TIM 2026-01-10T22:35:42+0200
 .APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
 .TYP FULL
 
@@ -294,7 +294,7 @@
             U5   7
 
 .ADD_TER   BC1   B74     "Net-(BC1-PULSE)"
-.TER       U5   11
+.TER       U3   13
 
 .ADD_TER   B_IN0   2     "Net-(B_IN0-A0)"
 .TER       B_IN1   2
@@ -344,9 +344,7 @@
 .TER       U2   15
 
 .ADD_TER   R2   2     "Net-(R2-Pad2)"
-.TER       U3   11
-            U3   12
-            U3   2
+.TER       U3   2
             U3   3
 
 .ADD_TER   STEP1   10     "Net-(STEP1-CEP)"
@@ -371,6 +369,10 @@
 .ADD_TER   U2   11     "Net-(U2-Cp)"
 .TER       U3   10
             ~{ENBL}1   1
+
+.ADD_TER   U3   11     "Net-(U3-Pad11)"
+.TER       U3   12
+            U5   11
 
 .ADD_TER   U3   4     "Net-(U3-Pad4)"
 .TER       U3   9
