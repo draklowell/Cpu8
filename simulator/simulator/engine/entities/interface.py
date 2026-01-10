@@ -47,6 +47,8 @@ class Interface(Component):
     clock: bool
     clock_new: bool
 
+    value: int
+
     read_callback: Callable[[int], int]
     write_callback: Callable[[int, int], None]
 
@@ -55,6 +57,7 @@ class Interface(Component):
         self.wait = False
         self.clock = False
         self.clock_new = False
+        self.value = 0
         self.read_callback = lambda address: None
         self.write_callback = lambda address, value: None
 
@@ -100,21 +103,25 @@ class Interface(Component):
             return
 
         # Falling edge: update memory
-        if not self.get(self.N_MEMWRITE) and not self.clock_new and self.clock:
-            # Write
-            value = 0
-            for i, pin in enumerate(self.DATA):
-                if self.get(pin):
-                    value |= 1 << i
-            self.write_callback(address, value)
-        elif not self.get(self.N_MEMREAD):
-            # Read
-            value = self.read_callback(address)
-            if value is None:
-                self.error(f"Illegal memory read at address {address:04X}")
+        if not self.clock_new and self.clock:
+            if not self.get(self.N_MEMWRITE):
+                # Write
+                value = 0
+                for i, pin in enumerate(self.DATA):
+                    if self.get(pin):
+                        value |= 1 << i
+                self.write_callback(address, value)
+            elif not self.get(self.N_MEMREAD):
+                # Read
+                value = self.read_callback(address)
+                if value is None:
+                    self.error(f"Illegal memory read at address {address:04X}")
+                else:
+                    self.value = value
 
+        if not self.get(self.N_MEMREAD):
             for i, pin in enumerate(self.DATA):
-                bit = (value >> i) & 1
+                bit = (self.value >> i) & 1
                 self.set(pin, bool(bit))
 
         # Temporary

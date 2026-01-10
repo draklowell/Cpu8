@@ -35,7 +35,7 @@ class StoringMessagingProvider(MessagingProvider):
 
     def collect_logs(self) -> list[tuple[LogLevel, str, str]]:
         logs = self._logs
-        self._logs.clear()
+        self._logs = []
         return logs
 
 
@@ -120,10 +120,11 @@ class SimulationEngine:
             for name, value in component.get_variables().items():
                 variables[component.name][name] = value
 
+        logs = self.provider.collect_logs()
         chunk = WaveformChunk(
             network_drivers=network_drivers,
             network_states=network_states,
-            logs=self.provider.collect_logs(),
+            logs=logs,
             tick=self._tick,
             variables=variables,
         )
