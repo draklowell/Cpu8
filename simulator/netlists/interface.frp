@@ -1,5 +1,5 @@
 .HEA
-.TIM 2026-01-09T14:49:28+0200
+.TIM 2026-01-10T19:25:47+0200
 .APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
 .TYP FULL
 
@@ -118,13 +118,13 @@
             U7   15
 
 .ADD_TER   BC1   A56     "/BUS5"
-.TER       U4   12
-            U4   13
+.TER       U4   13
             U5   1
             U7   1
 
 .ADD_TER   BC1   A57     "/BUS6"
-.TER       U5   10
+.TER       U4   12
+            U5   10
             U7   10
 
 .ADD_TER   BC1   A58     "/BUS7"
