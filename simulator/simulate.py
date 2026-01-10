@@ -1,7 +1,47 @@
+from dataclasses import dataclass
+
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
-CYCLES = 4
-PERIOD = 400
+
+@dataclass
+class Component:
+    reader: int | None
+    writer: int | None
+    name: str
+
+    def __str__(self):
+        return self.name
+
+
+COMPONENTS = [
+    Component(0x00, 0x00, "Disable"),
+    Component(0x01, 0x01, "Memory"),
+    Component(0x02, 0x02, "StackPointerHigh"),
+    Component(0x03, 0x03, "StackPointerLow"),
+    Component(0x04, 0x04, "ProgramCounterHigh"),
+    Component(0x05, 0x05, "ProgramCounterLow"),
+    Component(0x06, 0x06, "ArgumentHigh"),
+    Component(0x07, 0x07, "ArgumentLow"),
+    Component(0x08, 0x08, "Accumulator"),
+    Component(0x09, 0x09, "XH"),
+    Component(0x0A, 0x0A, "YL"),
+    Component(0x0B, 0x0B, "YH"),
+    Component(0x0C, 0x0C, "ZL"),
+    Component(0x0D, 0x0D, "ZH"),
+    Component(0x0E, 0x0E, "Flags"),
+    Component(0x0F, None, "Instruction"),
+    Component(0x10, None, "AddressHigh"),
+    Component(0x11, None, "AddressLow"),
+    Component(None, 0x0F, "InterruptHandleConstant"),
+    Component(None, 0x10, "ALU"),
+    Component(None, 0x11, "InterruptCode"),
+]
+
+READERS = {comp.reader: comp for comp in COMPONENTS if comp.reader is not None}
+WRITERS = {comp.writer: comp for comp in COMPONENTS if comp.writer is not None}
+
+CYCLES = 10
+PERIOD = 800
 INIT_TICKS = 200
 STARTUP_TICKS = 200
 
@@ -41,7 +81,7 @@ class Simulator:
                     f"Conflict: {chunk.network_drivers[network]}",
                 )
 
-    def log(self, level: LogLevel, source: str, message: str):
+    def log(self, level: LogLevel, source: str, message: str, tick: int | None = None):
         if level == LogLevel.INFO:
             color = "\033[34m"
         elif level == LogLevel.OK:
@@ -53,18 +93,10 @@ class Simulator:
         else:
             color = "\033[0m"
 
-        print(f"{color}[{source}] {message}\033[0m")
-
-    # def print_bus(self, chunk: WaveformChunk, bus_name: str, width: int):
-    #     value = 0
-    #     for i in range(width):
-    #         name = f"{bus_name}{i}!"
-    #         state_val = chunk.network_states[name]
-    #         if state_val == State.HIGH:
-    #             value |= 1 << i
-    #         elif state_val != State.LOW:
-    #             self.log(LogLevel.WARNING, name, "Unexpected floating state")
-    #     print(f">>> Bus {bus_name}: {value:0{width}b} ({value:#0{width//4+2}x})")
+        if tick is None:
+            print(f"{color}[{source}] {message}\033[0m")
+        else:
+            print(f"{color}[{tick}][{source}] {message}\033[0m")
 
     def start(self, ticks_init: int, ticks_startup: int):
         self.simulation_engine.set_power(True)
@@ -96,7 +128,7 @@ class Simulator:
         chunk = self.simulation_engine.tick()
 
         for level, source, message in chunk.logs:
-            self.log(level, source, message)
+            self.log(level, source, message, tick=chunk.tick)
 
         if verbose:
             self.check_conflicts(chunk)
@@ -106,12 +138,28 @@ class Simulator:
     def step(self):
         self.simulation_engine.set_component_variable("I:PAD2", "CLOCK", 0)
         for _ in range(self.period // 2):
-            self.tick(False)
+            c = self.tick(False)
+            # print(f"STATE: NNSSSSFFFIIIIIIII [{c.tick}]")
+            # print_bus(self, c, "STATE", "C3:/STATE", 17)
         chunk = self.tick()
         self.simulation_engine.set_component_variable("I:PAD2", "CLOCK", 1)
         for _ in range(self.period // 2):
-            self.tick(False)
+            c = self.tick(False)
+            # print(f"STATE: NNSSSSFFFIIIIIIII [{c.tick}]")
+            # print_bus(self, c, "STATE", "C3:/STATE", 17)
         return chunk
+
+
+def print_component(simulator: Simulator, chunk: WaveformChunk, component_name: str):
+    pins = simulator.component_pins.get(component_name)
+    if pins is None:
+        return
+
+    print(f"{component_name}:")
+
+    for pin, network in pins.items():
+        state = chunk.network_states[network]
+        print(f"  - {pin} ({network}): {state}")
 
 
 def print_bus(
@@ -167,7 +215,11 @@ def print_load_read(simulator: Simulator, chunk: WaveformChunk):
         elif i == 4:
             read |= 1 << i  # R4 is active low
 
-    print(f"LOAD: {load:05b} ({load:#04x}) <- READ: {read:05b} ({read:#04x})")
+    reader = READERS.get(load, "Unknown")
+    writer = WRITERS.get(read, "Unknown")
+    print(
+        f"LOAD: {load:05b} ({load:#04x}/{reader}) <- READ: {read:05b} ({read:#04x}/{writer})"
+    )
 
 
 def print_interface_pins(simulator: Simulator, chunk: WaveformChunk):
@@ -176,15 +228,8 @@ def print_interface_pins(simulator: Simulator, chunk: WaveformChunk):
         if pin.startswith("ADDRESS") or pin.startswith("DATA"):
             continue
 
-        if chunk.network_states[network] == State.FLOATING:
-            state_str = "FLOATING"
-        elif chunk.network_states[network] == State.CONFLICT:
-            state_str = "CONFLICT"
-        elif chunk.network_states[network] == State.HIGH:
-            state_str = "HIGH"
-        else:
-            state_str = "LOW"
-        print(f"  - {pin} ({network}): {state_str}")
+        state = chunk.network_states[network]
+        print(f"  - {pin} ({network}): {state}")
 
 
 def print_control_bus(simulator: Simulator, chunk: WaveformChunk):
@@ -200,20 +245,52 @@ def print_control_bus(simulator: Simulator, chunk: WaveformChunk):
             if network is None:
                 continue
 
-            if chunk.network_states[network] == State.HIGH:
-                state_str = "HIGH"
-            elif chunk.network_states[network] == State.LOW:
-                state_str = "LOW"
-            elif chunk.network_states[network] == State.FLOATING:
-                state_str = "FLOATING"
-            else:
-                state_str = "CONFLICT"
+            state = chunk.network_states[network]
+            print(f"  - CTL{idx * 8 + bit:02} ({network}): {state}")
 
-            print(f"  - CTL{idx * 8 + bit:02} ({network}): {state_str}")
+
+def print_decoders(simulator: Simulator, chunk: WaveformChunk):
+    for i in range(4):
+        print(f"DECODER{i+1}:")
+        pinout = simulator.component_pins[f"C1:DECODER{i+1}"]
+
+        for j in range(4):
+            network = pinout.get(f"A{j}")
+            if network is None:
+                print(f"  - A{j} not connected")
+                continue
+
+            if chunk.network_states[network] == State.HIGH:
+                print(f"  - A{j} ({network}) is HIGH")
+            else:
+                print(f"  - A{j} ({network}) is LOW")
+
+        for j in range(2):
+            network = pinout.get(f"N_E{j}")
+            if network is None:
+                print(f"  - N_E{j} not connected")
+                continue
+
+            if chunk.network_states[network] == State.HIGH:
+                print(f"  - N_E{j} ({network}) is HIGH")
+            else:
+                print(f"  - N_E{j} ({network}) is LOW")
+
+        for j in range(16):
+            network = pinout.get(f"Y{j}")
+            if network is None:
+                print(f"  - Y{j} not connected")
+                continue
+
+            if chunk.network_states[network] == State.HIGH:
+                print(f"  - Y{j} ({network}) is HIGH")
+            else:
+                print(f"  - Y{j} ({network}) is LOW")
 
 
 def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
     print(f"\033[53m>>>>>>>> Cycle {cycle} <<<<<<<<\033[0m")
+    print("STATE: NNSSSSFFFIIIIIIII")
     print_bus(simulator, chunk, "STATE", "C3:/STATE", 17)
     print_bus(simulator, chunk, "INTERFACE DATA", "I:/DATA", 8)
     print_bus(simulator, chunk, "DATA", "PC:/DATA", 8)
@@ -263,43 +340,7 @@ def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
     print_load_read(simulator, chunk)
     print_interface_pins(simulator, chunk)
     print_control_bus(simulator, chunk)
-
-    # for i in range(4):
-    #     print(f"  DECODER{i+1}:")
-    #     pinout = simulator.component_pins[f"C1:DECODER{i+1}"]
-
-    #     for j in range(4):
-    #         network = pinout.get(f"A{j}")
-    #         if network is None:
-    #             print(f"  - A{j} not connected")
-    #             continue
-
-    #         if chunk.network_states[network] == State.HIGH:
-    #             print(f"  - A{j} ({network}) is HIGH")
-    #         else:
-    #             print(f"  - A{j} ({network}) is LOW")
-
-    #     for j in range(2):
-    #         network = pinout.get(f"N_E{j}")
-    #         if network is None:
-    #             print(f"  - N_E{j} not connected")
-    #             continue
-
-    #         if chunk.network_states[network] == State.HIGH:
-    #             print(f"  - N_E{j} ({network}) is HIGH")
-    #         else:
-    #             print(f"  - N_E{j} ({network}) is LOW")
-
-    #     for j in range(16):
-    #         network = pinout.get(f"Y{j}")
-    #         if network is None:
-    #             print(f"  - Y{j} not connected")
-    #             continue
-
-    #         if chunk.network_states[network] == State.HIGH:
-    #             print(f"  - Y{j} ({network}) is HIGH")
-    #         else:
-    #             print(f"  - Y{j} ({network}) is LOW")
+    # print_decoders(simulator, chunk)
 
 
 def main():

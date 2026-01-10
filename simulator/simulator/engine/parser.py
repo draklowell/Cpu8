@@ -9,6 +9,7 @@ from simulator.engine.entities.ics.ic74181 import IC74181
 from simulator.engine.entities.ics.ic74193 import IC74193
 from simulator.engine.entities.ics.ic74245 import IC74245
 from simulator.engine.entities.ics.ic74273 import IC74273
+from simulator.engine.entities.ics.ic74573 import IC74573
 from simulator.engine.entities.ics.ic74574 import IC74574
 from simulator.engine.entities.interface import Interface
 
@@ -31,6 +32,7 @@ MAPPING = {
     "74LS193": IC74193,
     "74LS245": IC74245,
     "74LS273": IC74273,
+    "74LS573": IC74573,
     "74LS574": IC74574,
     "74HC00": IC7400,
     "74HC02": IC7402,
@@ -43,6 +45,7 @@ MAPPING = {
     "74HC193": IC74193,
     "74HC245": IC74245,
     "74HC273": IC74273,
+    "74HC573": IC74573,
     "74HC574": IC74574,
     "28C256": IC28C256,
     "BusConnector": BusConnector,
