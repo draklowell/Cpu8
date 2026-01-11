@@ -7,6 +7,7 @@ from config import (
     TABLES_PATH,
     load_microcode_data,
 )
+
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
 READERS, WRITERS, MICROCODE = load_microcode_data()

@@ -3,7 +3,6 @@ Tests for the WatchManager class.
 """
 
 import pytest
-
 from debug.watch import Watch, WatchManager
 
 

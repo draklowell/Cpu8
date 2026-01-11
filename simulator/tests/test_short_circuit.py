@@ -19,6 +19,7 @@ import pytest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import INIT_TICKS, MODULES, PERIOD, STARTUP_TICKS, TABLES_PATH
+
 from simulator.base import State
 from simulator.engine.loader import load
 from simulator.simulation import SimulationEngine

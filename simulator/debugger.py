@@ -16,6 +16,7 @@ from debug.disassembler import Disassembler
 from debug.state import CPUState
 from debug.ui import DebuggerStrings
 from debug.watch import Watch, WatchManager
+
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
 STRINGS = DebuggerStrings()
@@ -866,7 +867,9 @@ class DebuggerCLI(cmd.Cmd):
                     print(colored(STRINGS.errors.PERIOD_TOO_SMALL, Color.RED))
                     return
                 self.debugger.set_period(period)
-                print(colored(STRINGS.info.PERIOD_SET.format(period=period), Color.GREEN))
+                print(
+                    colored(STRINGS.info.PERIOD_SET.format(period=period), Color.GREEN)
+                )
             except ValueError:
                 print(colored(STRINGS.errors.INVALID_PERIOD, Color.RED))
         elif option == "var":
@@ -883,10 +886,12 @@ class DebuggerCLI(cmd.Cmd):
             if self.debugger.set_variable(component, var_name, var_value):
                 print(colored(f"Set {component}:{var_name} = {var_value}", Color.GREEN))
             else:
-                print(colored(
-                    STRINGS.errors.COMPONENT_NOT_FOUND.format(component=component),
-                    Color.RED
-                ))
+                print(
+                    colored(
+                        STRINGS.errors.COMPONENT_NOT_FOUND.format(component=component),
+                        Color.RED,
+                    )
+                )
 
     def do_tick(self, arg: str) -> None:
         """
@@ -926,7 +931,9 @@ class DebuggerCLI(cmd.Cmd):
             chunk = self.debugger.tick_simulator()
             self._print_logs(chunk)
 
-        print(colored(STRINGS.execution.EXECUTED_TICKS.format(count=count), Color.GREEN))
+        print(
+            colored(STRINGS.execution.EXECUTED_TICKS.format(count=count), Color.GREEN)
+        )
 
     def do_check(self, arg: str) -> None:
         """
@@ -963,10 +970,12 @@ class DebuggerCLI(cmd.Cmd):
         if not self.debugger.initialized:
             self.debugger.initialize()
 
-        print(colored(
-            STRINGS.execution.CHECKING_SHORT_CIRCUITS.format(cycles=cycles),
-            Color.YELLOW
-        ))
+        print(
+            colored(
+                STRINGS.execution.CHECKING_SHORT_CIRCUITS.format(cycles=cycles),
+                Color.YELLOW,
+            )
+        )
 
         conflicts_found = []
 
@@ -985,18 +994,20 @@ class DebuggerCLI(cmd.Cmd):
                         "cycle": cycle + 1,
                         "tick": chunk.tick,
                         "network": network,
-                        "drivers": list(drivers) if drivers else ["unknown"]
+                        "drivers": list(drivers) if drivers else ["unknown"],
                     }
                     conflicts_found.append(conflict_info)
-                    print(colored(
-                        STRINGS.execution.CONFLICT_FOUND.format(
-                            cycle=cycle + 1,
-                            tick=chunk.tick,
-                            network=network,
-                            drivers=conflict_info['drivers']
-                        ),
-                        Color.RED
-                    ))
+                    print(
+                        colored(
+                            STRINGS.execution.CONFLICT_FOUND.format(
+                                cycle=cycle + 1,
+                                tick=chunk.tick,
+                                network=network,
+                                drivers=conflict_info["drivers"],
+                            ),
+                            Color.RED,
+                        )
+                    )
 
             # Clock high phase - no conflict checking
             self.debugger.engine.set_component_variable("I:PAD2", "CLOCK", 1)
@@ -1007,21 +1018,27 @@ class DebuggerCLI(cmd.Cmd):
         print_separator()
         if conflicts_found:
             unique_networks = set(c["network"] for c in conflicts_found)
-            print(colored(
-                STRINGS.execution.SHORT_CIRCUITS_DETECTED.format(
-                    count=len(conflicts_found),
-                    unique=len(unique_networks)
-                ),
-                Color.RED, Color.BOLD
-            ))
+            print(
+                colored(
+                    STRINGS.execution.SHORT_CIRCUITS_DETECTED.format(
+                        count=len(conflicts_found), unique=len(unique_networks)
+                    ),
+                    Color.RED,
+                    Color.BOLD,
+                )
+            )
             for net in sorted(unique_networks):
-                drivers = next(c["drivers"] for c in conflicts_found if c["network"] == net)
+                drivers = next(
+                    c["drivers"] for c in conflicts_found if c["network"] == net
+                )
                 print(colored(f"  - {net}: {drivers}", Color.RED))
         else:
-            print(colored(
-                STRINGS.execution.NO_SHORT_CIRCUITS.format(cycles=cycles),
-                Color.GREEN
-            ))
+            print(
+                colored(
+                    STRINGS.execution.NO_SHORT_CIRCUITS.format(cycles=cycles),
+                    Color.GREEN,
+                )
+            )
 
         # Update state after checking
         if self.debugger.last_chunk:
@@ -1049,9 +1066,11 @@ class DebuggerCLI(cmd.Cmd):
             (gdb-dragonfly) period 100      - Set faster period (less accurate)
         """
         if not arg:
-            print(STRINGS.info.CLOCK_PERIOD.format(
-                period=colored(str(self.debugger.period), Color.CYAN)
-            ))
+            print(
+                STRINGS.info.CLOCK_PERIOD.format(
+                    period=colored(str(self.debugger.period), Color.CYAN)
+                )
+            )
             return
 
         try:

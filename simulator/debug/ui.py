@@ -58,10 +58,16 @@ class ExecutionStrings:
     RESET_COMPLETE: str = "CPU reset complete"
     INTERRUPTED: str = "Interrupted"
     EXECUTED_TICKS: str = "Executed {count} simulator tick(s)"
-    CHECKING_SHORT_CIRCUITS: str = "Checking {cycles} clock cycle(s) for short circuits..."
+    CHECKING_SHORT_CIRCUITS: str = (
+        "Checking {cycles} clock cycle(s) for short circuits..."
+    )
     NO_SHORT_CIRCUITS: str = "No short circuits detected in {cycles} cycle(s)"
-    SHORT_CIRCUITS_DETECTED: str = "SHORT CIRCUITS DETECTED: {count} conflicts on {unique} unique network(s)"
-    CONFLICT_FOUND: str = "  CONFLICT at cycle {cycle}, tick {tick}: {network} <- {drivers}"
+    SHORT_CIRCUITS_DETECTED: str = (
+        "SHORT CIRCUITS DETECTED: {count} conflicts on {unique} unique network(s)"
+    )
+    CONFLICT_FOUND: str = (
+        "  CONFLICT at cycle {cycle}, tick {tick}: {network} <- {drivers}"
+    )
 
 
 @dataclass(frozen=True)

@@ -3,7 +3,6 @@ Tests for the CPUState class.
 """
 
 import pytest
-
 from debug.state import CPUState
 
 

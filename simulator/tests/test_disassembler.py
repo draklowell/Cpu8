@@ -3,7 +3,6 @@ Tests for the Disassembler class.
 """
 
 import pytest
-
 from debug.disassembler import Disassembler
 
 
