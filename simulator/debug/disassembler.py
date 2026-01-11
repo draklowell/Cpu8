@@ -11,7 +11,9 @@ class Disassembler:
     def __init__(self, rom: bytes, microcode: dict[int, str]) -> None:
         self.rom = rom
         self.microcode = microcode
-        self._cache: dict[int, tuple[str, int, bytes]] = {}  # addr -> (mnemonic, size, bytes)
+        self._cache: dict[int, tuple[str, int, bytes]] = (
+            {}
+        )  # addr -> (mnemonic, size, bytes)
 
     def disassemble_at(self, address: int) -> tuple[str, int, bytes]:
         """

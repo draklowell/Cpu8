@@ -4,12 +4,7 @@ Core debugger
 
 import re
 
-from debug.breakpoint import BreakpointManager
-from debug.disassembler import Disassembler
-from debug.state import CPUState
-from debug.watch import WatchManager
-
-from simulator.config import (
+from config import (
     INIT_TICKS,
     MODULES,
     PERIOD,
@@ -17,6 +12,10 @@ from simulator.config import (
     TABLES_PATH,
     load_microcode_data,
 )
+from debug.breakpoint import BreakpointManager
+from debug.disassembler import Disassembler
+from debug.state import CPUState
+from debug.watch import WatchManager
 from simulator.simulation import SimulationEngine, State, WaveformChunk
 
 

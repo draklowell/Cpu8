@@ -2,15 +2,7 @@
 Debug package for CPU8 simulator.
 """
 
-from debug.base import DebuggerCore
-from debug.breakpoint import Breakpoint, BreakpointManager
-from debug.color import Color, colored, print_header, print_separator
-from debug.disassembler import Disassembler
-from debug.state import CPUState
-from debug.ui import DebuggerStrings
-from debug.watch import Watch, WatchManager
-
-from simulator.config import (
+from config import (
     INIT_TICKS,
     MODULES,
     PERIOD,
@@ -18,6 +10,13 @@ from simulator.config import (
     TABLES_PATH,
     load_microcode_data,
 )
+from debug.base import DebuggerCore
+from debug.breakpoint import Breakpoint, BreakpointManager
+from debug.color import Color, colored, print_header, print_separator
+from debug.disassembler import Disassembler
+from debug.state import CPUState
+from debug.ui import DebuggerStrings
+from debug.watch import Watch, WatchManager
 
 __all__ = [
     "Color",

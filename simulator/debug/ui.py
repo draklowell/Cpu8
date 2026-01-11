@@ -104,7 +104,9 @@ class UsageStrings:
     """
 
     USAGE_EXAMINE: str = "Usage: examine [/FMT] <address>"
-    USAGE_INFO: str = "Usage: info <registers|breakpoints|watches|program|cpu|components|period>"
+    USAGE_INFO: str = (
+        "Usage: info <registers|breakpoints|watches|program|cpu|components|period>"
+    )
     USAGE_PRINT: str = "Usage: print <register|expression>"
     USAGE_BREAK: str = "Usage: break <address>"
     USAGE_ENABLE: str = "Usage: enable <breakpoint-id>"

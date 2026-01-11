@@ -8,6 +8,7 @@ import cmd
 import os
 import sys
 
+from config import load_microcode_data
 from debug.base import DebuggerCore
 from debug.breakpoint import BreakpointManager
 from debug.color import Color, colored, print_header, print_separator
@@ -15,8 +16,6 @@ from debug.disassembler import Disassembler
 from debug.state import CPUState
 from debug.ui import DebuggerStrings
 from debug.watch import Watch, WatchManager
-
-from simulator.config import load_microcode_data
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
 STRINGS = DebuggerStrings()
