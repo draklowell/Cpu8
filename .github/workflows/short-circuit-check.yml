@@ -1,0 +1,82 @@
+name: Short Circuit Detection
+
+on:
+  push:
+    paths:
+      - 'schematics/**'
+      - 'simulator/**'
+    branches:
+      - master
+      - main
+      - simulator
+  pull_request:
+    paths:
+      - 'schematics/**'
+      - 'simulator/**'
+    branches:
+      - master
+      - main
+
+jobs:
+  short-circuit-check:
+    name: Check for Short Circuits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install KiCad
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-8.0-releases
+          sudo apt-get update
+          sudo apt-get install -y kicad
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Export netlists from schematics
+        working-directory: simulator
+        run: |
+          python export.py
+
+      - name: Run short circuit detection tests
+        working-directory: simulator
+        run: |
+          python -m pytest tests/test_short_circuit.py -v -m short_circuit --tb=long
+
+      - name: Run standalone short circuit check
+        if: always()
+        working-directory: simulator
+        run: |
+          python tests/test_short_circuit.py
+
+  unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run all simulator tests
+        working-directory: simulator
+        run: |
+          python -m pytest tests/ -v --ignore=tests/test_short_circuit.py
