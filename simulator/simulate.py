@@ -5,8 +5,8 @@ from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChun
 
 with open("../microcode/bin/components.json", "r") as file:
     components_data = json.load(file)
-    READERS = components_data["readers"]
-    WRITERS = components_data["writers"]
+    READERS = {int(key): value for key, value in components_data["readers"].items()}
+    WRITERS = {int(key): value for key, value in components_data["writers"].items()}
 
 with open("../microcode/bin/table.csv", "r") as file:
     reader = csv.DictReader(file)
@@ -337,7 +337,7 @@ def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
 
 
 def main():
-    with open("main.bin", "rb") as f:
+    with open("all.bin", "rb") as f:
         rom_data = f.read()
 
     engine = SimulationEngine.load(MODULES, TABLES_PATH, rom_data)
