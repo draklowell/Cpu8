@@ -1,7 +1,7 @@
 ; Auto-generated sample exercising all instruction mnemonics from table.csv
 .text
-.global example_all
-example_all:
+.global main
+main:
     nop
     inte
     intd

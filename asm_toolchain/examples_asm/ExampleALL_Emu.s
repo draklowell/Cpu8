@@ -5,9 +5,8 @@
 ; ============================================================================
 
 .text
-.global _start
+.global main
 
-_start:
 main:
     nop
     inte
@@ -198,7 +197,7 @@ main:
     jpx
     jm next1
     jmx
-    jmp next1 00 00
+    jmp next1
     jmpx
 
 next1:
