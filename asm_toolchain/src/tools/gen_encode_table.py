@@ -50,8 +50,8 @@ class EncodeTableGenerator:
     }
 
     SIG_STRINGS = {
-        "none":  "Sig({})",
-        "imm8":  "Sig({OT::Imm8})",
+        "none": "Sig({})",
+        "imm8": "Sig({OT::Imm8})",
         "imm16": "Sig({OT::Imm16})",
     }
 

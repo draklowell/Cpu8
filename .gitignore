@@ -1,3 +1,4 @@
+
 .kiri
 /microcode/bin/
 
@@ -797,6 +798,7 @@ mono_crash.*
 
 # Build results
 [Dd]ebug/
+!simulator/debug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
