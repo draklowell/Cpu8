@@ -45,6 +45,7 @@ jobs:
       - name: Generate microcode tables
         working-directory: microcode
         run: |
+          mkdir -p bin
           python generate.py
 
       - name: Export netlists from schematics
@@ -102,6 +103,7 @@ jobs:
       - name: Generate microcode tables
         working-directory: microcode
         run: |
+          mkdir -p bin
           python generate.py
 
       - name: Run all simulator tests
