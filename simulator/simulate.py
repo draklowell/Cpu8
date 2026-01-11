@@ -1,44 +1,16 @@
-from dataclasses import dataclass
+import csv
+import json
 
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
+with open("../microcode/bin/components.json", "r") as file:
+    components_data = json.load(file)
+    READERS = components_data["readers"]
+    WRITERS = components_data["writers"]
 
-@dataclass
-class Component:
-    reader: int | None
-    writer: int | None
-    name: str
-
-    def __str__(self):
-        return self.name
-
-
-COMPONENTS = [
-    Component(0x00, 0x00, "Disable"),
-    Component(0x01, 0x01, "Memory"),
-    Component(0x02, 0x02, "StackPointerHigh"),
-    Component(0x03, 0x03, "StackPointerLow"),
-    Component(0x04, 0x04, "ProgramCounterHigh"),
-    Component(0x05, 0x05, "ProgramCounterLow"),
-    Component(0x06, 0x06, "ArgumentHigh"),
-    Component(0x07, 0x07, "ArgumentLow"),
-    Component(0x08, 0x08, "Accumulator"),
-    Component(0x09, 0x09, "XH"),
-    Component(0x0A, 0x0A, "YL"),
-    Component(0x0B, 0x0B, "YH"),
-    Component(0x0C, 0x0C, "ZL"),
-    Component(0x0D, 0x0D, "ZH"),
-    Component(0x0E, 0x0E, "Flags"),
-    Component(0x0F, None, "Instruction"),
-    Component(0x10, None, "AddressHigh"),
-    Component(0x11, None, "AddressLow"),
-    Component(None, 0x0F, "InterruptHandleConstant"),
-    Component(None, 0x10, "ALU"),
-    Component(None, 0x11, "InterruptCode"),
-]
-
-READERS = {comp.reader: comp for comp in COMPONENTS if comp.reader is not None}
-WRITERS = {comp.writer: comp for comp in COMPONENTS if comp.writer is not None}
+with open("../microcode/bin/table.csv", "r") as file:
+    reader = csv.DictReader(file)
+    MICROCODE = {int(row["decOpcode"]): row["mnemonic"] for row in reader}
 
 CYCLES = 500
 PERIOD = 800
@@ -176,13 +148,12 @@ def print_bus(
     print(f"{name}: {value:0{size}b} ({value:#0{size//4+2}x})")
 
 
-def print_register(
+def read_register(
     simulator: Simulator,
     chunk: WaveformChunk,
-    name: str,
     registers: list[str],
     size: int,
-):
+) -> int:
     if size % len(registers) != 0:
         raise ValueError("Size must be divisible by number of registers")
 
@@ -190,7 +161,8 @@ def print_register(
     size_per_register = size // len(registers)
     for i, comp in enumerate(registers):
         result |= (chunk.variables[comp]["Q"]) << (i * size_per_register)
-    print(f"{name}: {result} ({result:#0{size//4+2}x})")
+
+    return result
 
 
 def print_load_read(simulator: Simulator, chunk: WaveformChunk):
@@ -288,6 +260,17 @@ def print_decoders(simulator: Simulator, chunk: WaveformChunk):
                 print(f"  - Y{j} ({network}) is LOW")
 
 
+def print_register(
+    simulator: Simulator,
+    chunk: WaveformChunk,
+    name: str,
+    registers: list[str],
+    size: int,
+):
+    result = read_register(simulator, chunk, registers, size)
+    print(f"{name}: {result} ({result:#0{size//4+2}x})")
+
+
 def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
     print(f"\033[53m>>>>>>>> Cycle {cycle} <<<<<<<<\033[0m")
     print("STATE: NNSSSSFFFIIIIIIII")
@@ -330,13 +313,15 @@ def process(cycle: int, simulator: Simulator, chunk: WaveformChunk):
         ],
         16,
     )
-    print_register(
+    instruction = read_register(
         simulator,
         chunk,
-        "INSTRUCTION REGISTER",
         ["C1:INSTRUCTION1"],
         8,
     )
+    mnemonic = MICROCODE.get(instruction, "UNKNOWN")
+    print(f"INSTRUCTION: {instruction:08b} ({instruction:#04x}/{mnemonic})")
+
     for reg in ["ZH", "ZL", "YH", "YL", "XH", "XL"]:
         print_register(
             simulator,
