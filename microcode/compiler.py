@@ -132,8 +132,10 @@ class Compiler:
     counter: int
     table: dict[int, tuple[str, list[int]]]
 
-    def __init__(self):
-        self.blocks = [bytearray(2**16) for _ in range(4)]
+    def __init__(self, default_code: Code = code(halt=1)):
+        self.blocks = [
+            bytearray(bytes([value]) * 65536) for _, value in enumerate(default_code)
+        ]
         self.counter = 0
         self.table = {}
 
