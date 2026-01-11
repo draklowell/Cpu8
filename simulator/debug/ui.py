@@ -12,19 +12,19 @@ class UIStrings:
     """
 
     BANNER: str = """
-╔═══════════════════════════════════════════════════════════════╗
-║           Dragonfly 8b9m GDB CLI
-║                                                               ║
-║  Type 'help' for available commands                           ║
-║  Type 'help <command>' for detailed help on a command         ║
-║                                                               ║
-║  Quick reference:                                             ║
-║    r/run      - Start program    n/nexti   - Step instruction ║
-║    c/continue - Continue         b/break   - Set breakpoint   ║
-║    rn         - Read network     rc        - Read component   ║
-║    pins       - Show pins        components - List components ║
-║    tick/t     - Simulator tick   period    - Clock period     ║
-╚═══════════════════════════════════════════════════════════════╝
++---------------------------------------------------------------+
+|           Dragonfly 8b9m GDB CLI                              |
+|                                                               |
+|  Type 'help' for available commands                           |
+|  Type 'help <command>' for detailed help on a command         |
+|                                                               |
+|  Quick reference:                                             |
+|    r/run      - Start program    n/nexti   - Step instruction |
+|    c/continue - Continue         b/break   - Set breakpoint   |
+|    rn         - Read network     rc        - Read component   |
+|    pins       - Show pins        components - List components |
+|    tick/t     - Simulator tick   sc/check  - Short circuit    |
++---------------------------------------------------------------+
 """
     PROMPT: str = "(gdb-dragonfly) "
     GOODBYE: str = "Done!"
@@ -37,6 +37,10 @@ class UIStrings:
     HEADER_INSTRUCTION_HISTORY: str = "Instruction History"
     HEADER_DISASSEMBLY: str = "Disassembly @ 0x{address:04X}"
     HEADER_MEMORY: str = "Memory @ 0x{address:04X}"
+    HEADER_NETWORK_READ: str = "Network Read ({bits} bits)"
+    HEADER_COMPONENT_PINS: str = "Component Pins: {component}"
+    HEADER_COMPONENTS_LIST: str = "Components"
+    HEADER_SHORT_CIRCUIT: str = "Short Circuit Check"
 
 
 @dataclass(frozen=True)
@@ -53,6 +57,11 @@ class ExecutionStrings:
     RESETTING_CPU: str = "Resetting CPU"
     RESET_COMPLETE: str = "CPU reset complete"
     INTERRUPTED: str = "Interrupted"
+    EXECUTED_TICKS: str = "Executed {count} simulator tick(s)"
+    CHECKING_SHORT_CIRCUITS: str = "Checking {cycles} clock cycle(s) for short circuits..."
+    NO_SHORT_CIRCUITS: str = "No short circuits detected in {cycles} cycle(s)"
+    SHORT_CIRCUITS_DETECTED: str = "SHORT CIRCUITS DETECTED: {count} conflicts on {unique} unique network(s)"
+    CONFLICT_FOUND: str = "  CONFLICT at cycle {cycle}, tick {tick}: {network} <- {drivers}"
 
 
 @dataclass(frozen=True)
@@ -88,13 +97,21 @@ class ErrorStrings:
     Error messages.
     """
 
-    INVALID_COUNT: str = "Error: Invalid count"
+    INVALID_COUNT: str = "Invalid count"
+    INVALID_CYCLE_COUNT: str = "Invalid cycle count"
     INVALID_ADDRESS: str = "Invalid address: {address}"
+    INVALID_VALUE: str = "Invalid value"
+    INVALID_PERIOD: str = "Invalid period value"
+    INVALID_CONTEXT: str = "Invalid context value"
+    INVALID_RANGE: str = "Invalid range specification"
+    PERIOD_TOO_SMALL: str = "Period must be at least 2"
     UNKNOWN_REGISTER: str = "Unknown register or expression: {name}"
     UNKNOWN_INFO_CMD: str = "Unknown info command: {subcmd}"
     ROM_NOT_FOUND: str = "Error: ROM file not found: {path}"
     GENERAL_ERROR: str = "Error: {message}"
-    INVALID_CONTEXT: str = "Invalid context value"
+    COMPONENT_NOT_FOUND: str = "Component not found: {component}"
+    PIN_NOT_FOUND: str = "Pin not found: {pin}"
+    FLOATING_OR_CONFLICT: str = "(contains floating or conflict states)"
 
 
 @dataclass(frozen=True)
@@ -143,6 +160,12 @@ class UsageStrings:
   Examples:
     period                      - Show current period
     period 800                  - Set period to 800 ticks"""
+    USAGE_CHECK: str = """Usage: check [cycles]
+  Examples:
+    check                       - Check 1 clock cycle
+    check 10                    - Check 10 clock cycles
+    check 100                   - Check 100 clock cycles"""
+    USAGE_SET_VAR: str = "Usage: set var <component> <variable> <value>"
 
 
 @dataclass(frozen=True)
@@ -173,6 +196,17 @@ class InfoStrings:
 
     # History
     NO_HISTORY: str = "No execution history"
+
+    # Network states
+    STATE_HIGH: str = "HIGH (1)"
+    STATE_LOW: str = "LOW (0)"
+    STATE_FLOATING: str = "FLOATING (Z)"
+    STATE_CONFLICT: str = "CONFLICT (X)"
+    STATE_UNKNOWN: str = "UNKNOWN (?)"
+
+    # Period
+    CLOCK_PERIOD: str = "Clock period: {period} simulator ticks"
+    PERIOD_SET: str = "Clock period set to {period} simulator ticks"
 
 
 @dataclass(frozen=True)

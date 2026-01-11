@@ -50,6 +50,7 @@ class DebuggerCLI(cmd.Cmd):
             "l": "list",
             "dis": "disassemble",
             "t": "tick",
+            "sc": "check",
         }
 
     def precmd(self, line: str) -> str:
@@ -862,35 +863,30 @@ class DebuggerCLI(cmd.Cmd):
             try:
                 period = int(value)
                 if period < 2:
-                    print(colored("Period must be at least 2", Color.RED))
+                    print(colored(STRINGS.errors.PERIOD_TOO_SMALL, Color.RED))
                     return
                 self.debugger.set_period(period)
-                print(
-                    colored(
-                        f"Clock period set to {period} simulator ticks", Color.GREEN
-                    )
-                )
+                print(colored(STRINGS.info.PERIOD_SET.format(period=period), Color.GREEN))
             except ValueError:
-                print(colored("Invalid period value", Color.RED))
+                print(colored(STRINGS.errors.INVALID_PERIOD, Color.RED))
         elif option == "var":
             if len(args) < 4:
-                print(
-                    colored("Usage: set var <component> <variable> <value>", Color.RED)
-                )
+                print(colored(STRINGS.usage.USAGE_SET_VAR, Color.RED))
                 return
             component = args[1]
             var_name = args[2]
             try:
                 var_value = int(args[3])
             except ValueError:
-                print(colored("Invalid value", Color.RED))
+                print(colored(STRINGS.errors.INVALID_VALUE, Color.RED))
                 return
             if self.debugger.set_variable(component, var_name, var_value):
                 print(colored(f"Set {component}:{var_name} = {var_value}", Color.GREEN))
             else:
-                print(
-                    colored(f"Failed to set variable (component not found?)", Color.RED)
-                )
+                print(colored(
+                    STRINGS.errors.COMPONENT_NOT_FOUND.format(component=component),
+                    Color.RED
+                ))
 
     def do_tick(self, arg: str) -> None:
         """
@@ -920,7 +916,7 @@ class DebuggerCLI(cmd.Cmd):
             try:
                 count = int(arg)
             except ValueError:
-                print(colored("Invalid count", Color.RED))
+                print(colored(STRINGS.errors.INVALID_COUNT, Color.RED))
                 return
 
         if not self.debugger.initialized:
@@ -930,7 +926,106 @@ class DebuggerCLI(cmd.Cmd):
             chunk = self.debugger.tick_simulator()
             self._print_logs(chunk)
 
-        print(colored(f"Executed {count} simulator tick(s)", Color.GREEN))
+        print(colored(STRINGS.execution.EXECUTED_TICKS.format(count=count), Color.GREEN))
+
+    def do_check(self, arg: str) -> None:
+        """
+        Check for short circuits (conflicts) in the simulation.
+
+        Usage:
+            check [cycles]
+
+        Arguments:
+            cycles - Number of clock cycles to check (default: 1)
+
+        Description:
+            Runs the simulation for specified clock cycles and checks for
+            conflicts (short circuits) on the rising edge of each clock cycle.
+            A conflict occurs when multiple outputs drive the same network
+            to different logic levels.
+
+            Only checks on clock rising edge (CLK 0->1 transition) to avoid
+            detecting normal bus transients during switching.
+
+        Examples:
+            (gdb-dragonfly) check           - Check 1 clock cycle
+            (gdb-dragonfly) check 10        - Check 10 clock cycles
+            (gdb-dragonfly) check 100       - Check 100 clock cycles
+        """
+        cycles = 1
+        if arg:
+            try:
+                cycles = int(arg)
+            except ValueError:
+                print(colored(STRINGS.errors.INVALID_CYCLE_COUNT, Color.RED))
+                return
+
+        if not self.debugger.initialized:
+            self.debugger.initialize()
+
+        print(colored(
+            STRINGS.execution.CHECKING_SHORT_CIRCUITS.format(cycles=cycles),
+            Color.YELLOW
+        ))
+
+        conflicts_found = []
+
+        for cycle in range(cycles):
+            # Clock low phase - no conflict checking (transients expected)
+            self.debugger.engine.set_component_variable("I:PAD2", "CLOCK", 0)
+            for _ in range(self.debugger.period // 2):
+                self.debugger._tick(False)
+
+            # Rising edge - THIS is where we check for conflicts
+            chunk = self.debugger._tick(True)
+            for network, state in chunk.network_states.items():
+                if state == State.CONFLICT:
+                    drivers = chunk.network_drivers.get(network, [])
+                    conflict_info = {
+                        "cycle": cycle + 1,
+                        "tick": chunk.tick,
+                        "network": network,
+                        "drivers": list(drivers) if drivers else ["unknown"]
+                    }
+                    conflicts_found.append(conflict_info)
+                    print(colored(
+                        STRINGS.execution.CONFLICT_FOUND.format(
+                            cycle=cycle + 1,
+                            tick=chunk.tick,
+                            network=network,
+                            drivers=conflict_info['drivers']
+                        ),
+                        Color.RED
+                    ))
+
+            # Clock high phase - no conflict checking
+            self.debugger.engine.set_component_variable("I:PAD2", "CLOCK", 1)
+            for _ in range(self.debugger.period // 2):
+                self.debugger._tick(False)
+
+        # Summary
+        print_separator()
+        if conflicts_found:
+            unique_networks = set(c["network"] for c in conflicts_found)
+            print(colored(
+                STRINGS.execution.SHORT_CIRCUITS_DETECTED.format(
+                    count=len(conflicts_found),
+                    unique=len(unique_networks)
+                ),
+                Color.RED, Color.BOLD
+            ))
+            for net in sorted(unique_networks):
+                drivers = next(c["drivers"] for c in conflicts_found if c["network"] == net)
+                print(colored(f"  - {net}: {drivers}", Color.RED))
+        else:
+            print(colored(
+                STRINGS.execution.NO_SHORT_CIRCUITS.format(cycles=cycles),
+                Color.GREEN
+            ))
+
+        # Update state after checking
+        if self.debugger.last_chunk:
+            self.debugger._update_state()
 
     def do_period(self, arg: str) -> None:
         """
@@ -954,20 +1049,20 @@ class DebuggerCLI(cmd.Cmd):
             (gdb-dragonfly) period 100      - Set faster period (less accurate)
         """
         if not arg:
-            print(
-                f"Clock period: {colored(str(self.debugger.period), Color.CYAN)} simulator ticks"
-            )
+            print(STRINGS.info.CLOCK_PERIOD.format(
+                period=colored(str(self.debugger.period), Color.CYAN)
+            ))
             return
 
         try:
             period = int(arg)
             if period < 2:
-                print(colored("Period must be at least 2", Color.RED))
+                print(colored(STRINGS.errors.PERIOD_TOO_SMALL, Color.RED))
                 return
             self.debugger.set_period(period)
-            print(colored(f"Clock period set to {period} simulator ticks", Color.GREEN))
+            print(colored(STRINGS.info.PERIOD_SET.format(period=period), Color.GREEN))
         except ValueError:
-            print(colored("Invalid period value", Color.RED))
+            print(colored(STRINGS.errors.INVALID_PERIOD, Color.RED))
 
     def do_rn(self, arg: str) -> None:
         """
@@ -1000,12 +1095,7 @@ class DebuggerCLI(cmd.Cmd):
             (gdb-dragonfly) rn I:/ADDRESS15 - I:/ADDRESS0  - Read 16-bit address
         """
         if not arg:
-            print(
-                colored(
-                    "Usage: rn <network> [network2 ...] or rn <start> - <end>",
-                    Color.RED,
-                )
-            )
+            print(colored(STRINGS.usage.USAGE_RN, Color.RED))
             return
 
         if not self.debugger.initialized:
@@ -1015,7 +1105,7 @@ class DebuggerCLI(cmd.Cmd):
         if " - " in arg:
             networks = self.debugger.expand_network_range(arg)
             if not networks:
-                print(colored("Invalid range specification", Color.RED))
+                print(colored(STRINGS.errors.INVALID_RANGE, Color.RED))
                 return
         else:
             # Multiple networks or single network
@@ -1029,7 +1119,7 @@ class DebuggerCLI(cmd.Cmd):
         int_val = self.debugger.read_networks_as_int(networks)
 
         # Print result
-        print_header(f"Network Read ({len(networks)} bits)")
+        print_header(STRINGS.ui.HEADER_NETWORK_READ.format(bits=len(networks)))
         print(f"  Binary: {colored(binary_str, Color.BRIGHT_CYAN)}")
         if int_val is not None:
             hex_width = (len(networks) + 3) // 4
@@ -1038,7 +1128,7 @@ class DebuggerCLI(cmd.Cmd):
             )
             print(f"  Dec:    {colored(str(int_val), Color.WHITE)}")
         else:
-            print(f"  {colored('(contains floating or conflict states)', Color.GRAY)}")
+            print(f"  {colored(STRINGS.errors.FLOATING_OR_CONFLICT, Color.GRAY)}")
         print_separator()
 
     def do_rc(self, arg: str) -> None:
