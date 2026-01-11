@@ -13,10 +13,17 @@ class UIStrings:
 
     BANNER: str = """
 ╔═══════════════════════════════════════════════════════════════╗
-║           Dragonfly 8b9m GDB CLI                              ║
+║           Dragonfly 8b9m GDB CLI
 ║                                                               ║
 ║  Type 'help' for available commands                           ║
 ║  Type 'help <command>' for detailed help on a command         ║
+║                                                               ║
+║  Quick reference:                                             ║
+║    r/run      - Start program    n/nexti   - Step instruction ║
+║    c/continue - Continue         b/break   - Set breakpoint   ║
+║    rn         - Read network     rc        - Read component   ║
+║    pins       - Show pins        components - List components ║
+║    tick/t     - Simulator tick   period    - Clock period     ║
 ╚═══════════════════════════════════════════════════════════════╝
 """
     PROMPT: str = "(gdb-dragonfly) "
@@ -97,13 +104,43 @@ class UsageStrings:
     """
 
     USAGE_EXAMINE: str = "Usage: examine [/FMT] <address>"
-    USAGE_INFO: str = "Usage: info <registers|breakpoints|watches|program|cpu>"
+    USAGE_INFO: str = "Usage: info <registers|breakpoints|watches|program|cpu|components|period>"
     USAGE_PRINT: str = "Usage: print <register|expression>"
     USAGE_BREAK: str = "Usage: break <address>"
     USAGE_ENABLE: str = "Usage: enable <breakpoint-id>"
     USAGE_DISABLE: str = "Usage: disable <breakpoint-id>"
     USAGE_WATCH: str = "Usage: watch <expression>"
-    USAGE_SET: str = "Usage: set <option> <value>"
+    USAGE_SET: str = """Usage: set <option> <value>
+  Options:
+    set disasm on/off           - Show disassembly on each step
+    set context <count>         - Set disassembly context lines
+    set period <ticks>          - Set clock period
+    set var <component> <var> <value> - Set component variable"""
+    USAGE_RN: str = """Usage: rn <network> [network2 ...] or rn <start> - <end>
+  Examples:
+    rn C3:/STATE0!              - Read single network
+    rn NET1 NET2 NET3           - Read multiple as binary
+    rn C3:/STATE16 - C3:/STATE0 - Read range (17 bits)"""
+    USAGE_RC: str = """Usage: rc <component> <pin_alias>
+  Examples:
+    rc C1:DECODER1 Y0           - Read Y0 output of decoder
+    rc I:PAD2 CLOCK             - Read clock input"""
+    USAGE_PINS: str = """Usage: pins <component>
+  Examples:
+    pins C1:DECODER1            - Show all pins of DECODER1
+    pins I:PAD2                 - Show all interface pad pins"""
+    USAGE_COMPONENTS: str = """Usage: components [filter]
+  Examples:
+    components                  - List all components
+    components C1               - List components starting with C1"""
+    USAGE_TICK: str = """Usage: tick [count]
+  Examples:
+    tick                        - Execute one simulator tick
+    tick 100                    - Execute 100 simulator ticks"""
+    USAGE_PERIOD: str = """Usage: period [value]
+  Examples:
+    period                      - Show current period
+    period 800                  - Set period to 800 ticks"""
 
 
 @dataclass(frozen=True)

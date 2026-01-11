@@ -79,9 +79,20 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_run(self, arg: str) -> None:
         """
-        Start/restart the program.
-        Usage: run
+        Start or restart the program from the beginning.
+
+        Usage:
+            run
+
         Alias: r
+
+        Description:
+            Initializes the CPU (power on, reset sequence) and starts execution.
+            If the program was already running, it will be restarted.
+
+        Examples:
+            (gdb-dragonfly) run
+            (gdb-dragonfly) r
         """
         print(colored(STRINGS.execution.STARTING_PROGRAM, Color.YELLOW))
         self.debugger.initialized = False
@@ -90,13 +101,25 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_nexti(self, arg: str) -> None:
         """
-        Execute next instruction.
-        Usage: nexti [count]
+        Execute next CPU instruction(s).
+
+        Usage:
+            nexti [count]
+
         Alias: n, ni
 
+        Arguments:
+            count   - Number of instructions to execute (default: 1)
+
+        Description:
+            Executes one or more CPU clock cycles. Each cycle represents
+            one instruction execution. Stops at breakpoints.
+
         Examples:
-            nexti       - Execute one instruction
-            nexti 5     - Execute 5 instructions
+            (gdb-dragonfly) nexti       - Execute one instruction
+            (gdb-dragonfly) nexti 5     - Execute 5 instructions
+            (gdb-dragonfly) n           - Same as nexti
+            (gdb-dragonfly) ni 10       - Execute 10 instructions
         """
         count = 1
         if arg:
@@ -135,25 +158,57 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_step(self, arg: str) -> None:
         """
-        Step program (same as nexti for now).
-        Usage: step [count]
+        Step program (same as nexti).
+
+        Usage:
+            step [count]
+
         Alias: s
+
+        Description:
+            Equivalent to nexti. Steps through CPU instructions.
+
+        Examples:
+            (gdb-dragonfly) step        - Execute one instruction
+            (gdb-dragonfly) step 3      - Execute 3 instructions
+            (gdb-dragonfly) s           - Same as step
         """
         self.do_nexti(arg)
 
     def do_stepi(self, arg: str) -> None:
         """
         Step one instruction exactly.
-        Usage: stepi [count]
+
+        Usage:
+            stepi [count]
+
         Alias: si
+
+        Description:
+            Equivalent to nexti. Steps through CPU instructions.
+
+        Examples:
+            (gdb-dragonfly) stepi       - Execute one instruction
+            (gdb-dragonfly) si 5        - Execute 5 instructions
         """
         self.do_nexti(arg)
 
     def do_continue(self, arg: str) -> None:
         """
         Continue execution until breakpoint or halt.
-        Usage: continue
+
+        Usage:
+            continue
+
         Alias: c
+
+        Description:
+            Continues running the program until a breakpoint is hit,
+            the CPU halts, or 10000 cycles are executed.
+
+        Examples:
+            (gdb-dragonfly) continue
+            (gdb-dragonfly) c
         """
         if not self.debugger.initialized:
             self.debugger.initialize()
@@ -197,18 +252,27 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_info(self, arg: str) -> None:
         """
-        Display various information.
-        Usage: info <what>
+        Display various information about the debugger state.
+
+        Usage:
+            info <what>
+
         Alias: i
 
         Subcommands:
-            info registers (or info reg, info r)  - Display all registers
-            info breakpoints (or info b)          - List breakpoints
-            info watches (or info w)              - List watches
-            info program                          - Program info
-            info cpu                              - CPU state
-            info components [filter]              - List components
-            info period                           - Show clock period
+            info registers    (or: info reg, info r)   - Display all CPU registers
+            info breakpoints  (or: info b)             - List all breakpoints
+            info watches      (or: info w)             - List watch expressions
+            info program                               - Show ROM and program info
+            info cpu                                   - Show CPU state and cycle count
+            info components   (or: info comp, info c)  - List hardware components
+            info period                                - Show clock period setting
+
+        Examples:
+            (gdb-dragonfly) info registers
+            (gdb-dragonfly) i reg
+            (gdb-dragonfly) info components C1
+            (gdb-dragonfly) i c
         """
         args = arg.split()
         if not args:
@@ -237,22 +301,50 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_registers(self, arg: str) -> None:
         """
-        Display all registers.
-        Usage: registers
+        Display all CPU registers.
+
+        Usage:
+            registers
+
         Alias: reg
+
+        Description:
+            Shows PC, SP, X, Y, Z register pairs and FLAGS.
+            16-bit registers X, Y, Z are shown both as combined
+            values and as individual high/low bytes.
+
+        Examples:
+            (gdb-dragonfly) registers
+            (gdb-dragonfly) reg
         """
         self._show_registers()
 
     def do_print(self, arg: str) -> None:
         """
-        Print value of expression/register.
-        Usage: print <expression>
+        Print value of a register or expression.
+
+        Usage:
+            print <expression>
+
         Alias: p
 
+        Arguments:
+            expression  - Register name or expression to evaluate
+
+        Available registers:
+            pc, sp      - Program Counter, Stack Pointer
+            x, y, z     - 16-bit register pairs
+            xh, xl      - X register high/low bytes
+            yh, yl      - Y register high/low bytes
+            zh, zl      - Z register high/low bytes
+            flags, fr   - Flags register
+            ac          - Accumulator
+
         Examples:
-            print pc        - Print program counter
-            print $sp       - Print stack pointer
-            print zh        - Print ZH register
+            (gdb-dragonfly) print pc        - Print program counter
+            (gdb-dragonfly) print $sp       - Print stack pointer ($ optional)
+            (gdb-dragonfly) p zh            - Print ZH register
+            (gdb-dragonfly) p x             - Print X register (16-bit)
         """
         if not arg:
             print(STRINGS.usage.USAGE_PRINT)
@@ -268,20 +360,30 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_examine(self, arg: str) -> None:
         """
-        Examine memory.
-        Usage: examine[/FMT] <address>
+        Examine memory contents.
+
+        Usage:
+            examine[/FMT] <address>
+            x[/FMT] <address>
+
         Alias: x
 
-        FMT is count followed by format:
-            b - bytes
-            h - halfwords (16-bit)
-            w - words (32-bit)
-            i - instructions
+        Arguments:
+            address - Memory address (hex with 0x prefix or decimal)
+            FMT     - Optional format: [count][format]
+                      count  - Number of units to display
+                      format - b=bytes, h=halfwords, w=words, i=instructions
+
+        Description:
+            Displays memory contents at the specified address.
+            Can also disassemble instructions with /i format.
 
         Examples:
-            x 0x100         - Examine 16 bytes at 0x100
-            x/16b 0x100     - Examine 16 bytes
-            x/8i 0x100      - Disassemble 8 instructions
+            (gdb-dragonfly) x 0x100         - Examine 16 bytes at 0x100
+            (gdb-dragonfly) x/16b 0x100     - Examine 16 bytes
+            (gdb-dragonfly) x/8h 0x200      - Examine 8 halfwords (16-bit)
+            (gdb-dragonfly) x/8i 0x100      - Disassemble 8 instructions
+            (gdb-dragonfly) x/32b pc        - Examine 32 bytes at current PC
         """
         if not arg:
             print(STRINGS.usage.USAGE_EXAMINE)
@@ -356,14 +458,26 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_disassemble(self, arg: str) -> None:
         """
-        Disassemble instructions.
-        Usage: disassemble [address] [count]
+        Disassemble instructions from ROM.
+
+        Usage:
+            disassemble [address] [count]
+
         Alias: dis
 
+        Arguments:
+            address - Starting address (default: current PC)
+            count   - Number of instructions to show (default: 10)
+
+        Description:
+            Shows disassembled instructions from ROM. Displays address,
+            raw bytes, and mnemonic for each instruction.
+
         Examples:
-            disassemble             - Disassemble at current PC
-            disassemble 0x100       - Disassemble at 0x100
-            disassemble 0x100 20    - Disassemble 20 instructions at 0x100
+            (gdb-dragonfly) disassemble             - Disassemble at current PC
+            (gdb-dragonfly) disassemble 0x100       - Disassemble at 0x100
+            (gdb-dragonfly) disassemble 0x100 20    - Disassemble 20 instructions
+            (gdb-dragonfly) dis 0x0 50              - Show first 50 instructions
         """
         args = arg.split()
 
@@ -392,9 +506,24 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_list(self, arg: str) -> None:
         """
-        List source/disassembly around current location.
-        Usage: list [address]
+        List disassembly around current location or specified address.
+
+        Usage:
+            list [address]
+
         Alias: l
+
+        Arguments:
+            address - Center address (default: current PC)
+
+        Description:
+            Shows 20 instructions centered around the specified address.
+            Current instruction is highlighted.
+
+        Examples:
+            (gdb-dragonfly) list        - List around current PC
+            (gdb-dragonfly) list 0x100  - List around 0x100
+            (gdb-dragonfly) l           - Same as list
         """
         address = self.debugger.state.pc
         if arg:
@@ -408,13 +537,24 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_break(self, arg: str) -> None:
         """
-        Set a breakpoint.
-        Usage: break <address>
+        Set a breakpoint at specified address.
+
+        Usage:
+            break <address>
+
         Alias: b
 
+        Arguments:
+            address - Memory address (hex with 0x or decimal)
+
+        Description:
+            Sets a breakpoint. Execution will stop when PC reaches
+            this address. Use 'info breakpoints' to list all breakpoints.
+
         Examples:
-            break 0x100     - Set breakpoint at 0x100
-            break 256       - Set breakpoint at address 256
+            (gdb-dragonfly) break 0x100     - Set breakpoint at 0x100
+            (gdb-dragonfly) break 256       - Set breakpoint at address 256
+            (gdb-dragonfly) b 0x0           - Set breakpoint at start
         """
         if not arg:
             print(STRINGS.usage.USAGE_BREAK)
@@ -442,12 +582,23 @@ class DebuggerCLI(cmd.Cmd):
     def do_delete(self, arg: str) -> None:
         """
         Delete breakpoint(s).
-        Usage: delete [breakpoint-id]
+
+        Usage:
+            delete [breakpoint-id]
+
         Alias: d
 
+        Arguments:
+            breakpoint-id - ID of breakpoint to delete (optional)
+
+        Description:
+            Deletes a specific breakpoint by ID, or all breakpoints
+            if no ID is specified.
+
         Examples:
-            delete 1        - Delete breakpoint #1
-            delete          - Delete all breakpoints
+            (gdb-dragonfly) delete 1    - Delete breakpoint #1
+            (gdb-dragonfly) delete      - Delete all breakpoints
+            (gdb-dragonfly) d 2         - Delete breakpoint #2
         """
         if not arg:
             count = self.debugger.breakpoints.clear_all()
@@ -480,8 +631,16 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_enable(self, arg: str) -> None:
         """
-        Enable breakpoint(s).
-        Usage: enable <breakpoint-id>
+        Enable a disabled breakpoint.
+
+        Usage:
+            enable <breakpoint-id>
+
+        Arguments:
+            breakpoint-id - ID of breakpoint to enable
+
+        Examples:
+            (gdb-dragonfly) enable 1    - Enable breakpoint #1
         """
         if not arg:
             print(STRINGS.usage.USAGE_ENABLE)
@@ -508,8 +667,20 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_disable(self, arg: str) -> None:
         """
-        Disable breakpoint(s).
-        Usage: disable <breakpoint-id>
+        Disable a breakpoint without deleting it.
+
+        Usage:
+            disable <breakpoint-id>
+
+        Arguments:
+            breakpoint-id - ID of breakpoint to disable
+
+        Description:
+            Disables a breakpoint. The breakpoint remains in the list
+            but won't trigger. Use 'enable' to re-enable it.
+
+        Examples:
+            (gdb-dragonfly) disable 1   - Disable breakpoint #1
         """
         if not arg:
             print(STRINGS.usage.USAGE_DISABLE)
@@ -536,8 +707,22 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_watch(self, arg: str) -> None:
         """
-        Add a watch expression.
-        Usage: watch <expression>
+        Add a watch expression to monitor.
+
+        Usage:
+            watch <expression>
+
+        Arguments:
+            expression - Register or expression to watch
+
+        Description:
+            Adds an expression to the watch list. Use 'info watches'
+            to see current values of all watched expressions.
+
+        Examples:
+            (gdb-dragonfly) watch pc    - Watch program counter
+            (gdb-dragonfly) watch x     - Watch X register
+            (gdb-dragonfly) watch sp    - Watch stack pointer
         """
         if not arg:
             print(STRINGS.usage.USAGE_WATCH)
@@ -554,8 +739,23 @@ class DebuggerCLI(cmd.Cmd):
     def do_backtrace(self, arg: str) -> None:
         """
         Show execution history (instruction backtrace).
-        Usage: backtrace [count]
+
+        Usage:
+            backtrace [count]
+
         Alias: bt
+
+        Arguments:
+            count - Number of history entries to show (default: 10)
+
+        Description:
+            Shows the last N executed instructions with their cycle
+            numbers, addresses, and mnemonics.
+
+        Examples:
+            (gdb-dragonfly) backtrace       - Show last 10 instructions
+            (gdb-dragonfly) backtrace 20    - Show last 20 instructions
+            (gdb-dragonfly) bt              - Same as backtrace
         """
         count = 10
         if arg:
@@ -582,14 +782,33 @@ class DebuggerCLI(cmd.Cmd):
     def do_status(self, arg: str) -> None:
         """
         Show current debugger and CPU status.
-        Usage: status
+
+        Usage:
+            status
+
+        Description:
+            Displays current cycle count, program counter, current
+            instruction, and whether the CPU is running or halted.
+
+        Examples:
+            (gdb-dragonfly) status
         """
         self._show_cpu_state()
 
     def do_reset(self, arg: str) -> None:
         """
-        Reset the CPU.
-        Usage: reset
+        Reset the CPU to initial state.
+
+        Usage:
+            reset
+
+        Description:
+            Resets all CPU state including registers, cycle count,
+            and execution history. The CPU will need to be started
+            again with 'run'.
+
+        Examples:
+            (gdb-dragonfly) reset
         """
         print(colored(STRINGS.execution.RESETTING_CPU, Color.YELLOW))
         self.debugger.initialized = False
@@ -600,13 +819,26 @@ class DebuggerCLI(cmd.Cmd):
     def do_set(self, arg: str) -> None:
         """
         Set debugger options or component variables.
-        Usage: set <option> <value>
+
+        Usage:
+            set <option> <value>
 
         Options:
-            set disasm on/off           - Show disassembly on each step
-            set context <count>         - Set disassembly context lines
-            set period <ticks>          - Set clock period (simulator ticks per CPU tick)
-            set var <component> <var> <value> - Set component variable
+            set disasm on|off                       - Toggle disassembly display after each step
+            set context <count>                     - Set number of context lines in disassembly
+            set period <ticks>                      - Set clock period (simulator ticks per CPU cycle)
+            set var <component> <variable> <value>  - Set a component variable
+
+        Description:
+            Configures debugger behavior and allows setting internal
+            component variables for simulation control.
+
+        Examples:
+            (gdb-dragonfly) set disasm off          - Disable auto-disassembly
+            (gdb-dragonfly) set context 10          - Show 10 lines of context
+            (gdb-dragonfly) set period 800          - Set clock period to 800 ticks
+            (gdb-dragonfly) set var I:PAD2 RESET 1  - Set RESET signal high
+            (gdb-dragonfly) set var I:PAD2 WAIT 0   - Set WAIT signal low
         """
         args = arg.split()
         if len(args) < 2:
@@ -663,13 +895,26 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_tick(self, arg: str) -> None:
         """
-        Execute simulator ticks (lowest level).
-        Usage: tick [count]
+        Execute low-level simulator ticks.
+
+        Usage:
+            tick [count]
+
         Alias: t
 
+        Arguments:
+            count - Number of simulator ticks to execute (default: 1)
+
+        Description:
+            Executes simulator ticks at the lowest level. This is more
+            granular than 'nexti' which executes full CPU clock cycles.
+            One CPU cycle = period/2 ticks (for each clock phase).
+            Use this for detailed timing analysis.
+
         Examples:
-            tick        - Execute one simulator tick
-            tick 100    - Execute 100 simulator ticks
+            (gdb-dragonfly) tick            - Execute one simulator tick
+            (gdb-dragonfly) tick 100        - Execute 100 simulator ticks
+            (gdb-dragonfly) t 50            - Execute 50 ticks
         """
         count = 1
         if arg:
@@ -691,11 +936,23 @@ class DebuggerCLI(cmd.Cmd):
     def do_period(self, arg: str) -> None:
         """
         Get or set clock period.
-        Usage: period [value]
+
+        Usage:
+            period [value]
+
+        Arguments:
+            value - New period in simulator ticks (optional)
+
+        Description:
+            Controls how many simulator ticks make up one CPU clock cycle.
+            Higher values = slower but more accurate simulation.
+            Lower values = faster but may miss timing details.
+            Default is 800 ticks.
 
         Examples:
-            period          - Show current period
-            period 800      - Set period to 800 ticks
+            (gdb-dragonfly) period          - Show current period
+            (gdb-dragonfly) period 800      - Set period to 800 ticks
+            (gdb-dragonfly) period 100      - Set faster period (less accurate)
         """
         if not arg:
             print(
@@ -715,17 +972,33 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_rn(self, arg: str) -> None:
         """
-        Read network value(s).
-        Usage: rn <network> [network2 ...]
-               rn <prefix>N - <prefix>M   (range, high to low)
+        Read network value(s) - displays state of simulation networks.
+
+        Usage:
+            rn <network> [network2 ...]
+            rn <prefix>N - <prefix>M      (range specification)
+
+        Arguments:
+            network - Network name (add '!' suffix if not present)
+
+        Output:
+            Binary string where each character represents a network:
+            - 1 = HIGH (driven high)
+            - 0 = LOW (driven low)
+            - Z = FLOATING (not driven)
+            - X = CONFLICT (multiple drivers)
+
+        Description:
+            Reads the current state of one or more networks. Networks
+            can be specified individually, as a space-separated list,
+            or as a range (high to low, using ' - ' separator).
 
         Examples:
-            rn C3:/STATE0!              - Read single network
-            rn NET1 NET2 NET3           - Read multiple as binary (left=MSB)
-            rn C3:/STATE16 - C3:/STATE0 - Read range (17 bits, 16 down to 0)
-            rn PC:/DATA7 - PC:/DATA0    - Read 8-bit bus
-
-        Output format: binary string (1, 0, Z=floating, X=conflict)
+            (gdb-dragonfly) rn C3:/STATE0!              - Read single network
+            (gdb-dragonfly) rn NET1 NET2 NET3           - Read multiple (left=MSB)
+            (gdb-dragonfly) rn C3:/STATE16 - C3:/STATE0 - Read 17-bit bus
+            (gdb-dragonfly) rn PC:/DATA7 - PC:/DATA0    - Read 8-bit data bus
+            (gdb-dragonfly) rn I:/ADDRESS15 - I:/ADDRESS0  - Read 16-bit address
         """
         if not arg:
             print(
@@ -771,13 +1044,29 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_rc(self, arg: str) -> None:
         """
-        Read component pin by alias.
-        Usage: rc <component> <pin_alias>
+        Read component pin by alias - shows pin state using friendly name.
+
+        Usage:
+            rc <component> <pin_alias>
+
+        Arguments:
+            component  - Component name (e.g., C1:DECODER1, I:PAD2)
+            pin_alias  - Pin alias/name (e.g., Y0, CLOCK, VCC)
+
+        Description:
+            Reads a single component pin using its alias name instead
+            of network name. Shows both the network name and current state.
+            If pin not found, shows available pins for that component.
 
         Examples:
-            rc C1:DECODER1 Y0       - Read Y0 output of decoder
-            rc I:PAD2 CLOCK         - Read clock input
-            rc PC:U4 Q              - Read Q output of register
+            (gdb-dragonfly) rc C1:DECODER1 Y0   - Read Y0 output of decoder
+            (gdb-dragonfly) rc I:PAD2 CLOCK     - Read clock input state
+            (gdb-dragonfly) rc I:PAD2 N_HALT    - Read halt signal
+            (gdb-dragonfly) rc PC:U4 Q          - Read Q output of register
+
+        See also:
+            pins <component>  - List all pins for a component
+            components        - List all components
         """
         args = arg.split()
         if len(args) < 2:
@@ -816,12 +1105,28 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_pins(self, arg: str) -> None:
         """
-        Show all pins for a component.
-        Usage: pins <component>
+        Show all pins for a component with their current states.
+
+        Usage:
+            pins <component>
+
+        Arguments:
+            component - Component name (e.g., C1:DECODER1, I:PAD2)
+
+        Description:
+            Lists all pin aliases for a component, their corresponding
+            network names, and current signal states. Useful for
+            understanding component connectivity and debugging.
 
         Examples:
-            pins C1:DECODER1        - Show all pins of DECODER1
-            pins I:PAD2             - Show all interface pad pins
+            (gdb-dragonfly) pins C1:DECODER1    - Show decoder pins
+            (gdb-dragonfly) pins I:PAD2         - Show interface pad pins
+            (gdb-dragonfly) pins PC:U4          - Show program counter register pins
+            (gdb-dragonfly) pins REG:ZH1        - Show ZH register pins
+
+        See also:
+            rc <component> <pin>  - Read specific pin
+            components            - List all components
         """
         if not arg:
             print(colored("Usage: pins <component>", Color.RED))
@@ -853,12 +1158,34 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_components(self, arg: str) -> None:
         """
-        List all components or filter by prefix.
-        Usage: components [filter]
+        List all hardware components or filter by prefix.
+
+        Usage:
+            components [filter]
+
+        Arguments:
+            filter - Optional prefix to filter component names
+
+        Description:
+            Lists all components in the simulation. Components are named
+            using the format MODULE:COMPONENT (e.g., C1:DECODER1).
+            Use 'pins <component>' to see pins for a specific component.
+
+        Module prefixes:
+            ALU - ALU hub
+            C1  - Core 1 (instruction decoder)
+            C2  - Core 2
+            C3  - Core 3 (microcode)
+            I   - Interface (external connections)
+            PC  - Program counter
+            REG - Register file
+            SP  - Stack pointer
 
         Examples:
-            components          - List all components
-            components C1       - List components starting with C1
+            (gdb-dragonfly) components         - List all components
+            (gdb-dragonfly) components C1      - List Core 1 components
+            (gdb-dragonfly) components I:      - List interface components
+            (gdb-dragonfly) components REG     - List register components
         """
         if not self.debugger.initialized:
             self.debugger.initialize()
@@ -906,8 +1233,18 @@ class DebuggerCLI(cmd.Cmd):
     def do_quit(self, arg: str) -> bool:
         """
         Exit the debugger.
-        Usage: quit
+
+        Usage:
+            quit
+
         Alias: q
+
+        Description:
+            Exits the debugger. Can also use Ctrl+D.
+
+        Examples:
+            (gdb-dragonfly) quit
+            (gdb-dragonfly) q
         """
         print(colored(STRINGS.ui.GOODBYE, Color.CYAN))
         return True
