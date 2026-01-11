@@ -1,31 +1,11 @@
 import os
 import platform
-import shutil
 import subprocess
 from pathlib import Path
 
 SYSTEM = platform.system()
 DARWIN = "Darwin"
-
-
-def get_kicad_cli_path() -> str:
-    """
-    Detects the user system and returns the appropriate path to the kicad-cli executable.
-
-    Returns:
-        str: str with the path to kicad-cli exe
-    """
-
-    if SYSTEM == DARWIN:
-        macos_path = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
-        if Path(macos_path).exists():
-            return macos_path
-
-    kicad_cli = shutil.which("kicad-cli")
-    if kicad_cli:
-        return str(kicad_cli)
-
-    return "kicad-cli"
+DARWIN_KICAD_CLI_PATH = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
 
 
 def export(input_path: str, output_path: str):
@@ -34,7 +14,7 @@ def export(input_path: str, output_path: str):
     output.parent.mkdir(parents=True, exist_ok=True)
 
     cmd = [
-        get_kicad_cli_path(),
+        DARWIN_KICAD_CLI_PATH if SYSTEM == DARWIN else "kicad-cli",
         "sch",
         "export",
         "netlist",
