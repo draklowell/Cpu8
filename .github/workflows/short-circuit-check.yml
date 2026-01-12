@@ -1,0 +1,112 @@
+name: Short Circuit Detection
+
+on:
+  push:
+    paths:
+      - 'schematics/**'
+      - 'simulator/**'
+    branches:
+      - master
+      - main
+      - simulator
+  pull_request:
+    paths:
+      - 'schematics/**'
+      - 'simulator/**'
+    branches:
+      - master
+      - main
+
+jobs:
+  short-circuit-check:
+    name: Check for Short Circuits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install KiCad
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-8.0-releases
+          sudo apt-get update
+          sudo apt-get install -y kicad xvfb
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Generate microcode tables
+        working-directory: microcode
+        run: |
+          mkdir -p bin
+          python generate.py
+
+      - name: Export netlists from schematics
+        working-directory: simulator
+        id: export_netlists
+        continue-on-error: true
+        run: |
+          xvfb-run --auto-servernum python export.py
+
+      - name: Check if netlists exist
+        id: check_netlists
+        run: |
+          if [ -f "simulator/netlists/alu_hub.frp" ]; then
+            echo "netlists_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "netlists_exist=false" >> $GITHUB_OUTPUT
+            echo "::warning::Netlists not found. KiCad export may have failed."
+          fi
+
+      - name: Run short circuit detection tests
+        if: steps.check_netlists.outputs.netlists_exist == 'true'
+        working-directory: simulator
+        run: |
+          python -m pytest tests/test_short_circuit.py -v -m short_circuit --tb=long
+
+      - name: Run standalone short circuit check
+        if: steps.check_netlists.outputs.netlists_exist == 'true'
+        working-directory: simulator
+        run: |
+          python tests/test_short_circuit.py
+
+      - name: Skip short circuit tests (no netlists)
+        if: steps.check_netlists.outputs.netlists_exist != 'true'
+        run: |
+          echo "::warning::Skipping short circuit tests - netlists not available"
+
+  unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Generate microcode tables
+        working-directory: microcode
+        run: |
+          mkdir -p bin
+          python generate.py
+
+      - name: Run all simulator tests
+        working-directory: simulator
+        run: |
+          python -m pytest tests/ -v --ignore=tests/test_short_circuit.py

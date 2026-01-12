@@ -181,24 +181,24 @@ uint8_t memoryRead(uint16_t address) {
   Serial.print(address, HEX);
   Serial.print(F(") -> "));
   // 0x0000 -- 0x27FF
-  if (address <= 0x27FF) {
+  if (address < 0x2800) {
     Serial.println(pgm_read_byte(&memoryRO[address]), HEX);
     // to ROM: 0x0000 -- 0x27FF
     return memoryRO[pgm_read_byte(&memoryRO[address])];
   }
 
-  // 0x4000 -- 0x5800
-  if (address >= 0x4000 && address <= 0x5800) {
+  // 0x4000 -- 0x57FF
+  if (address >= 0x4000 && address < 0x5800) {
     Serial.println(memoryRW[address], HEX);
-    // to RAM: 0x0000 -- 0x2800
+    // to RAM: 0x0000 -- 0x27FF
     return memoryRW[address-0x4000];
   }
 
-  // 0xFBFF -- 0xFFFF
-  if (address >= 0xFBFF && address <= 0xFFFF) {
+  // 0xFC00 -- 0xFFFF
+  if (address >= 0xFC00 && address < 0xFFFF) {
     Serial.println(memoryStack[address], HEX);
-    // to STACK: 0x0000 -- 0x0400
-    return memoryStack[address-0xFBFF];
+    // to STACK: 0x0000 -- 0x03FF
+    return memoryStack[address-0xFC00];
   }
 
   // 0x8000 -- 0x801F
@@ -223,22 +223,22 @@ void memoryWrite(uint16_t address, uint8_t value) {
   Serial.print(F(", "));
   Serial.print(value, HEX);
   Serial.println(F(")"));
-  // 0x0000 -- 0x2800
-  if (address <= 0x2800) {
-    // to ROM: 0x0000 -- 0x2800
+  // 0x0000 -- 0x27FF
+  if (address < 0x2800) {
+    // to ROM: 0x0000 -- 0x27FF
     return;
   }
 
-  // 0x4000 -- 0x5800
-  if (address >= 0x4000 && address <= 0x5800) {
-    // to RAM: 0x0000 -- 0x2800
+  // 0x4000 -- 0x57FF
+  if (address >= 0x4000 && address < 0x5800) {
+    // to RAM: 0x0000 -- 0x27FF
     memoryRW[address-0x4000] = value;
   }
 
-  // 0xFBFF -- 0xFFFF
-  if (address >= 0xFBFF && address <= 0xFFFF) {
-    // to STACK: 0x0000 -- 0x0400
-    memoryStack[address-0xFBFF] = value;
+  // 0xFC00 -- 0xFFFF
+  if (address >= 0xFC00 && address < 0xFFFF) {
+    // to STACK: 0x0000 -- 0x03FF
+    memoryStack[address-0xFC00] = value;
   }
 
   // 0x8000 -- 0x801F

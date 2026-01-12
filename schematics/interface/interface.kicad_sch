@@ -10633,7 +10633,7 @@
 		)
 		(uuid "53699549-e0fd-44ac-9123-089871dd973f")
 	)
-	(label "BUS5"
+	(label "BUS6"
 		(at 276.86 96.52 180)
 		(effects
 			(font

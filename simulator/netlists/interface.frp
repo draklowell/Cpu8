@@ -1,0 +1,339 @@
+.HEA
+.TIM 2026-01-10T19:25:47+0200
+.APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
+.TYP FULL
+
+.ADD_COM     U2     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     LLow1     "LoadLow"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Drt1     "Direction"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U6     "74LS193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     Pulse1     "Pulse"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U4     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     PAD2     "Conn_02x19_Counter_Clockwise"     "Connector_PinSocket_2.54mm:PinSocket_2x19_P2.54mm_Vertical"
+.ADD_COM     U5     "74LS193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U1     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U8     "74LS193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     LHIGH1     "LoadHigh"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Decrm1     "Decrement"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     Incrm1     "Increment"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     Reset1     "Reset"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     U7     "74LS193"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C5     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     Enbl1     "Enable"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     PWR1     "Power"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{CLK}1     "~{Clock}"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C8     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+
+
+.ADD_TER   PAD2   22     "/ADDRESS0"
+.TER       U8   3
+
+.ADD_TER   PAD2   23     "/ADDRESS1"
+.TER       U8   2
+
+.ADD_TER   PAD2   32     "/ADDRESS10"
+.TER       U6   6
+
+.ADD_TER   PAD2   33     "/ADDRESS11"
+.TER       U6   7
+
+.ADD_TER   PAD2   34     "/ADDRESS12"
+.TER       U5   3
+
+.ADD_TER   PAD2   35     "/ADDRESS13"
+.TER       U5   2
+
+.ADD_TER   PAD2   36     "/ADDRESS14"
+.TER       U5   6
+
+.ADD_TER   PAD2   37     "/ADDRESS15"
+.TER       U5   7
+
+.ADD_TER   PAD2   24     "/ADDRESS2"
+.TER       U8   6
+
+.ADD_TER   PAD2   25     "/ADDRESS3"
+.TER       U8   7
+
+.ADD_TER   PAD2   26     "/ADDRESS4"
+.TER       U7   3
+
+.ADD_TER   PAD2   27     "/ADDRESS5"
+.TER       U7   2
+
+.ADD_TER   PAD2   28     "/ADDRESS6"
+.TER       U7   6
+
+.ADD_TER   PAD2   29     "/ADDRESS7"
+.TER       U7   7
+
+.ADD_TER   PAD2   30     "/ADDRESS8"
+.TER       U6   3
+
+.ADD_TER   PAD2   31     "/ADDRESS9"
+.TER       U6   2
+
+.ADD_TER   BC1   B60     "/AddrDec"
+.TER       U1   13
+
+.ADD_TER   BC1   A30     "/AddrHighIn"
+.TER       U1   1
+
+.ADD_TER   BC1   B61     "/AddrInc"
+.TER       U1   10
+
+.ADD_TER   BC1   A31     "/AddrLowIn"
+.TER       U1   4
+
+.ADD_TER   BC1   A51     "/BUS0"
+.TER       U4   18
+            U6   15
+            U8   15
+
+.ADD_TER   BC1   A52     "/BUS1"
+.TER       U4   17
+            U6   1
+            U8   1
+
+.ADD_TER   BC1   A53     "/BUS2"
+.TER       U4   16
+            U6   10
+            U8   10
+
+.ADD_TER   BC1   A54     "/BUS3"
+.TER       U4   15
+            U6   9
+            U8   9
+
+.ADD_TER   BC1   A55     "/BUS4"
+.TER       U4   14
+            U5   15
+            U7   15
+
+.ADD_TER   BC1   A56     "/BUS5"
+.TER       U4   13
+            U5   1
+            U7   1
+
+.ADD_TER   BC1   A57     "/BUS6"
+.TER       U4   12
+            U5   10
+            U7   10
+
+.ADD_TER   BC1   A58     "/BUS7"
+.TER       U4   11
+            U5   9
+            U7   9
+
+.ADD_TER   PAD2   4     "/DATA0"
+.TER       U4   2
+
+.ADD_TER   PAD2   5     "/DATA1"
+.TER       U4   3
+
+.ADD_TER   PAD2   6     "/DATA2"
+.TER       U4   4
+
+.ADD_TER   PAD2   7     "/DATA3"
+.TER       U4   5
+
+.ADD_TER   PAD2   8     "/DATA4"
+.TER       U4   6
+
+.ADD_TER   PAD2   9     "/DATA5"
+.TER       U4   7
+
+.ADD_TER   PAD2   10     "/DATA6"
+.TER       U4   8
+
+.ADD_TER   PAD2   11     "/DATA7"
+.TER       U4   9
+
+.ADD_TER   BC1   A67     "/IntReq"
+.TER       PAD2   16
+
+.ADD_TER   BC1   B74     "/Pulse"
+.TER       Pulse1   1
+            U1   2
+            U1   5
+
+.ADD_TER   BC1   A69     "/Reset"
+.TER       PAD2   18
+            Reset1   1
+            U5   14
+            U6   14
+            U7   14
+            U8   14
+
+.ADD_TER   BC1   B73     "/~{Clk}"
+.TER       PAD2   2
+            U1   12
+            U1   9
+            ~{CLK}1   1
+
+.ADD_TER   BC1   B46     "/~{Halt}"
+.TER       PAD2   14
+
+.ADD_TER   BC1   B31     "/~{IntAck}"
+.TER       PAD2   17
+            U2   2
+
+.ADD_TER   BC1   B14     "/~{MemRead}"
+.TER       PAD2   13
+            U2   1
+
+.ADD_TER   BC1   A14     "/~{MemWrite}"
+.TER       PAD2   12
+            U2   13
+
+.ADD_TER   BC1   A68     "/~{Wait}"
+.TER       PAD2   15
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            C1   2
+            C2   2
+            C3   2
+            C4   2
+            C5   2
+            C6   2
+            C7   2
+            C8   2
+            PAD2   1
+            PAD2   19
+            PAD2   20
+            PAD2   21
+            PAD2   3
+            PAD2   38
+            U1   7
+            U2   7
+            U4   10
+            U5   8
+            U6   8
+            U7   8
+            U8   8
+
+.ADD_TER   U2   10     "Net-(U2-Pad10)"
+.TER       U2   11
+            U2   9
+
+.ADD_TER   U2   12     "Net-(U2-Pad12)"
+.TER       U2   6
+
+.ADD_TER   Drt1   1     "Net-(U4-A->B)"
+.TER       U2   3
+            U2   4
+            U2   5
+            U4   1
+
+.ADD_TER   Enbl1   1     "Net-(U4-CE)"
+.TER       U2   8
+            U4   19
+
+.ADD_TER   U5   4     "Net-(U5-DOWN)"
+.TER       U6   13
+
+.ADD_TER   U5   5     "Net-(U5-UP)"
+.TER       U6   12
+
+.ADD_TER   LHIGH1   1     "Net-(U5-~{LOAD})"
+.TER       U1   3
+            U5   11
+            U6   11
+
+.ADD_TER   U6   4     "Net-(U6-DOWN)"
+.TER       U7   13
+
+.ADD_TER   U6   5     "Net-(U6-UP)"
+.TER       U7   12
+
+.ADD_TER   U7   4     "Net-(U7-DOWN)"
+.TER       U8   13
+
+.ADD_TER   U7   5     "Net-(U7-UP)"
+.TER       U8   12
+
+.ADD_TER   LLow1   1     "Net-(U7-~{LOAD})"
+.TER       U1   6
+            U7   11
+            U8   11
+
+.ADD_TER   Decrm1   1     "Net-(U8-DOWN)"
+.TER       U1   11
+            U8   4
+
+.ADD_TER   Incrm1   1     "Net-(U8-UP)"
+.TER       U1   8
+            U8   5
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            C1   1
+            C2   1
+            C3   1
+            C4   1
+            C5   1
+            C6   1
+            C7   1
+            C8   1
+            PWR1   1
+            U1   14
+            U2   14
+            U4   20
+            U5   16
+            U6   16
+            U7   16
+            U8   16
+
+.END

@@ -1,0 +1,419 @@
+.HEA
+.TIM 2026-01-10T23:12:56+0200
+.APP "Eeschema 9.0.7-9.0.7~ubuntu24.04.1"
+.TYP FULL
+
+.ADD_COM     U1     "74LS04"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     STEP1     "74LS161"     "Package_DIP:DIP-16_W7.62mm_Socket_LongPads"
+.ADD_COM     C1     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     U5     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     ~{SignIn}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U3     "74LS02"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     ZerroO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     TABLE7     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     PWR1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{ENBL}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C7     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{L_FR}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C12     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     CarryO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     ~{UPD_FR}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     SignO1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     U2     "74LS574"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C4     "C"     "Capacitor_THT:C_Radial_D6.3mm_H5.0mm_P2.50mm"
+.ADD_COM     U4     "74LS00"     "Package_DIP:DIP-14_W7.62mm_Socket_LongPads"
+.ADD_COM     B_IN0     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C3     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     BC1     "BusConnector"     "Connector_PCBEdge:BUS_PCIexpress_x16"
+.ADD_COM     ~{CarrIn}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     B_IN1     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     R2     "R"     "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
+.ADD_COM     C6     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     B_OUT0     "74LS245"     "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+.ADD_COM     C17     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ZerroIn1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     TABLE8     "28C256"     "Package_DIP:DIP-28_W15.24mm_Socket_LongPads"
+.ADD_COM     C9     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{OUT_FR}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C11     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     ~{CLK}1     "TestPoint"     "TestPoint:TestPoint_Pad_D1.0mm"
+.ADD_COM     C8     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+.ADD_COM     C2     "C"     "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+
+
+.ADD_TER   BC1   B60     "/AddrDecrement"
+.TER       TABLE7   13
+            TABLE8   13
+
+.ADD_TER   BC1   B61     "/AddrIncrement"
+.TER       TABLE7   15
+            TABLE8   15
+
+.ADD_TER   STEP1   2     "/Clk"
+.TER       U1   10
+            U1   13
+
+.ADD_TER   BC1   A51     "/D0"
+.TER       B_IN1   18
+            B_OUT0   2
+
+.ADD_TER   BC1   A52     "/D1"
+.TER       B_IN1   17
+            B_OUT0   3
+
+.ADD_TER   BC1   A53     "/D2"
+.TER       B_IN1   16
+            B_OUT0   4
+
+.ADD_TER   BC1   A54     "/D3"
+.TER       B_IN1   15
+            B_OUT0   5
+
+.ADD_TER   BC1   A55     "/D4"
+.TER       B_IN1   14
+            B_OUT0   6
+
+.ADD_TER   BC1   A56     "/D5"
+.TER       B_IN1   13
+            B_OUT0   7
+
+.ADD_TER   BC1   A57     "/D6"
+.TER       B_IN1   12
+            B_OUT0   8
+
+.ADD_TER   BC1   A58     "/D7"
+.TER       B_IN1   11
+            B_OUT0   9
+
+.ADD_TER   BC1   B57     "/IntEnable"
+.TER       TABLE7   11
+            TABLE8   11
+
+.ADD_TER   BC1   A69     "/Reset"
+.TER       U5   4
+            U5   5
+
+.ADD_TER   BC1   A33     "/STATE0"
+.TER       TABLE7   10
+            TABLE8   10
+
+.ADD_TER   BC1   A34     "/STATE1"
+.TER       TABLE7   9
+            TABLE8   9
+
+.ADD_TER   BC1   A44     "/STATE10"
+.TER       B_OUT0   11
+            TABLE7   21
+            TABLE8   21
+            U2   12
+            ZerroO1   1
+
+.ADD_TER   BC1   A45     "/STATE11"
+.TER       STEP1   14
+            TABLE7   23
+            TABLE8   23
+
+.ADD_TER   BC1   A46     "/STATE12"
+.TER       STEP1   13
+            TABLE7   2
+            TABLE8   2
+
+.ADD_TER   BC1   A47     "/STATE13"
+.TER       STEP1   12
+            TABLE7   26
+            TABLE8   26
+
+.ADD_TER   BC1   A48     "/STATE14"
+.TER       STEP1   11
+            TABLE7   1
+            TABLE8   1
+
+.ADD_TER   BC1   A49     "/STATE15"
+.TER       TABLE7   22
+            U1   1
+
+.ADD_TER   BC1   A79     "/STATE16"
+.TER       TABLE8   22
+            U1   2
+
+.ADD_TER   BC1   A35     "/STATE2"
+.TER       TABLE7   8
+            TABLE8   8
+
+.ADD_TER   BC1   A36     "/STATE3"
+.TER       TABLE7   7
+            TABLE8   7
+
+.ADD_TER   BC1   A37     "/STATE4"
+.TER       TABLE7   6
+            TABLE8   6
+
+.ADD_TER   BC1   A38     "/STATE5"
+.TER       TABLE7   5
+            TABLE8   5
+
+.ADD_TER   BC1   A39     "/STATE6"
+.TER       TABLE7   4
+            TABLE8   4
+
+.ADD_TER   BC1   A40     "/STATE7"
+.TER       TABLE7   3
+            TABLE8   3
+
+.ADD_TER   BC1   A42     "/STATE8"
+.TER       B_OUT0   13
+            SignO1   1
+            TABLE7   25
+            TABLE8   25
+            U2   14
+
+.ADD_TER   BC1   A43     "/STATE9"
+.TER       B_OUT0   12
+            CarryO1   1
+            TABLE7   24
+            TABLE8   24
+            U2   13
+
+.ADD_TER   BC1   A62     "/SignIn"
+.TER       B_IN0   13
+            ~{SignIn}1   1
+
+.ADD_TER   BC1   A60     "/ZeroIn"
+.TER       B_IN0   11
+            ZerroIn1   1
+
+.ADD_TER   BC1   B73     "/~CLK"
+.TER       U1   11
+            U3   12
+            U3   8
+            ~{CLK}1   1
+
+.ADD_TER   BC1   A61     "/~{CarryIn}"
+.TER       B_IN0   12
+            ~{CarrIn}1   1
+
+.ADD_TER   BC1   B46     "/~{Halt}"
+.TER       U5   9
+
+.ADD_TER   BC1   B58     "/~{IntDisable}"
+.TER       TABLE7   12
+            TABLE8   12
+
+.ADD_TER   BC1   A28     "/~{LOAD_FR}"
+.TER       B_IN1   19
+            U1   3
+            ~{L_FR}1   1
+
+.ADD_TER   BC1   B28     "/~{OUT_FR}"
+.TER       B_OUT0   19
+            ~{OUT_FR}1   1
+
+.ADD_TER   BC1   B45     "/~{SCClear}"
+.TER       STEP1   9
+
+.ADD_TER   BC1   B39     "/~{UPDATE_FR}"
+.TER       B_IN0   19
+            U1   5
+            ~{UPD_FR}1   1
+
+.ADD_TER   BC1   A68     "/~{Wait}"
+.TER       U5   10
+
+.ADD_TER   BC1   A12     "GND"
+.TER       BC1   A13
+            BC1   A23
+            BC1   A32
+            BC1   A41
+            BC1   A50
+            BC1   A59
+            BC1   A63
+            BC1   A64
+            BC1   A65
+            BC1   A66
+            BC1   A70
+            BC1   A71
+            BC1   A72
+            BC1   A73
+            BC1   A74
+            BC1   A75
+            BC1   A76
+            BC1   B12
+            BC1   B13
+            BC1   B23
+            BC1   B32
+            BC1   B41
+            BC1   B50
+            BC1   B59
+            BC1   B62
+            BC1   B63
+            BC1   B64
+            BC1   B65
+            BC1   B66
+            BC1   B67
+            BC1   B68
+            BC1   B69
+            BC1   B70
+            BC1   B71
+            BC1   B72
+            BC1   B75
+            BC1   B76
+            B_IN0   1
+            B_IN0   10
+            B_IN0   14
+            B_IN0   15
+            B_IN0   16
+            B_IN0   17
+            B_IN0   18
+            B_IN1   1
+            B_IN1   10
+            B_OUT0   1
+            B_OUT0   10
+            C1   2
+            C11   2
+            C12   2
+            C17   2
+            C2   2
+            C3   2
+            C4   2
+            C6   1
+            C7   1
+            C8   1
+            C9   1
+            STEP1   3
+            STEP1   4
+            STEP1   5
+            STEP1   6
+            STEP1   8
+            TABLE7   14
+            TABLE7   20
+            TABLE8   14
+            TABLE8   20
+            U1   7
+            U2   1
+            U2   10
+            U3   7
+            U5   7
+
+.ADD_TER   BC1   B74     "Net-(BC1-PULSE)"
+.TER       U3   13
+
+.ADD_TER   B_IN0   2     "Net-(B_IN0-A0)"
+.TER       B_IN1   2
+            U2   2
+
+.ADD_TER   B_IN0   3     "Net-(B_IN0-A1)"
+.TER       B_IN1   3
+            U2   3
+
+.ADD_TER   B_IN0   4     "Net-(B_IN0-A2)"
+.TER       B_IN1   4
+            U2   4
+
+.ADD_TER   B_IN0   5     "Net-(B_IN0-A3)"
+.TER       B_IN1   5
+            U2   5
+
+.ADD_TER   B_IN0   6     "Net-(B_IN0-A4)"
+.TER       B_IN1   6
+            U2   6
+
+.ADD_TER   B_IN0   7     "Net-(B_IN0-A5)"
+.TER       B_IN1   7
+            U2   7
+
+.ADD_TER   B_IN0   8     "Net-(B_IN0-A6)"
+.TER       B_IN1   8
+            U2   8
+
+.ADD_TER   B_IN0   9     "Net-(B_IN0-A7)"
+.TER       B_IN1   9
+            U2   9
+
+.ADD_TER   B_OUT0   18     "Net-(B_OUT0-B0)"
+.TER       U2   19
+
+.ADD_TER   B_OUT0   17     "Net-(B_OUT0-B1)"
+.TER       U2   18
+
+.ADD_TER   B_OUT0   16     "Net-(B_OUT0-B2)"
+.TER       U2   17
+
+.ADD_TER   B_OUT0   15     "Net-(B_OUT0-B3)"
+.TER       U2   16
+
+.ADD_TER   B_OUT0   14     "Net-(B_OUT0-B4)"
+.TER       U2   15
+
+.ADD_TER   R2   2     "Net-(R2-Pad2)"
+.TER       U3   2
+            U3   3
+            U4   12
+            U4   13
+
+.ADD_TER   STEP1   10     "Net-(STEP1-CEP)"
+.TER       STEP1   7
+            U5   3
+
+.ADD_TER   STEP1   1     "Net-(STEP1-~{MR})"
+.TER       U5   6
+
+.ADD_TER   U1   12     "Net-(U1-Pad12)"
+.TER       U1   9
+
+.ADD_TER   U1   4     "Net-(U1-Pad4)"
+.TER       U3   6
+
+.ADD_TER   U1   6     "Net-(U1-Pad6)"
+.TER       U3   5
+
+.ADD_TER   U1   8     "Net-(U1-Pad8)"
+.TER       U3   11
+
+.ADD_TER   U2   11     "Net-(U2-Cp)"
+.TER       U3   10
+            ~{ENBL}1   1
+
+.ADD_TER   U3   4     "Net-(U3-Pad4)"
+.TER       U3   9
+
+.ADD_TER   U5   1     "Net-(U5-Pad1)"
+.TER       U5   2
+            U5   8
+
+.ADD_TER   BC1   A1     "VCC"
+.TER       BC1   A2
+            BC1   A3
+            BC1   A4
+            BC1   A5
+            BC1   B1
+            BC1   B2
+            BC1   B3
+            BC1   B4
+            BC1   B5
+            B_IN0   20
+            B_IN1   20
+            B_OUT0   20
+            C1   1
+            C11   1
+            C12   1
+            C17   1
+            C2   1
+            C3   1
+            C4   1
+            C6   2
+            C7   2
+            C8   2
+            C9   2
+            PWR1   1
+            R2   1
+            STEP1   16
+            TABLE7   27
+            TABLE7   28
+            TABLE8   27
+            TABLE8   28
+            U1   14
+            U2   20
+            U3   14
+            U5   14
+
+.END

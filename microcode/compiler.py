@@ -43,12 +43,14 @@ def code(
     reader_2 = (bus_reader.reader & 0x04) >> 2
     reader_3 = (bus_reader.reader & 0x08) >> 3
     reader_4 = (bus_reader.reader & 0x10) >> 4
+    not_reader_4 = 1 - reader_4
 
     writer_0 = bus_writer.writer & 0x01
     writer_1 = (bus_writer.writer & 0x02) >> 1
     writer_2 = (bus_writer.writer & 0x04) >> 2
     writer_3 = (bus_writer.writer & 0x08) >> 3
     writer_4 = (bus_writer.writer & 0x10) >> 4
+    not_writer_4 = 1 - writer_4
 
     alu_selection_0 = alu_selection & 0x1
     alu_selection_1 = (alu_selection & 0x2) >> 1
@@ -80,8 +82,8 @@ def code(
             (stack_pointer_decrement << 0)
             | (alu_selection_3 << 1)
             | (alu_selection_2 << 2)
-            | (writer_4 << 3)
-            | (reader_4 << 4)
+            | (not_writer_4 << 3)
+            | (not_reader_4 << 4)
             | (accumulator_shift_right << 5)
             | (accumulator_shift_left << 6)
             | (stack_pointer_increment << 7)
@@ -130,8 +132,10 @@ class Compiler:
     counter: int
     table: dict[int, tuple[str, list[int]]]
 
-    def __init__(self):
-        self.blocks = [bytearray(2**16) for _ in range(4)]
+    def __init__(self, default_code: Code = code(halt=1)):
+        self.blocks = [
+            bytearray(bytes([value]) * 65536) for _, value in enumerate(default_code)
+        ]
         self.counter = 0
         self.table = {}
 

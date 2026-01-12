@@ -1,3 +1,4 @@
+import json
 from enum import IntEnum
 
 from compiler import Compiler, Component, Context, code, components
@@ -538,3 +539,24 @@ def hlt(ctx: Context):
 
 
 compiler.save("bin/")
+
+data = {
+    "readers": {},
+    "writers": {},
+}
+
+for component in components.ALL_COMPONENTS:
+    if component.reader is not None:
+        if component.name in data["readers"]:
+            raise ValueError(f"Duplicate reader code {component.reader}")
+
+        data["readers"][component.reader] = component.name
+
+    if component.writer is not None:
+        if component.name in data["writers"]:
+            raise ValueError(f"Duplicate writer code {component.writer}")
+
+        data["writers"][component.writer] = component.name
+
+with open(f"bin/components.json", "w") as file:
+    json.dump(data, file, indent=4)
