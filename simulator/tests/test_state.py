@@ -17,9 +17,8 @@ class TestCPUState:
         assert state.sp == 0
         assert state.instruction == 0
         assert state.mnemonic == "???"
-        assert state.ac == 0
         assert state.xh == 0
-        assert state.xl == 0
+        assert state.xl == 0  # XL is also called AC (Accumulator)
         assert state.yh == 0
         assert state.yl == 0
         assert state.zh == 0
@@ -36,9 +35,8 @@ class TestCPUState:
         assert cpu_state.sp == 0x01FF
         assert cpu_state.instruction == 0x42
         assert cpu_state.mnemonic == "TEST"
-        assert cpu_state.ac == 0x12
         assert cpu_state.xh == 0x34
-        assert cpu_state.xl == 0x56
+        assert cpu_state.xl == 0x56  # XL is also called AC (Accumulator)
         assert cpu_state.yh == 0x78
         assert cpu_state.yl == 0x9A
         assert cpu_state.zh == 0xBC
@@ -109,9 +107,8 @@ class TestCPUState:
             pc=0xFFFF,
             sp=0xFFFF,
             instruction=0xFF,
-            ac=0xFF,
             xh=0xFF,
-            xl=0xFF,
+            xl=0xFF,  # XL is also called AC (Accumulator)
             yh=0xFF,
             yl=0xFF,
             zh=0xFF,

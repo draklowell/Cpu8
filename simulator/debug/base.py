@@ -27,7 +27,7 @@ class DebuggerCore:
 
     def __init__(self, rom_path: str):
         self.rom_path = rom_path
-        self.readers, self.writers, self.microcode = load_microcode_data()
+        self.readers, self.writers, self.microcode, self.cycles = load_microcode_data()
 
         # Load ROM
         with open(rom_path, "rb") as f:
@@ -53,23 +53,6 @@ class DebuggerCore:
         # History
         self.instruction_history: list[CPUState] = []
         self.max_history = 100
-        self.mapping = {
-            "pc": self.state.pc,
-            "sp": self.state.sp,
-            "ac": self.state.ac,
-            "accumulator": self.state.ac,
-            "xh": self.state.xh,
-            "xl": self.state.xl,
-            "x": (self.state.xh << 8) | self.state.xl,
-            "yh": self.state.yh,
-            "yl": self.state.yl,
-            "y": (self.state.yh << 8) | self.state.yl,
-            "zh": self.state.zh,
-            "zl": self.state.zl,
-            "z": (self.state.zh << 8) | self.state.zl,
-            "flags": self.state.flags,
-            "fr": self.state.flags,
-        }
 
     def initialize(self) -> None:
         """
@@ -100,7 +83,9 @@ class DebuggerCore:
 
     def step_instruction(self) -> CPUState:
         """
-        Execute a single instruction on clock
+        Execute a single clock cycle (one tick).
+        Note: A full CPU instruction may take multiple clock cycles.
+        Use step_full_instruction() to execute a complete instruction.
         """
         if not self.initialized:
             self.initialize()
@@ -123,6 +108,46 @@ class DebuggerCore:
         self.last_chunk = chunk
         self.state.cycle += 1
         self._update_state()
+
+        return self.state
+
+    def step_full_instruction(self, max_cycles: int = 100) -> CPUState:
+        """
+        Execute clock cycles until a full instruction is completed.
+
+        Uses the cycle count from the instruction table (table.csv) to know
+        exactly how many clock cycles each instruction takes.
+
+        Args:
+            max_cycles: Maximum cycles as fallback (normally not used)
+
+        Returns:
+            CPUState after the instruction completes
+        """
+        if not self.initialized:
+            self.initialize()
+
+        # Get the opcode at current PC
+        current_pc = self.state.pc
+        if current_pc < len(self.rom):
+            opcode = self.rom[current_pc]
+        else:
+            opcode = 0  # NOP
+
+        # Get number of cycles for this instruction from the table
+        num_cycles = self.cycles.get(opcode, 3)  # Default to 3 (NOP) if unknown
+
+        # HLT (0xDD) needs extra cycles for the halt signal to propagate
+        # through the circuit before halted flag becomes true
+        HLT_OPCODE = 0xDD
+        if opcode == HLT_OPCODE:
+            num_cycles = 6  # Give halt signal time to propagate
+
+        # Execute the required number of clock cycles
+        for _ in range(num_cycles):
+            self.step_instruction()
+            if self.state.halted:
+                break
 
         return self.state
 
@@ -195,10 +220,28 @@ class DebuggerCore:
 
     def get_register_value(self, name: str) -> int | None:
         """
-        Get a register value by name
+        Get a register value by name.
+        Note: AC (Accumulator) = XL
         """
         name = name.lower()
-        return self.mapping.get(name)
+        mapping = {
+            "pc": self.state.pc,
+            "sp": self.state.sp,
+            "ac": self.state.xl,  # AC = XL (Accumulator)
+            "accumulator": self.state.xl,
+            "xh": self.state.xh,
+            "xl": self.state.xl,
+            "x": (self.state.xh << 8) | self.state.xl,
+            "yh": self.state.yh,
+            "yl": self.state.yl,
+            "y": (self.state.yh << 8) | self.state.yl,
+            "zh": self.state.zh,
+            "zl": self.state.zl,
+            "z": (self.state.zh << 8) | self.state.zl,
+            "flags": self.state.flags,
+            "fr": self.state.flags,
+        }
+        return mapping.get(name)
 
     def tick_simulator(self) -> WaveformChunk:
         """

@@ -26,10 +26,10 @@ class TestDisassembler:
 
     def test_disassemble_instruction_with_word_operand(self, disassembler):
         """Test disassembling instruction with [word] operand."""
-        # At offset 5, we have: 0x20, 0x30, 0x40 -> "JMP 0x4030"
+        # At offset 5, we have: 0x20, 0x30, 0x40 -> "JMP 0x3040" (big-endian: high byte first)
         mnemonic, size, raw_bytes = disassembler.disassemble_at(5)
         assert size == 3
-        assert "0x4030" in mnemonic
+        assert "0x3040" in mnemonic  # Big-endian: 0x30 << 8 | 0x40
         assert raw_bytes == bytes([0x20, 0x30, 0x40])
 
     def test_disassemble_unknown_opcode(self, sample_rom):

@@ -183,6 +183,7 @@ class InfoStrings:
     # Registers
     REG_PC: str = "PC"
     REG_SP: str = "SP"
+    REG_AC: str = "AC"
     REG_X: str = "X"
     REG_Y: str = "Y"
     REG_Z: str = "Z"

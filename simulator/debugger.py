@@ -15,7 +15,7 @@ from debug.color import Color, colored, print_header, print_separator
 from debug.disassembler import Disassembler
 from debug.state import CPUState
 from debug.ui import DebuggerStrings
-from debug.watch import Watch, WatchManager
+from debug.watch import Watch, WatchChange, WatchManager
 
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
@@ -52,6 +52,7 @@ class DebuggerCLI(cmd.Cmd):
             "dis": "disassemble",
             "t": "tick",
             "sc": "check",
+            "reg": "registers",
         }
 
     def precmd(self, line: str) -> str:
@@ -138,7 +139,7 @@ class DebuggerCLI(cmd.Cmd):
                 print(colored(STRINGS.execution.PROGRAM_HALTED, Color.YELLOW))
                 break
 
-            state = self.debugger.step_instruction()
+            state = self.debugger.step_full_instruction()
 
             # Check breakpoints
             bp = self.debugger.breakpoints.check(state.pc)
@@ -178,7 +179,7 @@ class DebuggerCLI(cmd.Cmd):
 
     def do_stepi(self, arg: str) -> None:
         """
-        Step one instruction exactly.
+        Step one clock cycle (more granular than nexti).
 
         Usage:
             stepi [count]
@@ -186,13 +187,48 @@ class DebuggerCLI(cmd.Cmd):
         Alias: si
 
         Description:
-            Equivalent to nexti. Steps through CPU instructions.
+            Executes one or more CPU clock cycles. This is more granular
+            than 'nexti' which executes full instructions. Use this when
+            you need to see the CPU state mid-instruction.
 
         Examples:
-            (gdb-dragonfly) stepi       - Execute one instruction
-            (gdb-dragonfly) si 5        - Execute 5 instructions
+            (gdb-dragonfly) stepi       - Execute one clock cycle
+            (gdb-dragonfly) si 5        - Execute 5 clock cycles
         """
-        self.do_nexti(arg)
+        count = 1
+        if arg:
+            try:
+                count = int(arg)
+            except ValueError:
+                print(colored(STRINGS.errors.INVALID_COUNT, Color.RED))
+                return
+
+        if not self.debugger.initialized:
+            self.debugger.initialize()
+
+        for i in range(count):
+            if self.debugger.state.halted:
+                print(colored(STRINGS.execution.PROGRAM_HALTED, Color.YELLOW))
+                break
+
+            state = self.debugger.step_instruction()
+
+            # Check breakpoints
+            bp = self.debugger.breakpoints.check(state.pc)
+            if bp:
+                print(
+                    colored(
+                        "\n"
+                        + STRINGS.breakpoints.BREAKPOINT_HIT.format(
+                            id=bp.id, address=state.pc
+                        ),
+                        Color.YELLOW,
+                        Color.BOLD,
+                    )
+                )
+                break
+
+        self._show_current_location()
 
     def do_continue(self, arg: str) -> None:
         """
@@ -205,7 +241,7 @@ class DebuggerCLI(cmd.Cmd):
 
         Description:
             Continues running the program until a breakpoint is hit,
-            the CPU halts, or 10000 cycles are executed.
+            the CPU halts, or 10000 instructions are executed.
 
         Examples:
             (gdb-dragonfly) continue
@@ -214,17 +250,17 @@ class DebuggerCLI(cmd.Cmd):
         if not self.debugger.initialized:
             self.debugger.initialize()
 
-        max_cycles = 10000
+        max_instructions = 10000
         print(colored(STRINGS.execution.CONTINUING, Color.YELLOW))
 
-        for _ in range(max_cycles):
+        for _ in range(max_instructions):
             if self.debugger.state.halted:
                 print(
                     colored("\n" + STRINGS.execution.PROGRAM_HALTED_ALT, Color.YELLOW)
                 )
                 break
 
-            state = self.debugger.step_instruction()
+            state = self.debugger.step_full_instruction()
             bp = self.debugger.breakpoints.check(state.pc)
             if bp:
                 print(
@@ -243,7 +279,7 @@ class DebuggerCLI(cmd.Cmd):
                 colored(
                     "\n"
                     + STRINGS.execution.STOPPED_AFTER_CYCLES.format(
-                        max_cycles=max_cycles
+                        max_cycles=max_instructions
                     ),
                     Color.YELLOW,
                 )
@@ -719,10 +755,11 @@ class DebuggerCLI(cmd.Cmd):
         Description:
             Adds an expression to the watch list. Use 'info watches'
             to see current values of all watched expressions.
+            Changes are displayed automatically after each step.
 
         Examples:
             (gdb-dragonfly) watch pc    - Watch program counter
-            (gdb-dragonfly) watch x     - Watch X register
+            (gdb-dragonfly) watch ac    - Watch accumulator
             (gdb-dragonfly) watch sp    - Watch stack pointer
         """
         if not arg:
@@ -730,6 +767,8 @@ class DebuggerCLI(cmd.Cmd):
             return
 
         watch = self.debugger.watches.add(arg)
+        # Initialize last_value so first change is detected correctly
+        watch.last_value = self.debugger.get_register_value(arg)
         print(
             colored(
                 STRINGS.watches.WATCH_SET.format(id=watch.id, expression=arg),
@@ -1366,6 +1405,9 @@ class DebuggerCLI(cmd.Cmd):
         """Show current PC and instruction."""
         state = self.debugger.state
 
+        # Check for watch changes and display them
+        self._show_watch_changes()
+
         print()
         mnemonic, size, raw_bytes = self.debugger.disasm.disassemble_at(state.pc)
         bytes_str = " ".join(f"{b:02X}" for b in raw_bytes)
@@ -1390,6 +1432,25 @@ class DebuggerCLI(cmd.Cmd):
 
         print()
 
+    def _show_watch_changes(self) -> None:
+        """Check and display any watch value changes."""
+        changes = self.debugger.watches.check_changes(self.debugger.get_register_value)
+        for change in changes:
+            old_str = (
+                f"0x{change.old_value:04X}" if change.old_value is not None else "???"
+            )
+            new_str = (
+                f"0x{change.new_value:04X}" if change.new_value is not None else "???"
+            )
+            print(
+                colored(
+                    f"Watch #{change.watch.id} ({change.watch.expression}): "
+                    f"{old_str} → {new_str}",
+                    Color.MAGENTA,
+                    Color.BOLD,
+                )
+            )
+
     def _show_registers(self) -> None:
         """Display all registers in a nice format."""
         state = self.debugger.state
@@ -1411,10 +1472,10 @@ class DebuggerCLI(cmd.Cmd):
         )
         print()
 
-        # 16-bit register pairs
+        # 16-bit register pairs (XL = Accumulator)
         print(
             f"  {colored(STRINGS.info.REG_X, Color.BRIGHT_YELLOW):>4} = {colored(f'0x{x:04X}', Color.WHITE)}"
-            f"     XH={colored(f'0x{state.xh:02X}', Color.GRAY)} XL={colored(f'0x{state.xl:02X}', Color.GRAY)}"
+            f"     XH={colored(f'0x{state.xh:02X}', Color.GRAY)} {colored('AC', Color.BRIGHT_GREEN)}={colored(f'0x{state.xl:02X}', Color.WHITE, Color.BOLD)}"
         )
         print(
             f"  {colored(STRINGS.info.REG_Y, Color.BRIGHT_YELLOW):>4} = {colored(f'0x{y:04X}', Color.WHITE)}"

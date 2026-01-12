@@ -23,12 +23,18 @@ MODULES = [
 TABLES_PATH = "../microcode/bin"
 
 
-def load_microcode_data() -> tuple[dict[int, str], dict[int, str], dict[int, str]]:
+def load_microcode_data() -> (
+    tuple[dict[int, str], dict[int, str], dict[int, str], dict[int, int]]
+):
     """
     Loads data from microcode used in simulator and debuger wrapper
 
     Returns:
-        tuple[dict[int, str], dict[int, str], dict[int, str]]: Readers, writers and microcode mnemonics
+        tuple containing:
+        - readers: dict mapping load codes to component names
+        - writers: dict mapping read codes to component names
+        - microcode: dict mapping opcodes to mnemonic strings
+        - cycles: dict mapping opcodes to number of clock cycles
     """
     with open(f"{TABLES_PATH}/components.json", "r") as file:
         components_data = json.load(file)
@@ -37,6 +43,11 @@ def load_microcode_data() -> tuple[dict[int, str], dict[int, str], dict[int, str
 
     with open(f"{TABLES_PATH}/table.csv", "r") as file:
         reader = csv.DictReader(file)
-        microcode = {int(row["decOpcode"]): row["mnemonic"] for row in reader}
+        microcode = {}
+        cycles = {}
+        for row in reader:
+            opcode = int(row["decOpcode"])
+            microcode[opcode] = row["mnemonic"]
+            cycles[opcode] = int(row["maxCycles"])
 
-    return readers, writers, microcode
+    return readers, writers, microcode, cycles

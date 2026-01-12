@@ -17,10 +17,8 @@ class CPUState:
     instruction: int = 0
     mnemonic: str = "???"
 
-    # Registers
-    ac: int = 0
     xh: int = 0
-    xl: int = 0
+    xl: int = 0  # XL -> AC (Accumulator)
     yh: int = 0
     yl: int = 0
     zh: int = 0

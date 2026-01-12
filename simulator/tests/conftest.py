@@ -104,9 +104,8 @@ def cpu_state() -> CPUState:
         sp=0x01FF,
         instruction=0x42,
         mnemonic="TEST",
-        ac=0x12,
         xh=0x34,
-        xl=0x56,
+        xl=0x56,  # XL is also called AC (Accumulator)
         yh=0x78,
         yl=0x9A,
         zh=0xBC,

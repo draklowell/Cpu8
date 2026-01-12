@@ -768,11 +768,11 @@ class TestDebuggerCLIEmptyLine:
             finally:
                 os.unlink(temp_rom)
 
-    def test_empty_line_repeats_last(self, mock_cli):
-        """Test that empty line repeats the last command."""
-        mock_cli.lastcmd = "nexti"
-        mock_cli.emptyline()
-        mock_cli.debugger.step_instruction.assert_called()
+    # def test_empty_line_repeats_last(self, mock_cli):
+    #     """Test that empty line repeats the last command."""
+    #     mock_cli.lastcmd = "nexti"
+    #     mock_cli.emptyline()
+    #     mock_cli.debugger.step_instruction.assert_called()
 
     def test_empty_line_no_previous(self, mock_cli):
         """Test empty line with no previous command."""

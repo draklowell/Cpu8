@@ -1303,3 +1303,5 @@ fp-info-cache
 *.raw
 .svg2shenzhen-cache
 *.zip
+
+.vscode/

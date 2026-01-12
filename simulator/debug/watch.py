@@ -16,6 +16,17 @@ class Watch:
     last_value: int | None = None
 
 
+@dataclass
+class WatchChange:
+    """
+    Represents a change in a watch value
+    """
+
+    watch: Watch
+    old_value: int | None
+    new_value: int | None
+
+
 class WatchManager:
     """
     Manages watch expressions
@@ -49,3 +60,27 @@ class WatchManager:
         List all watch expressions
         """
         return list(self._watches.values())
+
+    def check_changes(self, get_value_func: callable) -> list[WatchChange]:
+        """
+        Check all watches for value changes.
+
+        Args:
+            get_value_func: Function that takes expression string and returns value
+
+        Returns:
+            List of WatchChange for watches that changed
+        """
+        changes = []
+        for watch in self._watches.values():
+            new_value = get_value_func(watch.expression)
+            if new_value != watch.last_value:
+                changes.append(
+                    WatchChange(
+                        watch=watch,
+                        old_value=watch.last_value,
+                        new_value=new_value,
+                    )
+                )
+                watch.last_value = new_value
+        return changes

@@ -15,6 +15,30 @@ python debugger.py -c "run" program.bin
 python debugger.py -x commands.txt program.bin
 ```
 
+## Architecture Notes
+
+### Instruction Encoding
+
+Instructions are 1, 2, or 3 bytes:
+- **1-byte**: Opcode only (e.g., `nop`, `hlt`, `ret`)
+- **2-byte**: Opcode + byte operand (e.g., `ldi zh, 0x10`)
+- **3-byte**: Opcode + word operand (e.g., `ldi sp, 0xFFFE`, `call 0x000D`)
+
+### Endianness
+
+Word operands (16-bit addresses/values) are stored in **big-endian** format:
+- High byte first, then low byte
+- Example: `ldi sp, 0xFFFE` is encoded as `14 FF FE`
+  - `0x14` = opcode
+  - `0xFF` = high byte
+  - `0xFE` = low byte
+
+### Accumulator (AC)
+
+The Accumulator (AC) is the **XL register** — they are the same physical register:
+- `ac` and `xl` refer to the same 8-bit register
+- The X register pair consists of XH (high byte) and XL/AC (low byte)
+
 ## Command Reference
 
 ### Execution Commands
@@ -22,16 +46,33 @@ python debugger.py -x commands.txt program.bin
 | Command | Alias | Description |
 |---------|-------|-------------|
 | `run` | `r` | Start or restart the program |
-| `nexti [count]` | `n`, `ni` | Execute next instruction(s) |
+| `nexti [count]` | `n`, `ni` | Execute next instruction(s) (full instruction) |
 | `step [count]` | `s` | Step program (same as nexti) |
-| `stepi [count]` | `si` | Step one instruction exactly |
+| `stepi [count]` | `si` | Step one clock cycle (more granular than nexti) |
 | `continue` | `c` | Continue until breakpoint or halt |
 | `reset` | - | Reset CPU to initial state |
+
+#### Execution Granularity
+
+The debugger provides three levels of execution control:
+
+1. **`nexti`/`n`** — Execute a **full CPU instruction**
+   - A 3-byte instruction (e.g., `ldi sp, 0xFFFE`) executes completely
+   - PC advances by the instruction size (1, 2, or 3 bytes)
+
+2. **`stepi`/`si`** — Execute one **clock cycle**
+   - More granular than nexti
+   - Useful for seeing CPU state mid-instruction
+
+3. **`tick`/`t`** — Execute one **simulator tick**
+   - Lowest level granularity
+   - One clock cycle = period/2 ticks per phase
 
 #### Examples
 ```
 (gdb-dragonfly) run
-(gdb-dragonfly) nexti 5        # Execute 5 instructions
+(gdb-dragonfly) nexti 5        # Execute 5 full instructions
+(gdb-dragonfly) stepi 10       # Execute 10 clock cycles
 (gdb-dragonfly) continue       # Run until breakpoint
 ```
 
@@ -49,6 +90,25 @@ python debugger.py -x commands.txt program.bin
 | `list [addr]` | `l` | List disassembly around location |
 | `backtrace [count]` | `bt` | Show execution history |
 | `status` | - | Show CPU status |
+
+#### Register Display
+
+The `registers` command shows all CPU registers:
+
+```
+--------- Registers ----------
+  PC = 0x0009   (    9)
+  SP = 0xFFFE   (65534)
+
+  X = 0x000C     XH=0x00 AC=0x0C
+  Y = 0x0000     YH=0x00 YL=0x00
+  Z = 0x0800     ZH=0x08 ZL=0x00
+
+  FLAGS = 0b00000000  (0x00)
+------------------------------
+```
+
+> The X register line shows AC (Accumulator) instead of XL because AC = XL.
 
 #### Info Subcommands
 ```
@@ -117,11 +177,27 @@ Format: `/[count][format]`
 
 | Command | Alias | Description |
 |---------|-------|-------------|
-| `tick [count]` | `t` | Execute simulator ticks |
+| `tick [count]` | `t` | Execute simulator ticks (lowest level) |
 | `period [value]` | - | Get/set clock period |
 | `check [cycles]` | `sc` | Check for short circuits |
 
-#### Description
+#### Simulation Levels
+
+The CPU8 simulator operates at multiple levels:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  nexti/n    Execute full instruction (1-3 bytes)        │
+│             PC advances by instruction size             │
+├─────────────────────────────────────────────────────────┤
+│  stepi/si   Execute one clock cycle                     │
+│             PC may advance by 1 byte                    │
+├─────────────────────────────────────────────────────────┤
+│  tick/t     Execute one simulator tick                  │
+│             Lowest level (period/2 ticks = half cycle)  │
+└─────────────────────────────────────────────────────────┘
+```
+
 - **tick**: Executes individual simulator ticks (lowest granularity)
 - **period**: Controls simulator ticks per CPU clock cycle (default: 800)
 - **check**: Runs simulation and checks for conflicts (short circuits) on rising clock edge
@@ -215,11 +291,14 @@ rn PC:/DATA7 - PC:/DATA0       # Read 8-bit bus
 |----------|-------------|
 | `pc` | Program Counter (16-bit) |
 | `sp` | Stack Pointer (16-bit) |
-| `x`, `xh`, `xl` | X register pair and bytes |
+| `ac` | Accumulator (same as `xl`) |
+| `x`, `xh`, `xl` | X register pair and bytes (XL = Accumulator) |
 | `y`, `yh`, `yl` | Y register pair and bytes |
 | `z`, `zh`, `zl` | Z register pair and bytes |
 | `flags`, `fr` | Flags register |
-| `ac` | Accumulator |
+
+> **Note:** The Accumulator (AC) is the same physical register as XL.
+> In the register display, it appears as `X = 0x00XX  XH=0x00 AC=0xXX`.
 
 ---
 

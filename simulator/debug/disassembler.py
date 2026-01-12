@@ -44,7 +44,8 @@ class Disassembler:
             size = 3
             if address + 2 < len(self.rom):
                 operand_bytes = self.rom[address : address + 3]
-                word_val = self.rom[address + 1] | (self.rom[address + 2] << 8)
+                # Big-endian: high byte first, then low byte
+                word_val = (self.rom[address + 1] << 8) | self.rom[address + 2]
                 mnemonic = mnemonic.replace("[word]", f"0x{word_val:04X}")
 
         return mnemonic, size, operand_bytes
