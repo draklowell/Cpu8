@@ -10,7 +10,7 @@ from config import (
 
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
-READERS, WRITERS, MICROCODE, CYCLES = load_microcode_data()
+READERS, WRITERS, MICROCODE, INSTRUCTION_CYCLES = load_microcode_data()
 
 
 class Simulator:

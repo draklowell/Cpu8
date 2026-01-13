@@ -1305,3 +1305,4 @@ fp-info-cache
 *.zip
 
 .vscode/
+trace_mul.py

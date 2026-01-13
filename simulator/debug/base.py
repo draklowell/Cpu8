@@ -127,12 +127,9 @@ class DebuggerCore:
         if not self.initialized:
             self.initialize()
 
-        # Get the opcode at current PC
-        current_pc = self.state.pc
-        if current_pc < len(self.rom):
-            opcode = self.rom[current_pc]
-        else:
-            opcode = 0  # NOP
+        # Get the opcode from the CPU's instruction register (current instruction being executed)
+        # NOT from ROM[PC], because PC already points to the NEXT instruction!
+        opcode = self.state.instruction
 
         # Get number of cycles for this instruction from the table
         num_cycles = self.cycles.get(opcode, 3)  # Default to 3 (NOP) if unknown

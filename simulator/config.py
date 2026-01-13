@@ -8,6 +8,7 @@ import json
 PERIOD = 800
 INIT_TICKS = 200
 STARTUP_TICKS = 200
+CYCLES = 1000
 
 MODULES = [
     ("netlists/alu_hub.frp", "ALU"),
