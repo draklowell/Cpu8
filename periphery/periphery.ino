@@ -11,8 +11,8 @@
 const uint8_t PIN_DATA[8] = {22, 23, 24, 25, 26, 27, 28, 29};
 const uint8_t PIN_ADDRESS[16] = {32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47};
 
-#define PIN_CTL_NREAD  6
-#define PIN_CTL_NWRITE 7
+#define PIN_CTL_NREAD  7
+#define PIN_CTL_NWRITE 6
 
 #define PIN_BTN1 A3
 #define PIN_BTN2 A4
@@ -184,7 +184,7 @@ uint8_t memoryRead(uint16_t address) {
   if (address < 0x2800) {
     Serial.println(pgm_read_byte(&memoryRO[address]), HEX);
     // to ROM: 0x0000 -- 0x27FF
-    return memoryRO[pgm_read_byte(&memoryRO[address])];
+    return pgm_read_byte(&memoryRO[address]);
   }
 
   // 0x4000 -- 0x57FF

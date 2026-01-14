@@ -799,6 +799,7 @@ mono_crash.*
 # Build results
 [Dd]ebug/
 !simulator/debug/
+!periphery/debug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/

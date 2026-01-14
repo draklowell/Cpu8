@@ -3,10 +3,10 @@
 #define DATA_ROW "DATA   | "
 #define STATE_ROW "STATE  | "
 
-// DATA[0] -> Pin 37 and DATA[7] -> Pin 23
-const byte dataPins[] = {37, 35, 33, 31, 29, 27, 25, 23};
-// STATE[0] -> Pin 52 and STATE[7] -> Pin 38
-const byte statePins[] = {52, 50, 48, 46, 44, 42, 40, 38};
+// DATA[0] -> Pin 23 and DATA[7] -> Pin 37
+const byte dataPins[] = {23, 25, 27, 29, 31, 33, 35, 37};
+// STATE[8] -> Pin 38 and STATE[15] -> Pin 52
+const byte statePins[] = {38, 40, 42, 44, 46, 48, 50, 52};
 
 void printFormatted(byte val)
 {

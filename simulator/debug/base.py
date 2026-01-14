@@ -111,15 +111,16 @@ class DebuggerCore:
 
         return self.state
 
-    def step_full_instruction(self, max_cycles: int = 100) -> CPUState:
+    def step_full_instruction(self, max_cycles: int = 50) -> CPUState:
         """
         Execute clock cycles until a full instruction is completed.
 
-        Uses the cycle count from the instruction table (table.csv) to know
-        exactly how many clock cycles each instruction takes.
+        Uses PC tracking to determine when an instruction finishes.
+        The instruction is complete when PC has moved past the current instruction
+        (including its operands) and stabilized.
 
         Args:
-            max_cycles: Maximum cycles as fallback (normally not used)
+            max_cycles: Maximum cycles as a safety limit
 
         Returns:
             CPUState after the instruction completes
@@ -127,24 +128,54 @@ class DebuggerCore:
         if not self.initialized:
             self.initialize()
 
-        # Get the opcode from the CPU's instruction register (current instruction being executed)
-        # NOT from ROM[PC], because PC already points to the NEXT instruction!
-        opcode = self.state.instruction
+        # Record starting PC and calculate expected next PC
+        start_pc = self.state.pc
+        opcode = self.rom[start_pc] if start_pc < len(self.rom) else 0xFF
 
-        # Get number of cycles for this instruction from the table
-        num_cycles = self.cycles.get(opcode, 3)  # Default to 3 (NOP) if unknown
+        # Calculate instruction size based on mnemonic
+        mnemonic = self.microcode.get(opcode, "")
+        if "[word]" in mnemonic:
+            instr_size = 3  # opcode + 2 byte operand
+        elif "[byte]" in mnemonic:
+            instr_size = 2  # opcode + 1 byte operand
+        else:
+            instr_size = 1  # just opcode
 
-        # HLT (0xDD) needs extra cycles for the halt signal to propagate
-        # through the circuit before halted flag becomes true
-        HLT_OPCODE = 0xDD
-        if opcode == HLT_OPCODE:
-            num_cycles = 6  # Give halt signal time to propagate
+        # Expected next instruction address (for non-jump instructions)
+        expected_next_pc = start_pc + instr_size
 
-        # Execute the required number of clock cycles
-        for _ in range(num_cycles):
+        # The instruction ends when PC is outside the range [start_pc, start_pc + instr_size)
+        # and has stabilized for at least 1 cycle
+        prev_pc = start_pc
+        stable_count = 0
+
+        for _ in range(max_cycles):
             self.step_instruction()
+
             if self.state.halted:
                 break
+
+            current_pc = self.state.pc
+
+            # Check if we've moved outside the current instruction
+            # PC should be either at expected_next_pc (sequential) or somewhere else (jump)
+            outside_current_instr = (
+                current_pc < start_pc or current_pc >= expected_next_pc
+            )
+
+            if outside_current_instr:
+                # Wait for PC to stabilize
+                if current_pc == prev_pc:
+                    stable_count += 1
+                    if stable_count >= 1:
+                        break
+                else:
+                    stable_count = 0
+                    prev_pc = current_pc
+            else:
+                # Still within current instruction (fetching operands)
+                prev_pc = current_pc
+                stable_count = 0
 
         return self.state
 
