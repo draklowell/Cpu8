@@ -16,7 +16,6 @@ from debug.disassembler import Disassembler
 from debug.state import CPUState
 from debug.ui import DebuggerStrings
 from debug.watch import Watch, WatchChange, WatchManager
-
 from simulator.simulation import LogLevel, SimulationEngine, State, WaveformChunk
 
 STRINGS = DebuggerStrings()

@@ -16,7 +16,6 @@ from debug.breakpoint import BreakpointManager
 from debug.disassembler import Disassembler
 from debug.state import CPUState
 from debug.watch import WatchManager
-
 from simulator.simulation import SimulationEngine, State, WaveformChunk
 
 

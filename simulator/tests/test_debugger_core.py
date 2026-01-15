@@ -115,7 +115,6 @@ class TestReadNetworksAsBinary:
     def mock_core(self):
         """Create a mock DebuggerCore for testing."""
         from debug.base import DebuggerCore
-
         from simulator.base import State
 
         core = MagicMock(spec=DebuggerCore)
@@ -174,7 +173,6 @@ class TestReadNetworksAsInt:
     def mock_core(self):
         """Create a mock DebuggerCore for testing."""
         from debug.base import DebuggerCore
-
         from simulator.base import State
 
         core = MagicMock(spec=DebuggerCore)

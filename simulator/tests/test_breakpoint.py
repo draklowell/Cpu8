@@ -3,6 +3,7 @@ Tests for the BreakpointManager class.
 """
 
 import pytest
+
 from debug.breakpoint import Breakpoint, BreakpointManager
 
 
