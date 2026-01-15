@@ -47,15 +47,15 @@ volatile uint8_t memoryStack[1024];
 
 /*** CONTROL BUS ***/
 uint8_t controlGetOperation(uint8_t read, uint8_t write) {
-  if(!digitalRead(PIN_CTL_NREAD) && !digitalRead(PIN_CTL_NWRITE)) {
+  if(!read && !write) {
     return OPERATION_NOP;
   }
 
-  if(!digitalRead(PIN_CTL_NREAD)) {
+  if(!read) {
     return OPERATION_READ;
   }
-
-  if(!digitalRead(PIN_CTL_NWRITE)) {
+  
+  if(!write) {
     return OPERATION_WRITE;
   }
 
@@ -293,32 +293,33 @@ void loop() {
 
     address = addressRead();
     value = dataRead(false);
-    log(read, write, address, value, clkValue);
 
     digitalWrite(PIN_CLK_OUT, clkValue);
 
     if (clkValue - prevClkValue != EDGE_TRIGGER) {
       prevClkValue = clkValue;
+      log(read, write, address, value, clkValue);
       continue;
     } else {
       prevClkValue = clkValue;
     }
 
     if (operation == OPERATION_NOP) {
+      log(read, write, address, value, clkValue);
       continue;
     }
 
-    address = addressRead();
     if (operation == OPERATION_READ) {
       value = memoryRead(address);
       dataWrite(value);
+      log(read, write, address, value, clkValue);
       continue;
     }
 
     if (operation == OPERATION_WRITE) {
-      value = dataRead();
+      value = dataRead(false);
       memoryWrite(address, value);
-      continue;
+      log(read, write, address, value, clkValue);
     }
 
     continue;
