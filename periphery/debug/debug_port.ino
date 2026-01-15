@@ -65,5 +65,5 @@ void loop()
   printFormatted(stateVal);
 
   Serial.println(SPLIT_LINE);
-  delay(1000);
+  delay(500);
 }

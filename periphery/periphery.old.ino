@@ -2,9 +2,7 @@
 // #include <LiquidCrystal.h>
 #include "ROMData.h"
 
-#define BAUD_RATE 115200
-
-#define HEADER F("time,op,address,data,clk")
+#define BAUD_RATE 9600
 
 #define PIN_DATA_DIR 2
 #define PIN_DATA_EN 3
@@ -179,20 +177,26 @@ uint8_t memoryRead(uint16_t address);
 void memoryWrite(uint16_t address, uint8_t value);
 
 uint8_t memoryRead(uint16_t address) {
+  Serial.print(F("OP: READ("));
+  Serial.print(address, HEX);
+  Serial.print(F(") -> "));
   // 0x0000 -- 0x27FF
   if (address < 0x2800) {
+    Serial.println(pgm_read_byte(&memoryRO[address]), HEX);
     // to ROM: 0x0000 -- 0x27FF
     return pgm_read_byte(&memoryRO[address]);
   }
 
   // 0x4000 -- 0x57FF
   if (address >= 0x4000 && address < 0x5800) {
+    Serial.println(memoryRW[address], HEX);
     // to RAM: 0x0000 -- 0x27FF
     return memoryRW[address-0x4000];
   }
 
   // 0xFC00 -- 0xFFFF
   if (address >= 0xFC00 && address < 0xFFFF) {
+    Serial.println(memoryStack[address], HEX);
     // to STACK: 0x0000 -- 0x03FF
     return memoryStack[address-0xFC00];
   }
@@ -214,6 +218,11 @@ uint8_t memoryRead(uint16_t address) {
 }
 
 void memoryWrite(uint16_t address, uint8_t value) {
+  Serial.print(F("OP: WRITE("));
+  Serial.print(address, HEX);
+  Serial.print(F(", "));
+  Serial.print(value, HEX);
+  Serial.println(F(")"));
   // 0x0000 -- 0x27FF
   if (address < 0x2800) {
     // to ROM: 0x0000 -- 0x27FF
@@ -256,32 +265,6 @@ void setup() {
   // buttonsSetup();
   pinMode(PIN_CLK, INPUT);
   pinMode(PIN_CLK_OUT, OUTPUT);
-  Serial.println(HEADER);
-}
-
-void log(uint8_t operation, uint16_t address, uint8_t data, uint8_t clkValue) {
-  Serial.print(millis());
-  Serial.print(F(","));
-  switch (operation) {
-    case OPERATION_NOP:
-      Serial.print(F("nop"));
-      break;
-    case OPERATION_READ:
-      Serial.print(F("read"));
-      break;
-    case OPERATION_WRITE:
-      Serial.print(F("write"));
-      break;
-    default:
-      Serial.print(F("unknown"));
-      break;
-  }
-  Serial.print(',');
-  Serial.print(address);
-  Serial.print(',');
-  Serial.print(data);
-  Serial.print(',');
-  Serial.println(clkValue);
 }
 
 void loop() {
@@ -298,7 +281,6 @@ void loop() {
     clkValue = digitalRead(PIN_CLK);
     digitalWrite(PIN_CLK_OUT, clkValue);
     if (clkValue - prevClkValue != EDGE_TRIGGER) {
-      log(OPERATION_NOP, 0, 0, clkValue);
       prevClkValue = clkValue;
       continue;
     } else {
@@ -308,21 +290,19 @@ void loop() {
     operation = controlGetOperation();
 
     if (operation == OPERATION_NOP) {
-      log(operation, 0, 0, clkValue);
+      Serial.println(F("OP: NOP"));
       continue;
     }
 
     address = addressRead();
     if (operation == OPERATION_READ) {
       value = memoryRead(address);
-      log(operation, address, value, clkValue);
       dataWrite(value);
       continue;
     }
 
     if (operation == OPERATION_WRITE) {
       value = dataRead();
-      log(operation, address, value, clkValue);
       memoryWrite(address, value);
       continue;
     }
