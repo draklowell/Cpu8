@@ -4,7 +4,7 @@
 
 #define BAUD_RATE 115200
 
-#define HEADER F("time,op,address,data,clk")
+#define HEADER F("time,not_read,not_write,address,data,clk")
 
 #define PIN_DATA_DIR 2
 #define PIN_DATA_EN 3
@@ -46,7 +46,7 @@ volatile uint8_t memoryRW[6144];
 volatile uint8_t memoryStack[1024];
 
 /*** CONTROL BUS ***/
-uint8_t controlGetOperation() {
+uint8_t controlGetOperation(uint8_t read, uint8_t write) {
   if(!digitalRead(PIN_CTL_NREAD) && !digitalRead(PIN_CTL_NWRITE)) {
     return OPERATION_NOP;
   }
@@ -122,11 +122,12 @@ void dataWrite(uint8_t value) {
   }
 }
 
-uint8_t dataRead() {
+uint8_t dataRead(bool force = true) {
   uint8_t value = 0;
   uint8_t i;
 
-  dataSetInput(true);
+  if (force)
+    dataSetInput(true);
 
   for (i = 0; i < 8; ++i) {
     value |= digitalRead(PIN_DATA[i]) << i;
@@ -259,23 +260,12 @@ void setup() {
   Serial.println(HEADER);
 }
 
-void log(uint8_t operation, uint16_t address, uint8_t data, uint8_t clkValue) {
+void log(uint8_t read, uint8_t write, uint16_t address, uint8_t data, uint8_t clkValue) {
   Serial.print(millis());
-  Serial.print(F(","));
-  switch (operation) {
-    case OPERATION_NOP:
-      Serial.print(F("nop"));
-      break;
-    case OPERATION_READ:
-      Serial.print(F("read"));
-      break;
-    case OPERATION_WRITE:
-      Serial.print(F("write"));
-      break;
-    default:
-      Serial.print(F("unknown"));
-      break;
-  }
+  Serial.print(',');
+  Serial.print(read);
+  Serial.print(',');
+  Serial.print(write);
   Serial.print(',');
   Serial.print(address);
   Serial.print(',');
@@ -286,7 +276,7 @@ void log(uint8_t operation, uint16_t address, uint8_t data, uint8_t clkValue) {
 
 void loop() {
   uint16_t address = 0;
-  uint8_t operation;
+  uint8_t operation, read, write;
 
   uint8_t value = memoryRead(address);
   // dataWrite(value);
@@ -296,33 +286,37 @@ void loop() {
   uint8_t clkValue = prevClkValue;
   for(;;) {
     clkValue = digitalRead(PIN_CLK);
+
+    read = digitalRead(PIN_CTL_NREAD);
+    write = digitalRead(PIN_CTL_NWRITE);
+    operation = controlGetOperation(read, write);
+
+    address = addressRead();
+    value = dataRead(false);
+    log(read, write, address, value, clkValue);
+
     digitalWrite(PIN_CLK_OUT, clkValue);
+
     if (clkValue - prevClkValue != EDGE_TRIGGER) {
-      log(OPERATION_NOP, 0, 0, clkValue);
       prevClkValue = clkValue;
       continue;
     } else {
       prevClkValue = clkValue;
     }
 
-    operation = controlGetOperation();
-
     if (operation == OPERATION_NOP) {
-      log(operation, 0, 0, clkValue);
       continue;
     }
 
     address = addressRead();
     if (operation == OPERATION_READ) {
       value = memoryRead(address);
-      log(operation, address, value, clkValue);
       dataWrite(value);
       continue;
     }
 
     if (operation == OPERATION_WRITE) {
       value = dataRead();
-      log(operation, address, value, clkValue);
       memoryWrite(address, value);
       continue;
     }
