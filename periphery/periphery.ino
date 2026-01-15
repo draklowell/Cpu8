@@ -46,16 +46,16 @@ volatile uint8_t memoryRW[6144];
 volatile uint8_t memoryStack[1024];
 
 /*** CONTROL BUS ***/
-uint8_t controlGetOperation(uint8_t read, uint8_t write) {
-  if(!read && !write) {
+uint8_t controlGetOperation(uint8_t not_read, uint8_t not_write) {
+  if(!not_read && !not_write) {
     return OPERATION_NOP;
   }
 
-  if(!read) {
+  if(!not_read) {
     return OPERATION_READ;
   }
   
-  if(!write) {
+  if(!not_write) {
     return OPERATION_WRITE;
   }
 
@@ -260,12 +260,12 @@ void setup() {
   Serial.println(HEADER);
 }
 
-void log(uint8_t read, uint8_t write, uint16_t address, uint8_t data, uint8_t clkValue) {
-  Serial.print(millis());
+void log(uint8_t not_read, uint8_t not_write, uint16_t address, uint8_t data, uint8_t clkValue) {
+  Serial.print(micros());
   Serial.print(',');
-  Serial.print(read);
+  Serial.print(not_read);
   Serial.print(',');
-  Serial.print(write);
+  Serial.print(not_write);
   Serial.print(',');
   Serial.print(address);
   Serial.print(',');
@@ -276,7 +276,7 @@ void log(uint8_t read, uint8_t write, uint16_t address, uint8_t data, uint8_t cl
 
 void loop() {
   uint16_t address = 0;
-  uint8_t operation, read, write;
+  uint8_t operation, not_read, not_write;
 
   uint8_t value = memoryRead(address);
   // dataWrite(value);
@@ -287,9 +287,9 @@ void loop() {
   for(;;) {
     clkValue = digitalRead(PIN_CLK);
 
-    read = digitalRead(PIN_CTL_NREAD);
-    write = digitalRead(PIN_CTL_NWRITE);
-    operation = controlGetOperation(read, write);
+    not_read = digitalRead(PIN_CTL_NREAD);
+    not_write = digitalRead(PIN_CTL_NWRITE);
+    operation = controlGetOperation(not_read, not_write);
 
     address = addressRead();
     value = dataRead(false);
@@ -298,28 +298,28 @@ void loop() {
 
     if (clkValue - prevClkValue != EDGE_TRIGGER) {
       prevClkValue = clkValue;
-      log(read, write, address, value, clkValue);
+      log(not_read, not_write, address, value, clkValue);
       continue;
     } else {
       prevClkValue = clkValue;
     }
 
     if (operation == OPERATION_NOP) {
-      log(read, write, address, value, clkValue);
+      log(not_read, not_write, address, value, clkValue);
       continue;
     }
 
     if (operation == OPERATION_READ) {
       value = memoryRead(address);
       dataWrite(value);
-      log(read, write, address, value, clkValue);
+      log(not_read, not_write, address, value, clkValue);
       continue;
     }
 
     if (operation == OPERATION_WRITE) {
       value = dataRead(true);
       memoryWrite(address, value);
-      log(read, write, address, value, clkValue);
+      log(not_read, not_write, address, value, clkValue);
       continue;
     }
 

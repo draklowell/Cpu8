@@ -1,4 +1,4 @@
-#define HEADER F("time,data,state,pcinc,scclear,instread,clk")
+#define HEADER F("time,data,state,pcinc,not_scclear,not_instread,clk")
 
 // DATA[0] -> Pin 23 and DATA[7] -> Pin 37
 const byte dataPins[] = {23, 25, 27, 29, 31, 33, 35, 37};
@@ -36,7 +36,7 @@ void loop()
     stateVal |= (digitalRead(statePins[i]) << i);
   }
 
-  Serial.print(millis());
+  Serial.print(micros());
   Serial.print(',');
   Serial.print(dataVal);
   Serial.print(',');
