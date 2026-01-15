@@ -317,9 +317,10 @@ void loop() {
     }
 
     if (operation == OPERATION_WRITE) {
-      value = dataRead(false);
+      value = dataRead(true);
       memoryWrite(address, value);
       log(read, write, address, value, clkValue);
+      continue;
     }
 
     continue;
