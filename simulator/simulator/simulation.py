@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 from simulator.base import LogLevel, State, WaveformChunk
 from simulator.engine.entities.base import MessagingProvider, NetworkState
 from simulator.engine.entities.cpu import CPU
@@ -89,6 +87,13 @@ class SimulationEngine:
                 pin_map[alias] = network.name
 
             result[component.name] = pin_map
+
+        return result
+
+    def get_component_variable_sizes(self) -> dict[str, dict[str, str]]:
+        result = {}
+        for component in self.cpu.components.values():
+            result[component.name] = component.get_variable_sizes()
 
         return result
 

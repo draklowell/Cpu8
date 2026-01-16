@@ -31,6 +31,11 @@ class IC74573(Component):
     def _init(self):
         self.internal_state = 0
 
+    def get_variable_sizes(self):
+        return {
+            "Q": 8,
+        }
+
     def get_variables(self) -> dict[str, int]:
         return {
             "Q": self.internal_state,

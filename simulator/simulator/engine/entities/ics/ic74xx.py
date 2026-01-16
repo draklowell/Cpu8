@@ -136,6 +136,12 @@ class IC74109(Component):
         self.prev_clk1 = False
         self.prev_clk2 = False
 
+    def get_variable_sizes(self):
+        return {
+            "Q1": 1,
+            "Q2": 1,
+        }
+
     def get_variables(self) -> dict[str, int]:
         return {
             "Q1": int(self.state1),

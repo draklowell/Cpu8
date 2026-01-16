@@ -76,6 +76,13 @@ class Interface(Component):
 
         return True
 
+    def get_variable_sizes(self):
+        return {
+            "RESET": None,
+            "WAIT": None,
+            "CLOCK": None,
+        }
+
     def get_variables(self) -> dict[str, int]:
         return {
             "RESET": int(self.reset),
