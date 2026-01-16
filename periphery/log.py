@@ -1,5 +1,6 @@
-from serial import Serial
 import time
+
+from serial import Serial
 
 PORT = "/dev/cu.usbserial-2140"
 BAUDRATE = 115200

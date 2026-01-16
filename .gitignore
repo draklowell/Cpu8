@@ -388,7 +388,6 @@ secring.*
 
 ##### SynopsysVCS
 # Waveform formats
-*.vcd
 *.vpd
 *.evcd
 *.fsdb

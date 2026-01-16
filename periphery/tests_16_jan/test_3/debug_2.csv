@@ -1,4 +1,4 @@
-ütime,data,state,pcinc,not_scclear,not_instread,clk
+time,data,state,pcinc,not_scclear,not_instread,clk
 556,0,128,0,1,1,0
 1360,0,128,0,1,1,0
 2428,0,128,0,1,1,0
