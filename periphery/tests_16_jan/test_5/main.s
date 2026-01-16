@@ -1,7 +1,6 @@
 .global main
 .text
 main:
-    ldi ac, 10
     inc ac
     inc ac
     inc ac
