@@ -2,7 +2,7 @@ import time
 
 from serial import Serial
 
-PORT = "/dev/cu.usbserial-2140"
+PORT = "/dev/cu.usbserial-130"
 BAUDRATE = 115200
 OUTPUT = "log.csv"
 
