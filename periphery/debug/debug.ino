@@ -1,4 +1,4 @@
-#define HEADER F("time,data,state,pcinc,not_scclear,not_instread,clk")
+#define HEADER F("time,data,state,pcinc,not_scclear,not_instread,clk,not_enable,direction")
 
 // DATA[0] -> Pin 23 and DATA[7] -> Pin 37
 const byte dataPins[] = {23, 25, 27, 29, 31, 33, 35, 37};
@@ -8,6 +8,8 @@ const byte pcinc = 51;
 const byte scclear = 53;
 const byte clk = 49;
 const byte instread = 47;
+const byte not_en = 22;
+const byte direction = 24;
 
 void setup()
 {
@@ -22,6 +24,8 @@ void setup()
   pinMode(scclear, INPUT);
   pinMode(clk, INPUT);
   pinMode(instread, INPUT);
+  pinMode(not_en, INPUT);
+  pinMode(direction, INPUT);
   Serial.println(HEADER);
 }
 
@@ -48,5 +52,9 @@ void loop()
   Serial.print(',');
   Serial.print(digitalRead(instread));
   Serial.print(',');
-  Serial.println(digitalRead(clk));
+  Serial.print(digitalRead(clk));
+  Serial.print(',');
+  Serial.print(digitalRead(not_en));
+  Serial.print(',');
+  Serial.println(digitalRead(direction));
 }
