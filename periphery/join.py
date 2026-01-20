@@ -11,6 +11,8 @@ VARIABLES = {
     "debug/pcinc": ("logic", 1),
     "debug/not_scclear": ("logic", 1),
     "debug/not_instread": ("logic", 1),
+    "debug/not_enable": ("logic", 1),
+    "debug/direction": ("logic", 1),
     "interface/clk": ("logic", 1),
     "interface/data": ("logic", 8),
     "interface/address": ("logic", 16),
@@ -33,6 +35,8 @@ def main(debug_path: str, interface_path: str, merged_path: str):
                 "debug/pcinc": int(row["pcinc"]),
                 "debug/not_scclear": int(row["not_scclear"]),
                 "debug/not_instread": int(row["not_instread"]),
+                "debug/not_enable": int(row["not_enable"]),
+                "debug/direction": int(row["direction"]),
             }
             debug_data.append(record)
             if record["debug/clk"] and debug_first_clk == -1:
