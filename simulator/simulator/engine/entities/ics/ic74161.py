@@ -29,6 +29,11 @@ class IC74161(Component):
         self.count = 0
         self.prev_clk = False
 
+    def get_variable_sizes(self):
+        return {
+            "Q": 4,
+        }
+
     def get_variables(self) -> dict[str, int]:
         return {
             "Q": self.count,

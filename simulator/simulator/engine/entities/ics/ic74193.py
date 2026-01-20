@@ -30,6 +30,11 @@ class IC74193(Component):
         self.prev_up = False
         self.prev_down = False
 
+    def get_variable_sizes(self):
+        return {
+            "Q": 4,
+        }
+
     def get_variables(self) -> dict[str, int]:
         return {
             "Q": self.value,

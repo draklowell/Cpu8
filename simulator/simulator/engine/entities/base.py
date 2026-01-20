@@ -109,6 +109,9 @@ class Component(Propagatable, Messaging):
     def _init(self):
         pass
 
+    def get_variable_sizes(self) -> dict[str, int]:
+        return {}
+
     def get_variables(self) -> dict[str, int]:
         return {}
 
