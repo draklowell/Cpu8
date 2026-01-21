@@ -1,4 +1,4 @@
-ðtime,data,state,pcinc,not_scclear,not_instread,clk,not_enable,direction
+time,data,state,pcinc,not_scclear,not_instread,clk,not_enable,direction
 904,0,130,0,1,0,0,1,0
 2860,0,130,0,1,0,0,1,0
 4900,0,130,0,1,0,0,1,0
